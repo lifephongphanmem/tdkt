@@ -9,7 +9,7 @@ include('system/system.php');
 //End System
 
 //Manage
-
+include('manage/kttkkc.php');
 //End Manage
 
 //View
