@@ -60,18 +60,18 @@
             document.getElementById("iddelete").value=id;
         }
         $(function(){
-            $('#mahinhthuckt').change(function() {
+            $('#madanhhieutd').change(function() {
                 var current_path_url = '/dmdanhhieutd?';
-                var mahinhthuckt = '&mahinhthuckt='+$('#mahinhthuckt').val();
+                var madanhhieutd = '&madanhhieutd='+$('#madanhhieutd').val();
                 var phanloai = '&phanloai='+$('#phanloai').val();
-                var url = current_path_url + mahinhthuckt + phanloai;
+                var url = current_path_url + madanhhieutd + phanloai;
                 window.location.href = url;
             });
             $('#phanloai').change(function() {
                 var current_path_url = '/dmdanhhieutd?';
-                var mahinhthuckt = '&mahinhthuckt='+$('#mahinhthuckt').val();
+                var madanhhieutd = '&madanhhieutd='+$('#madanhhieutd').val();
                 var phanloai = '&phanloai='+$('#phanloai').val();
-                var url = current_path_url + mahinhthuckt + phanloai;
+                var url = current_path_url + madanhhieutd + phanloai;
                 window.location.href = url;
             });
         })
@@ -83,7 +83,7 @@
 
 @section('content')
     <h3 class="page-title">
-        Quản lý danh mục<small>&nbsp;loại hình khen thưởng</small>
+        Quản lý danh mục<small>&nbsp;danh hiệu thi đua</small>
     </h3>
     <!-- END PAGE HEADER-->
     <div class="row">
@@ -94,7 +94,7 @@
                     <div class="portlet-title">
                         <div class="caption"></div>
                         <div class="actions">
-                            <a href="{{url('dmloaihinhkt/create')}}" class="btn btn-default btn-sm">
+                            <a href="{{url('dmdanhhieutd/create')}}" class="btn btn-default btn-sm">
                             <i class="fa fa-plus"></i> Thêm mới</a>
                         </div>
                     </div>
@@ -103,20 +103,18 @@
                 <div class="portlet-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <label class="control-label">Mã hình thức</label>
-                            {!! Form::text('maloaihinhkt', $inputs['maloaihinhkt'], ['id' => 'maloaihinhkt', 'class' => 'form-control']) !!}
+                            <label class="control-label">Mã danh hiệu</label>
+                            {!! Form::text('madanhhieutd', $inputs['madanhhieutd'], ['id' => 'madanhhieutd', 'class' => 'form-control']) !!}
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Phân loại</label>
                                 <select class="form-control" name="phanloai" id="phanloai">
-                                        <option value="Công trạng" {{($inputs['phanloai'] == 'Công trạng' ? 'selected' : '')}}>Khen thưởng theo công trạng và thành tích</option>
-                                        <option value="Đợt" {{($inputs['phanloai'] == 'Đợt' ? 'selected' : '')}}>Khen thưởng theo đợt (hoặc chuyên đề)</option>
-                                        <option value="Đột xuất" {{($inputs['phanloai'] == 'Đột xuất' ? 'selected' : '')}}>Khen thưởng đột xuất</option>
-                                        <option value="Cống hiến" {{($inputs['phanloai'] == 'Cống hiến' ? 'selected' : '')}}>Khen thưởng quá trình cống hiến</option>
-                                        <option value="Niên hạn" {{($inputs['phanloai'] == 'Niên hạn' ? 'selected' : '')}}>Khen thưởng theo niên hạn</option>
-                                        <option value="Đối ngoại" {{($inputs['phanloai'] == 'Đối ngoại' ? 'selected' : '')}}>Khen thưởng đối ngoại</option>
-                                    <option value="" {{($inputs['phanloai'] == '' ? 'selected' : '')}}>--Phân loại hình thức--</option>
+                                    <option value="Xã" {{($inputs['phanloai'] == 'Xã' ? 'selected' : '')}}>Danh hiệu thi đua cấp Xã</option>
+                                    <option value="Huyện" {{($inputs['phanloai'] == 'Huyện' ? 'selected' : '')}}>Danh hiệu thi đua cấp Huyện</option>
+                                    <option value="Tỉnh" {{($inputs['phanloai'] == 'Tỉnh' ? 'selected' : '')}}>Danh hiệu thi đua cấp Tỉnh</option>
+                                    <option value="Cơ sở" {{($inputs['phanloai'] == 'Cơ sở' ? 'selected' : '')}}>Danh hiệu thi đua cấp Cơ sở</option>
+                                    <option value="" {{($inputs['phanloai'] == '' ? 'selected' : '')}}>--Phân loại danh hiệu--</option>
                                 </select>
                             </div>
                         </div>
@@ -126,8 +124,8 @@
                         <thead>
                         <tr>
                             <th style="text-align: center" width="2%">STT</th>
-                            <th style="text-align: center">Mã loại hình</th>
-                            <th style="text-align: center" width="50%">Tên loại hình</th>
+                            <th style="text-align: center">Mã danh hiệu</th>
+                            <th style="text-align: center" width="50%">Tên danh hiệu</th>
                             <th style="text-align: center" width="20%">Phân loại</th>
                             <th style="text-align: center" width="10%">Thao tác</th>
                         </tr>
@@ -136,26 +134,22 @@
                         @foreach($model as $key=>$tt)
                         <tr class="odd gradeX">
                             <td style="text-align: center">{{$key + 1}}</td>
-                            <td>{{$tt->maloaihinhkt}}</td>
-                            <td class="active">{{$tt->tenloaihinhkt}}</td>
+                            <td>{{$tt->madanhhieutd}}</td>
+                            <td class="active">{{$tt->tendanhhieutd}}</td>
                             <td style="text-align: center">
-                                @if($tt->phanloai == 'Công trạng')
-                                    <span class="label label-sm label-success">Khen thưởng theo công trạng và thành tích</span>
-                                @elseif($tt->phanloai == 'Đợt')
-                                    <span class="label label-sm label-success">Khen thưởng theo đợt (hoặc chuyên đề)</span>
-                                @elseif($tt->phanloai == 'Đột xuất')
-                                    <span class="label label-sm label-success">Khen thưởng đột xuất</span>
-                                @elseif($tt->phanloai == 'Cống hiến')
-                                    <span class="label label-sm label-success">Khen thưởng quá trình cống hiến</span>
-                                @elseif($tt->phanloai == 'Niên hạn')
-                                    <span class="label label-sm label-success">Khen thưởng theo niên hạn</span>
+                                @if($tt->phanloai == 'Xã')
+                                    <span class="label label-sm label-success">Danh hiệu thi đua cấp Xã</span>
+                                @elseif($tt->phanloai == 'Huyện')
+                                    <span class="label label-sm label-success">Danh hiệu thi đua cấp Huyện</span>
+                                @elseif($tt->phanloai == 'Tỉnh')
+                                    <span class="label label-sm label-success">Danh hiệu thi đua cấp Tỉnh</span>
                                 @else
-                                    <span class="label label-sm label-success">Khen thưởng đối ngoại</span>
+                                    <span class="label label-sm label-success">Danh hiệu thi đua cấp Cơ sở</span>
                                 @endif
                             </td>
                             <td>
                                 @if(can('users','edit'))
-                                <a href="{{url('dmloaihinhkt/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                <a href="{{url('dmdanhhieutd/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                 @endif
                                 @if(session('admin')->sadmin == 'ssa')
                                     <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
@@ -178,7 +172,7 @@
     <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                {!! Form::open(['url'=>'dmloaihinhthuckt/delete','id' => 'frm_delete'])!!}
+                {!! Form::open(['url'=>'dmdanhhieutd/delete','id' => 'frm_delete'])!!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">Đồng ý xóa?</h4>

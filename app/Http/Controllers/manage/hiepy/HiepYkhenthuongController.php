@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\manage\hiepy;
 
-use App\dmloaihinhkt;
+use App\Model\manage\hiepy\hiepykhenthuong;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
-class DmloaihinhktController extends Controller
+class HiepYkhenthuongController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,17 +19,17 @@ class DmloaihinhktController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $inputs['maloaihinhkt'] = isset($inputs['maloaihinhkt']) ? $inputs['maloaihinhkt'] : '';
-            $inputs['phanloai'] = isset($inputs['phanloai']) ? $inputs['phanloai'] : '';
-            $model = dmloaihinhkt::all();
-            if($inputs['maloaihinhkt'] != '')
-                $model=$model->where('maloaihinhkt',$inputs['maloaihinhkt']);
-            if($inputs['phanloai'] != '')
-                $model = $model->where('phanloai',$inputs['phanloai']);
-            return view('system.dmloaihinhkt.index')
+            $inputs['mahiepy'] = isset($inputs['mahiepy']) ? $inputs['mahiepy'] : '';
+            //$inputs['phanloai'] = isset($inputs['phanloai']) ? $inputs['phanloai'] : '';
+            $model = hiepykhenthuong::all();
+            if($inputs['mahiepy'] != '')
+                $model=$model->where('mahiepy',$inputs['mahiepy']);
+            //if($inputs['phanloai'] != '')
+              //  $model = $model->where('phanloai',$inputs['phanloai']);
+            return view('manage.hiepy.index')
                 ->with('model', $model)
                 ->with('inputs', $inputs)
-                ->with('pageTitle', 'Danh sách danh mục loại hình khen thưởng');
+                ->with('pageTitle', 'Danh sách hiệp y khen thưởng');
 
         } else
             return view('errors.notlogin');
@@ -44,8 +44,8 @@ class DmloaihinhktController extends Controller
     {
         if (Session::has('admin')) {
             if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
-                return view('system.dmloaihinhkt.create')
-                    ->with('pageTitle', 'Tạo mới thông tin danh mục loại hình khen thưởng');
+                return view('manage.hiepy.create')
+                    ->with('pageTitle', 'Tạo mới thông tin hiệp y khen thưởng');
             }
         }
     }
@@ -60,10 +60,10 @@ class DmloaihinhktController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $model = new dmloaihinhkt();
+            $model = new hiepykhenthuong();
             $inputs['ttnguoitao'] = session('admin')->name.'('.session('admin')->username.')'. getDateTime(Carbon::now()->toDateTimeString());
             $model->create($inputs);
-            return redirect('dmloaihinhkt');
+            return redirect('hiepykhenthuong');
 
         } else {
             return view('errors.notlogin');
@@ -91,10 +91,10 @@ class DmloaihinhktController extends Controller
     {
         if (Session::has('admin')) {
 
-            $model = dmloaihinhkt::findOrFail($id);
-            return view('system.dmloaihinhkt.edit')
+            $model = hiepykhenthuong::findOrFail($id);
+            return view('manage.hiepy.edit')
                 ->with('model', $model)
-                ->with('pageTitle', 'Chỉnh sửa thông tin danh mục loại hình khen thưởng');
+                ->with('pageTitle', 'Chỉnh sửa thông tin hiệp y khen thưởng');
         } else
             return view('errors.notlogin');
     }
@@ -110,9 +110,9 @@ class DmloaihinhktController extends Controller
     {
         if (Session::has('admin')) {
             $input = $request->all();
-            $model = dmloaihinhkt::findOrFail($id);
+            $model = hiepykhenthuong::findOrFail($id);
             $model->update($input);
-            return redirect('dmloaihinhkt');
+            return redirect('hiepykhenthuong');
 
         } else {
             return view('errors.notlogin');
@@ -129,24 +129,36 @@ class DmloaihinhktController extends Controller
     {
         if (Session::has('admin')) {
             $id = $request->all()['iddelete'];
-            $model = dmloaihinhkt::findorFail($id);
+            $model = hiepykhenthuong::findorFail($id);
             $model->delete();
 
-            return redirect('dmloaihinhkt');
+            return redirect('hiepykhenthuong');
 
         } else
             return view('errors.notlogin');
     }
+    public function deleteyk(Request $request)
+    {
+        if (Session::has('admin')) {
+            $id = $request->all()['iddelete'];
+            $model = hiepykhenthuong::findorFail($id);
+            $inputs['ykien'] = "";
+            $model->update($inputs);
 
-    public function checkmaloaihinhkt(Request $request){
+            return redirect('hiepykhenthuong');
+
+        } else
+            return view('errors.notlogin');
+    }
+    public function checkmahiepy(Request $request){
         $result = array(
             'status' => 'fail',
             'message' => 'error',
         );
         $inputs = $request->all();
 
-        if (isset($inputs['mahinhthuckt'])) {
-            $model = dmloaihinhkt::where('maloaihinhkt', $inputs['mahinhthuckt'])->count();
+        if (isset($inputs['mahiepy'])) {
+            $model = hiepykhenthuong::where('mahiepy', $inputs['mahiepy'])->count();
             if ($model == 0) {
                 $result['status'] = 'success';
                 $result['message'] = 'ok';
