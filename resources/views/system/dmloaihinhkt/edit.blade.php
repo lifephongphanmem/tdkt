@@ -15,7 +15,7 @@
 
 
     <h3 class="page-title">
-        Thông tin danh mục hình thức khen thưởng<small> thêm mới</small>
+        Thông tin danh mục loại hình khen thưởng<small> chỉnh sửa</small>
     </h3>
     <!-- END PAGE HEADER-->
 
@@ -28,45 +28,48 @@
                 </div-->
                 <div class="portlet-body form">
                     <!-- BEGIN FORM-->
-                    {!! Form::open(['url'=>'dmhinhthuckt', 'id' => 'create_dmhinhthuckt', 'class'=>'horizontal-form']) !!}
+                    {!! Form::model($model, ['method' => 'PATCH', 'url'=>'dmloaihinhkt'. $model->id, 'class'=>'horizontal-form','id'=>'update_dmloaihinhthuckt','files'=>true,'enctype'=>'multipart/form-data']) !!}
                         <meta name="csrf-token" content="{{ csrf_token() }}" />
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Mã danh hiệu<span class="require">*</span></label>
-                                        <input type="text" class="form-control required" name="mahinhthuckt" id="mahinhthuckt" autofocus>
+                                        <label class="control-label">Mã danh hiệu</label>
+                                        {!!Form::text('maloaihinhkt', null, array('id' => 'maloaihinhkt','class' => 'form-control required', 'readonly'=>'readonly'))!!}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Tên danh hiệu<span class="require">*</span></label>
-                                        <input type="text" class="form-control required"  name="tenhinhthuckt" id="tenhinhthuckt">
+                                        {!!Form::text('tenloaihinhkt', null, array('id' => 'tenloaihinhkt','class' => 'form-control required','autofocus'))!!}
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Phân loại</label>
+                                    <select class="form-control" name="phanloai" id="phanloai">
+                                        <option value="Công trạng" {{($model->status == 'Công trạng' ? 'selected' : '')}}>Khen thưởng theo công trạng và thành tích</option>
+                                        <option value="Đợt" {{($model->status == 'Đợt' ? 'selected' : '')}}>Khen thưởng theo đợt (hoặc chuyên đề)</option>
+                                        <option value="Đột xuất" {{($model->status == 'Đột xuất' ? 'selected' : '')}}>Khen thưởng đột xuất</option>
+                                        <option value="Cống hiến" {{($model->status == 'Cống hiến' ? 'selected' : '')}}>Khen thưởng quá trình cống hiến</option>
+                                        <option value="Niên hạn" {{($model->status == 'Niên hạn' ? 'selected' : '')}}>Khen thưởng theo niên hạn</option>
+                                        <option value="Đối ngoại" {{($model->status == 'Đối ngoại' ? 'selected' : '')}}>Khen thưởng đối ngoại</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Phân loại</label>
-                                        <select class="form-control" name="phanloai" id="phanloai">
-                                            <option value="Xã" selected>Hình thức khen thưởng cấp Xã</option>
-                                            <option value="Huyện">Hình thức khen thưởng cấp Huyện</option>
-                                            <option value="Tỉnh">Hình thức khen thưởng cấp Tỉnh</option>
-                                            <option value="Trung ương">Hình thức khen thưởng cấp Trung ương</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
                                         <label class="control-label">Ghi chú</label>
-                                        <input type="text" class="form-control"  name="ghichu" id="ghichu">
+                                        {!!Form::text('ghichu', null, array('id' => 'ghichu','class' => 'form-control '))!!}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        </div>
+
                     <!-- END FORM-->
+                </div>
             </div>
             <div style="text-align: center">
                 <a href="{{url('dmhinhthuckt')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
@@ -80,40 +83,14 @@
     <script type="text/javascript">
         function validateForm(){
 
-            var validator = $("#create_dmhinhthuckt").validate({
+            var validator = $("#update_dmhinhthuckt").validate({
                 rules: {
-                    mahinhthuckt :"required",
                     tenhinhthuckt :"required",
-
                 },
                 messages: {
-                    mahinhthuckt :"Chưa nhập dữ liệu",
                     tenhinhthuckt :"Chưa nhập dữ liệu",
                 }
             });
         }
-    </script>
-    <script>
-        $('input[name="mahinhthuckt"]').change(function(){
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $.ajax({
-                type: 'GET',
-                url: '/checkmahinhthuckt',
-                data: {
-                    _token: CSRF_TOKEN,
-                    mahinhthuckt:$(this).val()
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    if(data.status != 'success') {
-                        toastr.error("Bạn cần nhập lại mã Hình thức khen thưởng", "Mã Hình thức khen thưởng nhập vào đã tồn tại!!!");
-                        $('input[name="mahinhthuckt"]').val('');
-                        $('input[name="mahinhthuckt"]').focus();
-                    }else
-                        toastr.success("Mã Hình thức khen thưởng sử dụng được!", "Thành công!");
-                }
-
-            });
-        });
     </script>
 @stop

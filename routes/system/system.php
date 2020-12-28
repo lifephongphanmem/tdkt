@@ -61,6 +61,10 @@ Route::get('checkmatieuchuandhtd','DmtieuchuandhtdController@checkmatieuchuandht
 Route::resource('dmhinhthuckt','DmhinhthucktController');
 Route::post('dmhinhthuckt/delete','DmhinhthucktController@destroy');
 Route::get('checkmahinhthuckt','DmhinhthucktController@checkmahinhthuckt');
+//Danh mục loại hình khen thưởng
+Route::resource('dmloaihinhkt','DmloaihinhktController');
+Route::post('dmloaihinhkt/delete','DmloaihinhktController@destroy');
+Route::get('checkmaloaihinhkt','DmloaihinhktController@checkmaloaihinhkt');
 
 
 ?>

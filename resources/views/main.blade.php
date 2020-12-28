@@ -357,10 +357,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                 @endif
 
                                 @if(session('admin')->level == 'T' || session('admin')->level == 'H')
-                                    <li><a href="{{url('users')}}">Quản lý hình thức TĐKT</a></li>
+                                    <li><a href="{{url('dmhinhthuckt')}}">Quản lý hình thức TĐKT</a></li>
                                 @endif
                                 @if(session('admin')->level == 'T' || session('admin')->level == 'H')
-                                    <li><a href="{{url('users')}}">Quản lý danh mục các loại hình TĐKT</a></li>
+                                    <li><a href="{{url('dmloaihinhkt')}}">Quản lý danh mục các loại hình TĐKT</a></li>
                                 @endif
                                 @if(session('admin')->level == 'T' || session('admin')->level == 'H')
                                     <li><a href="{{url('users')}}">Quản lý danh mục hình thức tổ chức TĐKT</a></li>

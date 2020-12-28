@@ -83,7 +83,7 @@
 
 @section('content')
     <h3 class="page-title">
-        Quản lý danh mục<small>&nbsp;hình thức khen thưởng</small>
+        Quản lý danh mục<small>&nbsp;loại hình khen thưởng</small>
     </h3>
     <!-- END PAGE HEADER-->
     <div class="row">
@@ -94,7 +94,7 @@
                     <div class="portlet-title">
                         <div class="caption"></div>
                         <div class="actions">
-                            <a href="{{url('dmhinhthuckt/create')}}" class="btn btn-default btn-sm">
+                            <a href="{{url('dmloaihinhkt')}}" class="btn btn-default btn-sm">
                             <i class="fa fa-plus"></i> Thêm mới</a>
                         </div>
                     </div>
@@ -104,16 +104,18 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label class="control-label">Mã hình thức</label>
-                            {!! Form::text('mahinhthuckt', $inputs['mahinhthuckt'], ['id' => 'mahinhthuckt', 'class' => 'form-control']) !!}
+                            {!! Form::text('maloaihinhkt', $inputs['maloaihinhkt'], ['id' => 'maloaihinhkt', 'class' => 'form-control']) !!}
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Phân loại</label>
                                 <select class="form-control" name="phanloai" id="phanloai">
-                                    <option value="Xã" {{($inputs['phanloai'] == 'Xã' ? 'selected' : '')}}>Hình thức khen thưởng cấp Xã</option>
-                                    <option value="Huyện" {{($inputs['phanloai'] == 'Huyện' ? 'selected' : '')}}>Hình thức khen thưởng cấp Huyện</option>
-                                    <option value="Tỉnh" {{($inputs['phanloai'] == 'Tỉnh' ? 'selected' : '')}}>Hình thức khen thưởng cấp Tỉnh</option>
-                                    <option value="Trung ương" {{($inputs['phanloai'] == 'Trung ương' ? 'selected' : '')}}>Hình thức khen thưởng cấp Trung ương</option>
+                                        <option value="Công trạng" {{($inputs['phanloai'] == 'Công trạng' ? 'selected' : '')}}>Khen thưởng theo công trạng và thành tích</option>
+                                        <option value="Đợt" {{($inputs['phanloai'] == 'Đợt' ? 'selected' : '')}}>Khen thưởng theo đợt (hoặc chuyên đề)</option>
+                                        <option value="Đột xuất" {{($inputs['phanloai'] == 'Đột xuất' ? 'selected' : '')}}>Khen thưởng đột xuất</option>
+                                        <option value="Cống hiến" {{($inputs['phanloai'] == 'Cống hiến' ? 'selected' : '')}}>Khen thưởng quá trình cống hiến</option>
+                                        <option value="Niên hạn" {{($inputs['phanloai'] == 'Niên hạn' ? 'selected' : '')}}>Khen thưởng theo niên hạn</option>
+                                        <option value="Đối ngoại" {{($inputs['phanloai'] == 'Đối ngoại' ? 'selected' : '')}}>Khen thưởng đối ngoại</option>
                                     <option value="" {{($inputs['phanloai'] == '' ? 'selected' : '')}}>--Phân loại hình thức--</option>
                                 </select>
                             </div>
@@ -124,8 +126,8 @@
                         <thead>
                         <tr>
                             <th style="text-align: center" width="2%">STT</th>
-                            <th style="text-align: center">Mã hình thức</th>
-                            <th style="text-align: center" width="50%">Tên hình thức KT</th>
+                            <th style="text-align: center">Mã loại hình</th>
+                            <th style="text-align: center" width="50%">Tên loại hình</th>
                             <th style="text-align: center" width="20%">Phân loại</th>
                             <th style="text-align: center" width="10%">Thao tác</th>
                         </tr>
@@ -134,22 +136,26 @@
                         @foreach($model as $key=>$tt)
                         <tr class="odd gradeX">
                             <td style="text-align: center">{{$key + 1}}</td>
-                            <td>{{$tt->mahinhthuckt}}</td>
-                            <td class="active">{{$tt->tenhinhthuckt}}</td>
+                            <td>{{$tt->maloaihinhthuckt}}</td>
+                            <td class="active">{{$tt->tenloaihinhthuckt}}</td>
                             <td style="text-align: center">
-                                @if($tt->phanloai == 'Xã')
-                                    <span class="label label-sm label-success">Hình thức khen thưởng cấp Xã</span>
-                                @elseif($tt->phanloai == 'Huyện')
-                                    <span class="label label-sm label-success">Hình thức khen thưởng cấp Huyện</span>
-                                @elseif($tt->phanloai == 'Tỉnh')
-                                    <span class="label label-sm label-success">Hình thức khen thưởng cấp Tỉnh</span>
+                                @if($tt->phanloai == 'Công trạng')
+                                    <span class="label label-sm label-success">Khen thưởng theo công trạng và thành tích</span>
+                                @elseif($tt->phanloai == 'Đợt')
+                                    <span class="label label-sm label-success">Khen thưởng theo đợt (hoặc chuyên đề)</span>
+                                @elseif($tt->phanloai == 'Đột xuất')
+                                    <span class="label label-sm label-success">Khen thưởng đột xuất</span>
+                                @elseif($tt->phanloai == 'Cống hiến')
+                                    <span class="label label-sm label-success">Khen thưởng quá trình cống hiến</span>
+                                @elseif($tt->phanloai == 'Niên hạn')
+                                    <span class="label label-sm label-success">Khen thưởng theo niên hạn</span>
                                 @else
-                                    <span class="label label-sm label-success">Hình thức khen thưởng cấp Trung ương</span>
+                                    <span class="label label-sm label-success">Khen thưởng đối ngoại</span>
                                 @endif
                             </td>
                             <td>
                                 @if(can('users','edit'))
-                                <a href="{{url('dmhinhthuckt/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                <a href="{{url('dmloaihinhkt/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                 @endif
                                 @if(session('admin')->sadmin == 'ssa')
                                     <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
@@ -172,7 +178,7 @@
     <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                {!! Form::open(['url'=>'dmhinhthuckt/delete','id' => 'frm_delete'])!!}
+                {!! Form::open(['url'=>'dmloaihinhthuckt/delete','id' => 'frm_delete'])!!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">Đồng ý xóa?</h4>

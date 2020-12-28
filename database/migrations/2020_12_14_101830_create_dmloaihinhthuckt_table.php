@@ -15,6 +15,13 @@ class CreateDmloaihinhthucktTable extends Migration
     {
         Schema::create('dmloaihinhthuckt', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('maloaihinhkt')->unique();
+            $table->string('tenloaihinhkt')->nullable();
+            $table->string('phanloai')->nullable();
+            $table->string('maxa')->nullable();
+            $table->string('mahuyen')->nullable();
+            $table->string('ghichu')->nullable();
+            $table->string('ttnguoitao')->nullable();
             $table->timestamps();
         });
     }
