@@ -15,7 +15,7 @@
 
 
     <h3 class="page-title">
-        Thông tin danh mục danh hiệu thi đua<small> chỉnh sửa</small>
+        Thông tin hiệp y khen thưởng<small> chỉnh sửa</small>
     </h3>
     <!-- END PAGE HEADER-->
 
@@ -28,32 +28,27 @@
                 </div-->
                 <div class="portlet-body form">
                     <!-- BEGIN FORM-->
-                    {!! Form::model($model, ['method' => 'PATCH', 'url'=>'dmdanhhieutd/'. $model->id, 'class'=>'horizontal-form','id'=>'update_dmdanhhieutd','files'=>true,'enctype'=>'multipart/form-data']) !!}
+                    {!! Form::model($model, ['method' => 'PATCH', 'url'=>'hiepykhenthuong/'. $model->id, 'class'=>'horizontal-form','id'=>'update_hiepykhenthuong','files'=>true,'enctype'=>'multipart/form-data']) !!}
                         <meta name="csrf-token" content="{{ csrf_token() }}" />
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Mã danh hiệu</label>
-                                        {!!Form::text('madanhhieu', null, array('id' => 'madanhhieu','class' => 'form-control required', 'readonly'=>'readonly'))!!}
+                                        <label class="control-label">Mã hiệp y</label>
+                                        {!!Form::text('mahiepy', null, array('id' => 'mahiepy','class' => 'form-control required', 'readonly'=>'readonly'))!!}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Tên danh hiệu<span class="require">*</span></label>
-                                        {!!Form::text('tendanhhieu', null, array('id' => 'tendanhhieu','class' => 'form-control required','autofocus'))!!}
+                                        <label class="control-label">Tên đối tượng<span class="require">*</span></label>
+                                        {!!Form::text('tendoituong', null, array('id' => 'tendoituong','class' => 'form-control required','autofocus'))!!}
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label">Phân loại</label>
-                                    <select class="form-control" name="phanloai" id="phanloai">
-                                        <option value="Xã" {{($model->status == 'Xã' ? 'selected' : '')}}>Danh hiệu thi đua cấp Xã</option>
-                                        <option value="Huyện" {{($model->status == 'Huyện' ? 'selected' : '')}}>Danh hiệu thi đua cấp Huyện</option>
-                                        <option value="Tỉnh" {{($model->status == 'Tỉnh' ? 'selected' : '')}}>Danh hiệu thi đua cấp Tỉnh</option>
-                                        <option value="Cơ sở" {{($model->status == 'Cơ sở' ? 'selected' : '')}}>Danh hiệu thi đua cấp Cơ sở</option>
-                                    </select>
+                                    <label class="control-label">Nội dung<span class="require">*</span></label>
+                                    {!!Form::text('noidung', null, array('id' => 'noidung','class' => 'form-control required'))!!}
                                 </div>
                             </div>
                             <div class="row">
@@ -70,7 +65,7 @@
                 </div>
             </div>
             <div style="text-align: center">
-                <a href="{{url('dmdanhhieutd')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                <a href="{{url('hiepykhenthuong')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                 <button type="reset" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Nhập lại</button>
                 <button type="submit" class="btn green" onclick="validateForm()"><i class="fa fa-check"></i> Cập nhật</button>
             </div>
@@ -81,12 +76,12 @@
     <script type="text/javascript">
         function validateForm(){
 
-            var validator = $("#update_dmdanhhieutd").validate({
+            var validator = $("#update_hiepykhenthuong").validate({
                 rules: {
-                    tendanhhieu :"required",
+                    tendoituong :"required",
                 },
                 messages: {
-                    tendanhhieu :"Chưa nhập dữ liệu",
+                    tendoituong :"Chưa nhập dữ liệu",
                 }
             });
         }

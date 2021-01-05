@@ -15,7 +15,7 @@
 
 
     <h3 class="page-title">
-        Thông tin danh mục danh hiệu thi đua<small> thêm mới</small>
+        Thông tin hiệp y khen thưởng<small> thêm mới</small>
     </h3>
     <!-- END PAGE HEADER-->
 
@@ -28,33 +28,28 @@
                 </div-->
                 <div class="portlet-body form">
                     <!-- BEGIN FORM-->
-                    {!! Form::open(['url'=>'dmdanhhieutd', 'id' => 'create_dmdanhhieutd', 'class'=>'horizontal-form']) !!}
+                    {!! Form::open(['url'=>'hiepykhenthuong', 'id' => 'create_hiepykhenthuong', 'class'=>'horizontal-form']) !!}
                         <meta name="csrf-token" content="{{ csrf_token() }}" />
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Mã danh hiệu<span class="require">*</span></label>
-                                        <input type="text" class="form-control required" name="madanhhieutd" id="madanhhieutd" autofocus>
+                                        <label class="control-label">Mã hiệp y<span class="require">*</span></label>
+                                        <input type="text" class="form-control required" name="mahiepy" id="mahiepy" autofocus>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Tên danh hiệu<span class="require">*</span></label>
-                                        <input type="text" class="form-control required"  name="tendanhhieutd" id="tendanhhieutd">
+                                        <label class="control-label">Tên đối tượng<span class="require">*</span></label>
+                                        <input type="text" class="form-control required"  name="tendoituong" id="tendoituong">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">Phân loại</label>
-                                        <select class="form-control" name="phanloai" id="phanloai">
-                                            <option value="Xã" selected>Danh hiệu thi đua cấp Xã</option>
-                                            <option value="Huyện">Danh hiệu thi đua cấp Huyện</option>
-                                            <option value="Tỉnh">Danh hiệu thi đua cấp Tỉnh</option>
-                                            <option value="Cơ sở">Danh hiệu thi đua cấp cơ sở</option>
-                                        </select>
+                                        <label class="control-label">Nội dung<span class="require">*</span></label>
+                                        <input type="text" class="form-control required"  name="noidung" id="noidung">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -69,7 +64,7 @@
                     <!-- END FORM-->
             </div>
             <div style="text-align: center">
-                <a href="{{url('dmdanhhieutd')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                <a href="{{url('hiepykhenthuong')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                 <button type="reset" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Nhập lại</button>
                 <button type="submit" class="btn green" onclick="validateForm()"><i class="fa fa-check"></i> Cập nhật</button>
             </div>
@@ -80,37 +75,37 @@
     <script type="text/javascript">
         function validateForm(){
 
-            var validator = $("#create_dmdanhhieutd").validate({
+            var validator = $("#create_hiepykhenthuong").validate({
                 rules: {
-                    madanhhieutd :"required",
-                    tendanhhieutd :"required",
+                    mahiepy :"required",
+                    tendoituong :"required",
 
                 },
                 messages: {
-                    madanhhieutd :"Chưa nhập dữ liệu",
-                    tendanhhieutd :"Chưa nhập dữ liệu",
+                    mahiepy :"Chưa nhập dữ liệu",
+                    tendoituong :"Chưa nhập dữ liệu",
                 }
             });
         }
     </script>
     <script>
-        $('input[name="madanhhieutd"]').change(function(){
+        $('input[name="mahiepy"]').change(function(){
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 type: 'GET',
-                url: '/checkmadanhhieutd',
+                url: '/checkmahiepy',
                 data: {
                     _token: CSRF_TOKEN,
-                    madanhhieutd:$(this).val()
+                    mahiepy:$(this).val()
                 },
                 dataType: 'JSON',
                 success: function (data) {
                     if(data.status != 'success') {
-                        toastr.error("Bạn cần nhập lại mã danh hiệu thi đua", "Mã danh hiệu thi đua nhập vào đã tồn tại!!!");
-                        $('input[name="madanhhieutd"]').val('');
-                        $('input[name="madanhhieutd"]').focus();
+                        toastr.error("Bạn cần nhập lại mã hiệp y khen thưởng", "Mã hiệp y khen thưởng nhập vào đã tồn tại!!!");
+                        $('input[name="mahiepy"]').val('');
+                        $('input[name="mahiepy"]').focus();
                     }else
-                        toastr.success("Mã danh hiệu thi đua sử dụng được!", "Thành công!");
+                        toastr.success("Mã hiệp y khen thưởng sử dụng được!", "Thành công!");
                 }
 
             });

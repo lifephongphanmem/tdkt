@@ -59,19 +59,25 @@
         function getId(id){
             document.getElementById("iddelete").value=id;
         }
+        function confirmDeleteyk(id) {
+            $('#frmDeleteyk').attr('action', "/deleteyk/" + id);
+        }
+        function getIdyk(id){
+            document.getElementById("iddeleteyk").value=id;
+        }
         $(function(){
-            $('#madanhhieutd').change(function() {
-                var current_path_url = '/dmdanhhieutd?';
-                var madanhhieutd = '&madanhhieutd='+$('#madanhhieutd').val();
+            $('#mahiepy').change(function() {
+                var current_path_url = '/hiepykhenthuong?';
+                var mahiepy = '&mahiepy='+$('#mahiepy').val();
                 var phanloai = '&phanloai='+$('#phanloai').val();
-                var url = current_path_url + madanhhieutd + phanloai;
+                var url = current_path_url + mahiepy + phanloai;
                 window.location.href = url;
             });
             $('#phanloai').change(function() {
-                var current_path_url = '/dmdanhhieutd?';
-                var madanhhieutd = '&madanhhieutd='+$('#madanhhieutd').val();
+                var current_path_url = '/hiepykhenthuong?';
+                var mahiepy = '&mahiepy='+$('#mahiepy').val();
                 var phanloai = '&phanloai='+$('#phanloai').val();
-                var url = current_path_url + madanhhieutd + phanloai;
+                var url = current_path_url + mahiepy + phanloai;
                 window.location.href = url;
             });
         })
@@ -94,7 +100,7 @@
                     <div class="portlet-title">
                         <div class="caption"></div>
                         <div class="actions">
-                            <a href="{{url('dmdanhhieutd/create')}}" class="btn btn-default btn-sm">
+                            <a href="{{url('hiepykhenthuong/create')}}" class="btn btn-default btn-sm">
                             <i class="fa fa-plus"></i> Thêm mới</a>
                         </div>
                     </div>
@@ -104,9 +110,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label class="control-label">Mã danh hiệu</label>
-                            {!! Form::text('madanhhieutd', $inputs['madanhhieutd'], ['id' => 'madanhhieutd', 'class' => 'form-control']) !!}
+                            {!! Form::text('mahiepy', $inputs['mahiepy'], ['id' => 'mahiepy', 'class' => 'form-control']) !!}
                         </div>
-                        <div class="col-md-6">
+                        <!--div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Phân loại</label>
                                 <select class="form-control" name="phanloai" id="phanloai">
@@ -117,16 +123,16 @@
                                     <option value="" {{($inputs['phanloai'] == '' ? 'selected' : '')}}>--Phân loại danh hiệu--</option>
                                 </select>
                             </div>
-                        </div>
+                        </div-->
                     </div>
                     <div class="portlet-body">
                         <table class="table table-striped table-bordered table-hover" id="sample_3">
                         <thead>
                         <tr>
                             <th style="text-align: center" width="2%">STT</th>
-                            <th style="text-align: center">Mã danh hiệu</th>
-                            <th style="text-align: center" width="50%">Tên danh hiệu</th>
-                            <th style="text-align: center" width="20%">Phân loại</th>
+                            <th style="text-align: center">Mã hiệp y</th>
+                            <th style="text-align: center" width="20%">Tên đối tượng</th>
+                            <th style="text-align: center" width="50%">Nội dung</th>
                             <th style="text-align: center" width="10%">Thao tác</th>
                         </tr>
                         </thead>
@@ -134,27 +140,19 @@
                         @foreach($model as $key=>$tt)
                         <tr class="odd gradeX">
                             <td style="text-align: center">{{$key + 1}}</td>
-                            <td>{{$tt->madanhhieutd}}</td>
-                            <td class="active">{{$tt->tendanhhieutd}}</td>
-                            <td style="text-align: center">
-                                @if($tt->phanloai == 'Xã')
-                                    <span class="label label-sm label-success">Danh hiệu thi đua cấp Xã</span>
-                                @elseif($tt->phanloai == 'Huyện')
-                                    <span class="label label-sm label-success">Danh hiệu thi đua cấp Huyện</span>
-                                @elseif($tt->phanloai == 'Tỉnh')
-                                    <span class="label label-sm label-success">Danh hiệu thi đua cấp Tỉnh</span>
-                                @else
-                                    <span class="label label-sm label-success">Danh hiệu thi đua cấp Cơ sở</span>
-                                @endif
-                            </td>
+                            <td>{{$tt->mahiepy}}</td>
+                            <td class="active">{{$tt->tendoituong}}</td>
+                            <td class="active">{{$tt->noidung}}</td>
                             <td>
                                 @if(can('users','edit'))
-                                <a href="{{url('dmdanhhieutd/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                <a href="{{url('hiepykhenthuong/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                 @endif
-                                @if(session('admin')->sadmin == 'ssa')
-                                    <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
-                                    Xóa</button>
-                                @endif
+                                <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
+                                Xóa</button>
+                                <button type="button" onclick="getIdyk('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
+                                    Ý kiến</button>
+                                <button type="button" onclick="getIdyk('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
+                                    Xóa ý kiến</button>
                             </td>
                         </tr>
                         @endforeach
@@ -169,7 +167,7 @@
     <!-- BEGIN DASHBOARD STATS -->
     <!-- END DASHBOARD STATS -->
     <div class="clearfix"></div>
-    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteyk-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 {!! Form::open(['url'=>'dmdanhhieutd/delete','id' => 'frm_delete'])!!}
@@ -178,6 +176,24 @@
                     <h4 class="modal-title">Đồng ý xóa?</h4>
                 </div>
                 <input type="hidden" name="iddelete" id="iddelete">
+                <div class="modal-footer">
+                    <button type="submit" class="btn blue" onclick="ClickDelete()">Đồng ý</button>
+                    <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div><div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {!! Form::open(['url'=>'hiepykhenthuong/deleteyk','id' => 'frm_deleteyk'])!!}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Đồng ý xóa ý kiến?</h4>
+                </div>
+                <input type="hidden" name="iddeleteyk" id="iddeleteyk">
                 <div class="modal-footer">
                     <button type="submit" class="btn blue" onclick="ClickDelete()">Đồng ý</button>
                     <button type="button" class="btn default" data-dismiss="modal">Hủy</button>

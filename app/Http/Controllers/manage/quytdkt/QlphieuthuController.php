@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\manage\hiepy;
+namespace App\Http\Controllers\manage\quytdkt;
 
-use App\Model\manage\hiepy\hiepykhenthuong;
+use App\Model\manage\quytdkt\qlphieuthu;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
-class HiepYkhenthuongController extends Controller
+class QlphieuthuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,17 +19,17 @@ class HiepYkhenthuongController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $inputs['mahiepy'] = isset($inputs['mahiepy']) ? $inputs['mahiepy'] : '';
+            $inputs['maphieuthu'] = isset($inputs['maphieuthu']) ? $inputs['maphieuthu'] : '';
             $inputs['phanloai'] = isset($inputs['phanloai']) ? $inputs['phanloai'] : '';
-            $model = hiepykhenthuong::all();
-            if($inputs['mahiepy'] != '')
-                $model=$model->where('mahiepy',$inputs['mahiepy']);
+            $model = qlphieuthu::all();
+            if($inputs['maphieuthu'] != '')
+                $model=$model->where('maphieuthu',$inputs['maphieuthu']);
             if($inputs['phanloai'] != '')
                 $model = $model->where('phanloai',$inputs['phanloai']);
-            return view('manage.hiepy.index')
+            return view('manage.quytdkt.thu.index')
                 ->with('model', $model)
                 ->with('inputs', $inputs)
-                ->with('pageTitle', 'Danh sách hiệp y khen thưởng');
+                ->with('pageTitle', 'Danh sách quản lý phiếu thu');
 
         } else
             return view('errors.notlogin');
@@ -44,8 +44,8 @@ class HiepYkhenthuongController extends Controller
     {
         if (Session::has('admin')) {
             if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
-                return view('manage.hiepy.create')
-                    ->with('pageTitle', 'Tạo mới thông tin hiệp y khen thưởng');
+                return view('manage.quytdkt.thu.create')
+                    ->with('pageTitle', 'Tạo mới thông tin phiếu thu quỹ');
             }
         }
     }
@@ -60,10 +60,10 @@ class HiepYkhenthuongController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $model = new hiepykhenthuong();
+            $model = new qlphieuthu();
             $inputs['ttnguoitao'] = session('admin')->name.'('.session('admin')->username.')'. getDateTime(Carbon::now()->toDateTimeString());
             $model->create($inputs);
-            return redirect('hiepykhenthuong');
+            return redirect('qldauvao');
 
         } else {
             return view('errors.notlogin');
@@ -91,10 +91,10 @@ class HiepYkhenthuongController extends Controller
     {
         if (Session::has('admin')) {
 
-            $model = hiepykhenthuong::findOrFail($id);
-            return view('manage.hiepy.edit')
+            $model = qlphieuthu::findOrFail($id);
+            return view('manage.quytdkt.thu.edit')
                 ->with('model', $model)
-                ->with('pageTitle', 'Chỉnh sửa thông tin hiệp y khen thưởng');
+                ->with('pageTitle', 'Chỉnh sửa thông tin phiếu thu');
         } else
             return view('errors.notlogin');
     }
@@ -110,9 +110,9 @@ class HiepYkhenthuongController extends Controller
     {
         if (Session::has('admin')) {
             $input = $request->all();
-            $model = hiepykhenthuong::findOrFail($id);
+            $model = qlphieuthu::findOrFail($id);
             $model->update($input);
-            return redirect('hiepykhenthuong');
+            return redirect('qldauvao');
 
         } else {
             return view('errors.notlogin');
@@ -129,36 +129,24 @@ class HiepYkhenthuongController extends Controller
     {
         if (Session::has('admin')) {
             $id = $request->all()['iddelete'];
-            $model = hiepykhenthuong::findorFail($id);
+            $model = qlphieuthu::findorFail($id);
             $model->delete();
 
-            return redirect('hiepykhenthuong');
+            return redirect('qldauvao');
 
         } else
             return view('errors.notlogin');
     }
-    public function deleteyk(Request $request)
-    {
-        if (Session::has('admin')) {
-            $id = $request->all()['iddelete'];
-            $model = hiepykhenthuong::findorFail($id);
-            $inputs['ykien'] = "";
-            $model->update($inputs);
 
-            return redirect('hiepykhenthuong');
-
-        } else
-            return view('errors.notlogin');
-    }
-    public function checkmahiepy(Request $request){
+    public function checkmaphieuthu(Request $request){
         $result = array(
             'status' => 'fail',
             'message' => 'error',
         );
         $inputs = $request->all();
 
-        if (isset($inputs['mahiepy'])) {
-            $model = hiepykhenthuong::where('mahiepy', $inputs['mahiepy'])->count();
+        if (isset($inputs['maphieuthu'])) {
+            $model = qlphieuthu::where('maphieuthu', $inputs['maphieuthu'])->count();
             if ($model == 0) {
                 $result['status'] = 'success';
                 $result['message'] = 'ok';
