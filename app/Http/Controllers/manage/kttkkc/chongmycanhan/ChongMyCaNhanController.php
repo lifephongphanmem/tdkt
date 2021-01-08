@@ -45,7 +45,6 @@ class ChongMyCaNhanController extends Controller
             $model = new ChongMyCaNhan();
             $model->create($inputs);
             return redirect('chongmycanhan');
-
         }else
             return view('errors.notlogin');
     }

@@ -32,7 +32,7 @@
         $(function(){
             $('#nam').change(function() {
                 var nam = '&nam='+$('#nam').val();
-                var url = '/kyniemchuong?'+nam;
+                var url = '/dangkytd?'+nam;
                 window.location.href = url;
             });
         });
@@ -42,7 +42,7 @@
 
 @section('content')
     <h3 class="page-title">
-        Danh sách<small>&nbsp;kỷ niệm chương (tỉnh Hà Bắc cũ)</small>
+        Danh sách<small>&nbsp;quốc tịch</small>
     </h3>
     <div class="row">
         <div class="col-md-12">
@@ -50,52 +50,31 @@
             <div class="portlet box">
                 <div class="portlet-title">
                     <div class="actions">
-                        <a href="{{url('kyniemchuong/create')}}" class="btn btn-default btn-sm">
+                        <a href="{{url('dmquoctich/create')}}" class="btn btn-default btn-sm">
                             <i class="fa fa-plus"></i> Thêm mới </a>
                     </div>
                 </div>
                 <hr>
                 <div class="portlet-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label style="font-weight: bold">Năm nhập hồ sơ khen thưởng</label>
-                                <select class="form-control" name="nam" id="nam">
-                                    <?php
-                                    $imax = date('Y') + 1;
-                                    $imin = date('Y') - 5;
-                                    ?>
-                                    @for($i = $imin; $i <= $imax;$i++)
-                                        <option value="{{$i}}" {{$i == $inputs['nam'] ? 'selected' : '' }}>Năm {{$i}}</option>
-                                    @endfor
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                     <div class="portlet-body">
                         <table class="table table-striped table-bordered table-hover" id="sample_3">
                             <thead>
                             <tr>
                                 <th style="text-align: center" width="2%">STT</th>
-                                <th style="text-align: center" width="12%">Loại khen thưởng</th>
-                                <th style="text-align: center" width="12%">Danh hiệu khen thưởng</th>
-                                <th style="text-align: center" width="5%">Số quyết định/Số được duyệt</th>
-                                <th style="text-align: center" width="5%">Thời gian tham gia kháng chiến</th>
-                                <th style="text-align: center" width="8%">Loại hồ sơ kháng chiến</th>
-                                <th style="text-align: center" width="22%">Thao tác</th>
+                                <th style="text-align: center" width="12%">Mã quốc tịch</th>
+                                <th style="text-align: center" width="12%">Tên quốc tịch</th>
+                                <th style="text-align: center" width="15%">Ghi chú</th>
+                                <th style="text-align: center" width="10%">Thao tác</th>
                             </tr>
                             </thead>
                             @foreach($model as $key => $tt)
                                 <tr>
                                     <td style="text-align: center">{{$key+1}}</td>
-                                    <td>{{$tt->loaikt}}</td>
-                                    <td>{{$tt->dhkt}}</td>
-                                    <td class="active">Số hợp đồng: {{$tt->soqd}} <br> Số được duyệt: {{$tt->sodd}}</td>
-                                    <td style="text-align: center">{{getDayVn($tt->tgiantgkc)}}</td>
-                                    <td style="text-align: center">{{$tt->loaihskc}}</td>
+                                    <td>{{$tt->maqt}}</td>
+                                    <td class="active">{{$tt->tenqt}}</td>
+                                    <td>{{$tt->ghichu}}</td>
                                     <td style="text-align: center">
-                                        <a href="{{url('kyniemchuong/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
-                                        <a href="{{url('kyniemchuong/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                        <a href="{{url('dmquoctich/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                         <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
                                             Xóa</button>
                                     </td>
@@ -107,14 +86,16 @@
                 <!-- END EXAMPLE TABLE PORTLET-->
             </div>
         </div>
+
         <!-- BEGIN DASHBOARD STATS -->
 
         <!-- END DASHBOARD STATS -->
         <div class="clearfix"></div>
+
         <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    {!! Form::open(['url'=>'kyniemchuong/delete','id' => 'frm_delete'])!!}
+                    {!! Form::open(['url'=>'dmquoctich/delete','id' => 'frm_delete'])!!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 class="modal-title">Đồng ý xóa?</h4>

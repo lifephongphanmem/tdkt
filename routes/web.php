@@ -10,6 +10,7 @@ include('system/system.php');
 
 //Manage
 include('manage/kttkkc.php');
+include('manage/ktcaccap.php');
 include('manage/hiepy.php');
 //End Manage
 

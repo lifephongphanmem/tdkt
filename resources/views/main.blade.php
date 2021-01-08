@@ -365,6 +365,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                 @if(session('admin')->level == 'T' || session('admin')->level == 'H')
                                     <li><a href="{{url('users')}}">Quản lý danh mục hình thức tổ chức TĐKT</a></li>
                                 @endif
+                                @if(session('admin')->level == 'T' || session('admin')->level == 'H')
+                                    <li><a href="{{url('dmquoctich')}}">Quản lý danh mục quốc tịch</a></li>
+                                @endif
                             </ul>
                         </li>
                 @endif

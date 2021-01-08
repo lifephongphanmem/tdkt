@@ -65,6 +65,8 @@ Route::get('checkmahinhthuckt','DmhinhthucktController@checkmahinhthuckt');
 Route::resource('dmloaihinhkt','DmloaihinhktController');
 Route::post('dmloaihinhkt/delete','DmloaihinhktController@destroy');
 Route::get('checkmaloaihinhkt','DmloaihinhktController@checkmaloaihinhkt');
-
-
+//Danh mục quốc tịch
+Route::resource('dmquoctich','DmQuocTichController');
+Route::post('dmquoctich/delete','DmQuocTichController@delete');
+Route::get('checkmaqt','DmQuocTichController@checkmaqt');
 ?>

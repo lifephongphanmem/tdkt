@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="vi">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{{$pageTitle}}</title>
@@ -60,7 +61,7 @@
     <div class="col-md-12">
         <table cellspacing="0" cellpadding="0" border="0" style="margin: 10px auto; border-collapse: collapse;font:normal 16px Times, serif;" >
             <tr>
-                <th style="text-transform: uppercase">Danh sách kỷ niệm chương (tỉnh Hà Bắc cũ)</td>
+                <th style="text-transform: uppercase">DANH SÁCH HỒ SƠ THI ĐUA</td>
             </tr>
         </table>
     </div>
@@ -69,51 +70,79 @@
     <div class="col-md-12">
         <table cellspacing="0" cellpadding="0" border="0" style="margin: 10px auto;padding-left: 10px; border-collapse: collapse;font:normal 16px Times, serif; text-align: left" >
             <tr>
-                <th  width=""> Thông tin khen thưởng </td>
+                <th  width=""> Thông tin đăng ký thi đua </td>
             </tr>
             <tr>
-                <th width="30%" style="padding-left: 50px;">Loại khen thưởng: </td>
-                <td style="padding-left: 100px;"> {{$model->loaikt}} </td>
+                <th width="30%" style="padding-left: 50px;">Kí hiệu danh hiệu thi đua: </td>
+                <td style="padding-left: 100px;"> {{$model->kihieudhtd}} </td>
             </tr>
             <tr>
-                <th width="30%" style="padding-left: 50px;">Danh hiệu khen thưởng: </td>
-                <td style="padding-left: 100px;"> {{$model->dhkt}} </td>
+                <th width="30%" style="padding-left: 50px;">Danh hiệu thi đua: </td>
+                <td style="padding-left: 100px;"> {{$model->tendanhhieutd}} </td>
+            </tr>
+            <tr>
+                <th width="30%" style="padding-left: 50px;">Hình thức khen thưởng: </td>
+                <td style="padding-left: 100px;"> {{$model->tenhinhthuckt}} </td>
+            </tr>
+            <tr>
+                <th width="30%" style="padding-left: 50px;">Tên đối tượng được khen: </td>
+                <td style="padding-left: 100px;"> {{$model->tendtkt}} </td>
+            </tr>
+            <tr>
+                <th width="30%" style="padding-left: 50px;">Phụ cấp lãnh đạo: </td>
+                <td style="padding-left: 100px;"> {{$model->phucapld}} </td>
+            </tr>
+            <tr>
+                <th width="30%" style="padding-left: 50px;">Chức danh lãnh đạo: </td>
+                <td style="padding-left: 100px;"> {{$model->chucdanhld}} </td>
+            </tr>
+            <tr>
+                <th width="30%" style="padding-left: 50px;">Chức vụ: </td>
+                <td style="padding-left: 100px;"> {{$model->chucvu}} </td>
+            </tr>
+            <tr>
+                <th width="30%" style="padding-left: 50px;">Đơn vị công tác hoặc Địa chỉ: </td>
+                <td style="padding-left: 100px;"> {{$model->dvdcct}} </td>
             </tr>
             <tr>
                 <th width="30%" style="padding-left: 50px;">Số quyết định: </td>
                 <td style="padding-left: 100px;"> {{$model->soqd}} </td>
             </tr>
             <tr>
-                <th width="30%" style="padding-left: 50px;">Nơi trình khen: </td>
-                <td style="padding-left: 100px;"> {{$model->noitrkhen}} </td>
+                <th width="30%" style="padding-left: 50px;">Năm: </td>
+                <td style="padding-left: 100px;"> {{$model->nam}} </td>
             </tr>
             <tr>
-                <th width="30%" style="padding-left: 50px;">Số được duyệt: </td>
-                <td style="padding-left: 100px;"> {{$model->sodd}} </td>
+                <th width="30%" style="padding-left: 50px;">Ngày ký: </td>
+                <td style="padding-left: 100px;"> {{getDayVn($model->ngayky)}} </td>
+            </tr>
+            <tr>
+                <th width="30%" style="padding-left: 50px;">Người ký: </td>
+                <td style="padding-left: 100px;"> {{$model->nguoiky}} </td>
+            </tr>
+            <tr>
+                <th width="30%" style="padding-left: 50px;">Loại hình khen thưởng: </td>
+                <td style="padding-left: 100px;"> {{$model->tenloaihinhkt}} </td>
             </tr>
             <tr>
                 <th width="30%" style="padding-left: 50px;">Ngày tháng năm sinh: </td>
                 <td style="padding-left: 100px;"> {{getDayVn($model->namsinh)}} </td>
             </tr>
             <tr>
-                <th width="30%" style="padding-left: 50px;">Chính quán: </td>
+                <th width="30%" style="padding-left: 50px;">Chính quán (Nguyên quán): </td>
                 <td style="padding-left: 100px;"> {{$model->chinhquan}} </td>
             </tr>
             <tr>
-                <th width="30%" style="padding-left: 50px;">Chức vụ, chỗ ở hiện nay: </td>
-                <td style="padding-left: 100px;"> {{$model->cvchohn}} </td>
+                <th width="30%" style="padding-left: 50px;">Trú quán: </td>
+                <td style="padding-left: 100px;"> {{$model->truquan}} </td>
             </tr>
             <tr>
-                <th width="30%" style="padding-left: 50px;">Loại hồ sơ kháng chiến(theo phần mềm cũ): </td>
-                <td style="padding-left: 100px;"> {{$model->loaihskc}} </td>
+                <th width="30%" style="padding-left: 50px;">Tính chất tặng: </td>
+                <td style="padding-left: 100px;"> {{$model->tctang}} </td>
             </tr>
             <tr>
-                <th width="30%" style="padding-left: 50px;">Thời gian tham gia kháng chiến: </td>
-                <td style="padding-left: 100px;"> {{getDayVn($model->tgiantgkc)}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Thời gian kháng chiến quy đổi: </td>
-                <td style="padding-left: 100px;"> {{getDayVn($model->tgiankcqd)}} </td>
+                <th width="30%" style="padding-left: 50px;">Quốc tịch: </td>
+                <td style="padding-left: 100px;"> {{$model->tenqt}} </td>
             </tr>
             <tr>
                 <th width="30%" style="padding-left: 50px;">Ghi chú: </td>
