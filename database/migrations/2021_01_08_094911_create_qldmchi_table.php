@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQlphieuthuTable extends Migration
+class CreateQldmchiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateQlphieuthuTable extends Migration
      */
     public function up()
     {
-        Schema::create('qlphieuthu', function (Blueprint $table) {
+        Schema::create('qldmchi', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('maphieuthu')->unique();
-            $table->date('ngaythang')->nullable();
+            $table->string('madmchi')->unique();
             $table->string('noidung')->nullable();
             $table->string('phanloai')->nullable();
-            $table->string('nguonhinhthanh')->nullable();
             $table->double('sotien')->nullable();
             $table->string('maxa')->nullable();
             $table->string('mahuyen')->nullable();
@@ -36,6 +34,6 @@ class CreateQlphieuthuTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('qlphieuthu');
+        Schema::dropIfExists('qldmchi');
     }
 }

@@ -182,7 +182,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Ngày tháng năm sinh<span class="require">*</span></label>
-                                {!! Form::input('date', 'namsinh', null, array('id' => 'namsinh', 'class' => 'form-control', 'required'))!!}
+                                {!! Form::input('date', 'namsinh', null, array('id' => 'namsinh', 'class' => 'form-control'))!!}
                                 @if ($errors->has('namsinh'))
                                     <em class="invalid">{{ $errors->first('namsinh') }}</em>
                                 @endif

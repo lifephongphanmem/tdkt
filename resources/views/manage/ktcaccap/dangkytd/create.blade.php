@@ -205,7 +205,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Chức danh lãnh đạo<span class="require">*</span></label>
-                                {!!Form::text('chucdanhld',null, array('id' => 'chucdanhld','class' => 'form-control required'))!!}
+                                {!!Form::text('chucdanhld',null, array('id' => 'chucdanhld','class' => 'form-control '))!!}
                                 @if ($errors->has('chucdanhld'))
                                     <em class="invalid">{{$errors->first('chucdanhld') }}</em>
                                 @endif
@@ -216,7 +216,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Chức vụ<span class="require">*</span></label>
-                                {!!Form::text('chucvu',null, array('id' => 'chucvu','class' => 'form-control required'))!!}
+                                {!!Form::text('chucvu',null, array('id' => 'chucvu','class' => 'form-control '))!!}
                                 @if ($errors->has('chucvu'))
                                     <em class="invalid">{{$errors->first('chucvu') }}</em>
                                 @endif
@@ -225,7 +225,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Đơn vị công tác hoặc Địa chỉ<span class="require">*</span></label>
-                                {!!Form::text('dvdcct',null, array('id' => 'dvdcct','class' => 'form-control required'))!!}
+                                {!!Form::text('dvdcct',null, array('id' => 'dvdcct','class' => 'form-control '))!!}
                                 @if ($errors->has('dvdcct'))
                                     <em class="invalid">{{$errors->first('dvdcct') }}</em>
                                 @endif
@@ -236,7 +236,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="control-label">Số quyết định<span class="require">*</span></label>
-                                {!!Form::text('soqd',null, array('id' => 'soqd','class' => 'form-control required'))!!}
+                                {!!Form::text('soqd',null, array('id' => 'soqd','class' => 'form-control '))!!}
                                 @if ($errors->has('soqd'))
                                     <em class="invalid">{{$errors->first('soqd') }}</em>
                                 @endif
@@ -254,7 +254,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Ngày ký<span class="require">*</span></label>
-                                {!! Form::input('date', 'ngayky', null, array('id' => 'ngayky', 'class' => 'form-control', 'required'))!!}
+                                {!! Form::input('date', 'ngayky', null, array('id' => 'ngayky', 'class' => 'form-control', )!!}
                                 @if ($errors->has('ngayky'))
                                     <em class="invalid">{{ $errors->first('ngayky') }}</em>
                                 @endif
@@ -265,7 +265,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Người ký<span class="require">*</span></label>
-                                {!!Form::text('nguoiky',null, array('id' => 'nguoiky','class' => 'form-control required'))!!}
+                                {!!Form::text('nguoiky',null, array('id' => 'nguoiky','class' => 'form-control '))!!}
                                 @if ($errors->has('nguoiky'))
                                     <em class="invalid">{{$errors->first('nguoiky') }}</em>
                                 @endif
@@ -286,7 +286,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Thành tích khen<span class="require">*</span></label>
-                                {!!Form::text('thanhtichkhen',null, array('id' => 'thanhtichkhen','class' => 'form-control required'))!!}
+                                {!!Form::text('thanhtichkhen',null, array('id' => 'thanhtichkhen','class' => 'form-control '))!!}
                                 @if ($errors->has('thanhtichkhen'))
                                     <em class="invalid">{{$errors->first('thanhtichkhen') }}</em>
                                 @endif

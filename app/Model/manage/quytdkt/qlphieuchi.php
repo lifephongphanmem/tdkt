@@ -4,16 +4,15 @@ namespace App\Model\manage\quytdkt;
 
 use Illuminate\Database\Eloquent\Model;
 
-class qlphieuthu extends Model
+class qlphieuchi extends Model
 {
-    protected $table = 'qlphieuthu';
+    protected $table = 'qlphieuchi';
     protected $fillable = [
         'id',
-        'maphieuthu',
+        'maphieuchi',
         'ngaythang',
         'noidung',
         'phanloai',
-        'nguonhinhthanh',
         'sotien',
         'maxa',
         'mahuyen',
