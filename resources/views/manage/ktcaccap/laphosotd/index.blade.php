@@ -122,24 +122,22 @@
                                     @endif
                                     <td style="text-align: center">
                                         <a href="{{url('laphosotd/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
-                                        <a href="{{url('laphosotd/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+
                                         @if($tt->trangthai == 'CC')
                                             <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
                                                 Xóa</button>
                                         @endif
-                                        {{--@if($tt->trangthai == 'CC' || $tt->trangthai == 'BTL')
-                                            <a href="{{url('laphosotd/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                        @if($tt->trangthai == 'CC' || $tt->trangthai == 'BTL')
+                                            <!--a href="{{url('laphosotd/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a-->
                                             <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
                                                 Chuyển</button>
+                                            <a href="{{url('laphosotd/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                         @endif
                                         @if($tt->trangthai == 'BTL')
                                             <button type="button" onclick="viewLiDo('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#lydo-show" data-toggle="modal"><i class="fa fa-archive"></i>&nbsp;
                                                 Lí do</button>
                                         @endif
-                                        @if($tt->trangthai == 'CC')
-                                            <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
-                                                Xóa</button>
-                                        @endif--}}
+
                                     </td>
                                 </tr>
                             @endforeach

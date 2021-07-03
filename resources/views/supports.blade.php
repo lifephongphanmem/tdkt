@@ -62,7 +62,7 @@
 							</td>
 							<td>
 								<a href="" class="primary-link">Tạ Đình Hữu</a>
-							</td>php artisan make:migration create_dmdanhhieutd_table --create=dmdanhhieutd
+							</td>
 							<td style="text-align: center">
 								<span class="bold theme-font">0917 179993</span>
 							</td>

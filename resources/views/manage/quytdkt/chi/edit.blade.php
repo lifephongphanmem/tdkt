@@ -35,7 +35,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Mã phiếu chi</label>
-                                        {!!Form::text('maphieuchi', null, array('id' => 'maphieuchi','class' => 'form-control required', 'readonly'=>'readonly'))!!}
+                                        {!!Form::text('maphieu', null, array('id' => 'maphieu','class' => 'form-control required', 'readonly'=>'readonly'))!!}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -60,13 +60,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Số tiền</label>
                                     {!!Form::text('sotien', null, array('id' => 'sotien','class' => 'form-control','data-mask'=>'fdecimal'))!!}
                                 </div>
                             </div>
-                            <div class="row">
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Ghi chú</label>
@@ -101,4 +102,6 @@
             });
         }
     </script>
+    @include('includes.script.create-header-scripts')
+    @include('includes.script.inputmask-ajax-scripts')
 @stop

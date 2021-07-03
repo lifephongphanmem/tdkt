@@ -60,18 +60,18 @@
             document.getElementById("iddelete").value=id;
         }
         $(function(){
-            $('#maphieuchi').change(function() {
+            $('#maphieu').change(function() {
                 var current_path_url = '/qlchihdtdkt?';
-                var maphieuchi = '&maphieuchi='+$('#maphieuchi').val();
+                var maphieu = '&maphieu='+$('#maphieu').val();
                 var phanloai = '&phanloai='+$('#phanloai').val();
-                var url = current_path_url + maphieuchi + phanloai;
+                var url = current_path_url + maphieu + phanloai;
                 window.location.href = url;
             });
             $('#phanloai').change(function() {
                 var current_path_url = '/qlchihdtdkt?';
-                var maphieuchi = '&maphieuchi='+$('#maphieuchi').val();
+                var maphieu = '&maphieu='+$('#maphieu').val();
                 var phanloai = '&phanloai='+$('#phanloai').val();
-                var url = current_path_url + maphieuchi + phanloai;
+                var url = current_path_url + maphieu + phanloai;
                 window.location.href = url;
             });
         })
@@ -104,7 +104,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label class="control-label">Mã phiếu thu</label>
-                            {!! Form::text('maphieuchi', $inputs['maphieuchi'], ['id' => 'maphieuchi', 'class' => 'form-control']) !!}
+                            {!! Form::text('maphieu', $inputs['maphieu'], ['id' => 'maphieu', 'class' => 'form-control']) !!}
                         </div>
                         <!--div class="col-md-6">
                             <div class="form-group">
@@ -118,6 +118,7 @@
                                 </select>
                             </div>
                         </div-->
+                    </div>
                     </div>
                     <div class="portlet-body">
                         <table class="table table-striped table-bordered table-hover" id="sample_3">
@@ -135,10 +136,10 @@
                         @foreach($model as $key=>$tt)
                         <tr class="odd gradeX">
                             <td style="text-align: center">{{$key + 1}}</td>
-                            <td>{{$tt->maphieuchi}}</td>
+                            <td>{{$tt->maphieu}}</td>
                             <td class="active">{{$tt->ngaythang}}</td>
                             <td class="active">{{$tt->noidung}}</td>
-                            <td class="active">{{dinhdangso($tt->sotien)}}</td>
+                            <td style="text-align: right" class="active">{{dinhdangso($tt->sotien)}}</td>
                             <td>
                                 @if(can('users','edit'))
                                 <a href="{{url('qlchihdtdkt/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>

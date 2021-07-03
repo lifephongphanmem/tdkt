@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\manage\quytdkt;
 
+use App\Model\manage\quytdkt\qlphieuchi;
 use App\Model\manage\quytdkt\qlphieuthu;
+use App\Model\manage\quytdkt\qlphieuthuchi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
@@ -28,7 +30,7 @@ class BaocaoquyController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $model = qlphieuthu::all();
+            $model = qlphieuthuchi::where('loaiphieu','PT')->get();
             return view('manage.quytdkt.baocaoth.soquythu')
                 ->with('model', $model)
                 ->with('inputs', $inputs)
@@ -41,7 +43,7 @@ class BaocaoquyController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $model = qlphieuthu::all();
+            $model = qlphieuthuchi::where('loaiphieu','PC')->get();
             return view('manage.quytdkt.baocaoth.soquychi')
                 ->with('model', $model)
                 ->with('inputs', $inputs)
@@ -51,6 +53,19 @@ class BaocaoquyController extends Controller
             return view('errors.notlogin');
     }
 
+    public function soquythuchi(Request $request)
+    {
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $model = qlphieuthuchi::orderby('ngaythang')->get();
+            return view('manage.quytdkt.baocaoth.soquythuchi')
+                ->with('model', $model)
+                ->with('inputs', $inputs)
+                ->with('pageTitle', 'Sổ quỹ các khoản thu, chi');
+
+        } else
+            return view('errors.notlogin');
+    }
     /**
      * Show the form for creating a new resource.
      *

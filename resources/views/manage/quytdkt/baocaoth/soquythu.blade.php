@@ -49,13 +49,18 @@
             <tr>
                 <td style="text-align: center">{{$key+1}}</td>
                 <td style="text-align: center">{{$tt->ngaythang}}</td>
-                <td class="active" style="font-weight: bold">{{$tt->maphieuthu}}</td>
+                <td class="active" style="font-weight: bold">{{$tt->maphieu}}</td>
                 <td>{{$tt->noidung}}</td>
                 <td style="text-align: right;font-weight: bold">{{dinhdangso($tt->sotien)}}</td>
                 <td ></td>
             </tr>
         @endforeach
-
+        <tr>
+            <td style="text-align: center"></td>
+            <td colspan="3" style="text-align: center; font-weight: bold">Tổng cộng</td>
+            <td style="text-align: right;font-weight: bold">{{dinhdangso($model->sum('sotien'))}}</td>
+            <td ></td>
+        </tr>
     </tbody>
 </table>
 <table width="96%" border="0" cellspacing="0" height cellpadding="0" style="margin: 20px auto;text-align: center; height:200px">

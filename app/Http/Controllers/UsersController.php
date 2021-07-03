@@ -133,10 +133,12 @@ class UsersController extends Controller
                 if(session('admin')->level == 'T' || session('admin')->level == 'H') {
                     $inputs = $request->all();
                     $inputs['level'] = isset($inputs['level']) ? $inputs['level'] : '';
+                    /*
                     $model = Users::where('level', $inputs['level'])
-                        ->orderBy('id', 'desc');
+                        ->orderBy('id', 'desc');*/
+                    $model = Users::all();
                     $districts = District::all();
-                    $inputs['mahuyen'] = isset($inputs['mahuyen']) ? $inputs['mahuyen'] : $districts->first()->mahuyen;
+                    /*/$inputs['mahuyen'] = isset($inputs['mahuyen']) ? $inputs['mahuyen'] : $districts->first()->mahuyen;
                     if($inputs['level'] == 'X'){
                         if(session('admin')->level == 'H')
                             $inputs['mahuyen'] = session('admin')->mahuyen;
@@ -144,7 +146,7 @@ class UsersController extends Controller
                     }
 
                     $model = $model->get();
-
+*/
                     $index_unset = 0;
                     foreach ($model as $user) {
                         if ($user->username == 'minhtran') {

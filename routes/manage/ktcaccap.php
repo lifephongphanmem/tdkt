@@ -4,7 +4,7 @@ Route::get('/dangkytd/lydo','manage\ktcaccap\DangKyTdController@lydo');
 Route::resource('dangkytd','manage\ktcaccap\DangKyTdController');
 Route::post('dangkytd/delete','manage\ktcaccap\DangKyTdController@delete');
 Route::post('dangkytd/trans','manage\ktcaccap\DangKyTdController@trans');
-Route::get('checkkihieu','manage\ktcaccap\DangKyTdController@checkkihieu');
+Route::get('/dangkytd/checkkihieu','manage\ktcaccap\DangKyTdController@checkkihieu');
 
 //duyetdktd
 Route::get('/duyetdktd/lydo','manage\ktcaccap\DangKyTdXdController@lydo');
@@ -34,3 +34,9 @@ Route::get('/chuyenhosocaptren/lydo','manage\ktcaccap\ChuyenHoSoCapTrenControlle
 Route::resource('chuyenhosocaptren','manage\ktcaccap\ChuyenHoSoCapTrenController');
 Route::post('chuyenhosocaptren/back','manage\ktcaccap\ChuyenHoSoCapTrenController@back');
 Route::post('chuyenhosocaptren/trans','manage\ktcaccap\ChuyenHoSoCapTrenController@trans');
+
+//duyethosocapduoi
+Route::get('/duyethosocapduoi/lydo','manage\ktcaccap\DuyetHoSoCapDuoiController@lydo');
+Route::resource('duyethosocapduoi','manage\ktcaccap\DuyetHoSoCapDuoiController');
+Route::post('duyethosocapduoi/get','manage\ktcaccap\DuyetHoSoCapDuoiController@get');
+Route::post('duyethosocapduoi/back','manage\ktcaccap\DuyetHoSoCapDuoiController@back');

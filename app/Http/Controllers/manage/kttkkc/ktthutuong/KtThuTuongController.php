@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\manage\kttkkc\ktthutuong;
 
+use App\dmdanhhieutd;
+use App\dmloaihinhkt;
 use App\Http\Requests\manage\KtThuTuongRequest;
 use App\Model\manage\kttkkc\ktthutuong\KtThuTuong;
 use Illuminate\Http\Request;
@@ -13,12 +15,16 @@ class KtThuTuongController extends Controller
     public function index(Request $request){
         if(Session::has('admin')){
             $inputs = $request->all();
+            $model_lh = dmloaihinhkt::select('maloaihinhkt','tenloaihinhkt')->get();
+            $model_dh = dmdanhhieutd::select('madanhhieutd','tendanhhieutd')->get();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
             $model = KtThuTuong::whereYear('ngaynhap',$inputs['nam'])
                 ->get();
             return view('manage.kttkkc.ktthutuong.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)
+                ->with('model_dh', $model_dh)
+                ->with('model_lh', $model_lh)
                 ->with('pageTitle','Danh sách bằng khen thủ tướng (tỉnh Hà Bắc cũ)');
         }else
             return view('errors.notlogin');
@@ -76,8 +82,12 @@ class KtThuTuongController extends Controller
     public function show($id){
         if(Session::has('admin')) {
             $model = KtThuTuong::findOrFail($id);
+            $model_lh = dmloaihinhkt::select('maloaihinhkt','tenloaihinhkt')->get();
+            $model_dh = dmdanhhieutd::select('madanhhieutd','tendanhhieutd')->get();
             return view('manage.kttkkc.ktthutuong.show')
                 ->with('model', $model)
+                ->with('model_dh', $model_dh)
+                ->with('model_lh', $model_lh)
                 ->with('pageTitle', 'Danh sách bằng khen thủ tướng (tỉnh Hà Bắc cũ)');
         }else
             return view('errors.notlogin');

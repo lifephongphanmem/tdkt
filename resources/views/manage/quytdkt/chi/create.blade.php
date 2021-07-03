@@ -35,7 +35,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Mã phiếu chi<span class="require">*</span></label>
-                                        <input type="text" class="form-control required" name="maphieuchi" id="maphieuchi" autofocus>
+                                        <input type="text" class="form-control required" name="maphieu" id="maphieu" autofocus>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -92,33 +92,33 @@
 
             var validator = $("#create_qlchihdtdkt").validate({
                 rules: {
-                    maphieuchi :"required",
+                    maphieu :"required",
                     noidung :"required",
 
                 },
                 messages: {
-                    maphieuchi :"Chưa nhập dữ liệu",
+                    maphieu :"Chưa nhập dữ liệu",
                     noidung :"Chưa nhập dữ liệu",
                 }
             });
         }
     </script>
     <script>
-        $('input[name="maphieuchi"]').change(function(){
+        $('input[name="maphieu"]').change(function(){
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 type: 'GET',
-                url: '/checkmaphieuchi',
+                url: '/checkmaphieu',
                 data: {
                     _token: CSRF_TOKEN,
-                    maphieuchi:$(this).val()
+                    maphieu:$(this).val()
                 },
                 dataType: 'JSON',
                 success: function (data) {
                     if(data.status != 'success') {
                         toastr.error("Bạn cần nhập lại mã phiếu chi", "Mã phiếu chi nhập vào đã tồn tại!!!");
-                        $('input[name="maphieuchi"]').val('');
-                        $('input[name="maphieuchi"]').focus();
+                        $('input[name="maphieu"]').val('');
+                        $('input[name="maphieu"]').focus();
                     }else
                         toastr.success("Mã phiếu chi sử dụng được!", "Thành công!");
                 }
@@ -126,4 +126,6 @@
             });
         });
     </script>
+    @include('includes.script.create-header-scripts')
+    @include('includes.script.inputmask-ajax-scripts')
 @stop

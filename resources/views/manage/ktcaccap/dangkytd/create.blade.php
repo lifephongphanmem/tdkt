@@ -254,7 +254,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Ngày ký<span class="require">*</span></label>
-                                {!! Form::input('date', 'ngayky', null, array('id' => 'ngayky', 'class' => 'form-control', )!!}
+                                {!! Form::input('date', 'ngayky', null, array('id' => 'ngayky', 'class' => 'form-control' ))!!}
                                 @if ($errors->has('ngayky'))
                                     <em class="invalid">{{ $errors->first('ngayky') }}</em>
                                 @endif
@@ -438,7 +438,7 @@
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 type: 'GET',
-                url: '/checkkihieu',
+                url: '/dangkytd/checkkihieu11',
                 data: {
                     _token: CSRF_TOKEN,
                     kihieudhtd:$(this).val()

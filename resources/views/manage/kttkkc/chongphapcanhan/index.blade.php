@@ -106,8 +106,8 @@
                             @foreach($model as $key => $tt)
                                 <tr>
                                     <td style="text-align: center">{{$key+1}}</td>
-                                    <td>{{$tt->loaikt}}</td>
-                                    <td>{{$tt->dhkt}}</td>
+                                    <td>{{$model_lh->where('maloaihinhkt',$tt->loaikt)->first()->tenloaihinhkt}}</td>
+                                    <td>{{$model_dh->where('madanhhieutd',$tt->dhkt)->first()->tendanhhieutd}}</td>
                                     <td class="active">Số hợp đồng: {{$tt->soqd}} <br> Số được duyệt: {{$tt->sodd}}</td>
                                     <td style="text-align: center">{{getDayVn($tt->tgiantgkc)}}</td>
                                     <td style="text-align: center">{{$tt->loaihskc}}</td>

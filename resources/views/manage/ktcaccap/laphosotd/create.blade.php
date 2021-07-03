@@ -205,7 +205,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Chức danh lãnh đạo<span class="require">*</span></label>
-                                {!!Form::text('chucdanhld',null, array('id' => 'chucdanhld','class' => 'form-control required'))!!}
+                                {!!Form::text('chucdanhld',null, array('id' => 'chucdanhld','class' => 'form-control '))!!}
                                 @if ($errors->has('chucdanhld'))
                                     <em class="invalid">{{$errors->first('chucdanhld') }}</em>
                                 @endif
@@ -216,7 +216,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Chức vụ<span class="require">*</span></label>
-                                {!!Form::text('chucvu',null, array('id' => 'chucvu','class' => 'form-control required'))!!}
+                                {!!Form::text('chucvu',null, array('id' => 'chucvu','class' => 'form-control '))!!}
                                 @if ($errors->has('chucvu'))
                                     <em class="invalid">{{$errors->first('chucvu') }}</em>
                                 @endif

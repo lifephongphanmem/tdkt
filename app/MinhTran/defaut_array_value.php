@@ -5,19 +5,37 @@
  * Date: 4/5/2018
  * Time: 3:05 PM
  */
-
-function NhomQuanLy()
+function getdanhhieu()
 {
-    $a_kq = array(
-        'TC' => 'Tài Chính',
-        'VT' => 'Vận Tải',
-        'CT' => 'Công Thương',
-        'KHAC' => 'Khác'
-    );
-    //dd($a_kq);
-    return $a_kq;
+    $danhhieu = \App\dmdanhhieutd::all();
+    $options = array();
+    $options[''] = '--Chọn danh hiệu thi đua--';
+    foreach ($danhhieu as $danhhieu) {
+        $options[$danhhieu->madanhhieutd] = $danhhieu->tendanhhieutd;
+    }
+    return $options;
+}
+function getloaihinhkt()
+{
+    $loaihinhkt = \App\dmloaihinhkt::all();
+    $options = array();
+    $options[''] = '--Chọn loại hình khen thưởng--';
+    foreach ($loaihinhkt as $loaihinhkt) {
+        $options[$loaihinhkt->maloaihinhkt] = $loaihinhkt->tenloaihinhkt;
+    }
+    return $options;
 }
 
+function getphanloaichi()
+{
+    $phanloai = \App\Model\manage\quytdkt\qldmchi::all();
+    $options = array();
+    $options[''] = '--Chọn loại hình khen thưởng--';
+    foreach ($phanloai as $phanloai) {
+        $options[$phanloai->madmchi] = $phanloai->noidung;
+    }
+    return $options;
+}
 
 function getLoaiXe(){
     $a_loaixe = array(

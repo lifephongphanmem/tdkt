@@ -85,6 +85,7 @@
                                 <th style="text-align: center" width="5%">Ngày ký</th>
                                 <th style="text-align: center" width="8%">Thành tích khen</th>
                                 <th style="text-align: center" width="8%">Trạng thái</th>
+                                <th style="text-align: center" width="8%">Trạng thái cấp trên</th>
                                 <th style="text-align: center" width="15%">Thao tác</th>
                             </tr>
                             </thead>
@@ -116,6 +117,26 @@
                                             <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
                                         </td>
                                     @endif
+                                    @if($tt->trangthaihuyen == "CC")
+                                        <td align="center"><span class="badge badge-warning">Chờ chuyển</span></td>
+                                    @elseif($tt->trangthaihuyen == 'CD')
+                                        <td align="center"><span class="badge badge-blue">Chờ duyệt</span>
+                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
+                                        </td>
+                                    @elseif($tt->trangthaihuyen == 'CN')
+                                        <td align="center"><span class="badge badge-warning">Chờ nhận</span>
+                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
+                                        </td>
+                                    @elseif($tt->trangthaihuyen == 'BTL')
+                                        <td align="center">
+                                            <span class="badge badge-danger">Bị trả lại</span><br>&nbsp;
+                                        </td>
+                                    @else
+                                        <td align="center">
+                                            <span class="badge badge-success">Đã duyệt</span>
+                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
+                                        </td>
+                                    @endif
                                     <td style="text-align: center">
                                         <a href="{{url('chuyenhosocaptren/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
                                         {{--<button type="button" onclick="getIdGet('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#get-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;
@@ -127,9 +148,13 @@
                                             <button type="button" onclick="getIdBack('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#back-modal" data-toggle="modal"><i class="fa fa-backward"></i>&nbsp;
                                                 Trả</button>
                                         @endif
-                                        @if($tt->trangthai == 'BTL')
+                                        @if($tt->trangthaihuyen == 'BTL')
                                             <button type="button" onclick="viewLiDo('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#lydo-show" data-toggle="modal"><i class="fa fa-archive"></i>&nbsp;
                                                 Lí do</button>
+                                            <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
+                                                Trình hồ sơ</button>
+                                            <button type="button" onclick="getIdBack('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#back-modal" data-toggle="modal"><i class="fa fa-backward"></i>&nbsp;
+                                                Trả</button>
                                         @endif
                                     </td>
                                 </tr>

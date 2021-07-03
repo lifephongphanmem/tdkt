@@ -194,8 +194,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Loại khen thưởng<span class="require">*</span></label>
-                                {!!Form::text('loaikt',null, array('id' => 'loaikt','class' => 'form-control required'))!!}
-                                @if ($errors->has('loaikt'))
+                                {!! Form::select('loaikt',getloaihinhkt(),null, array('id'=>'loaikt','class'=>'form-control'))!!}
+                            @if ($errors->has('loaikt'))
                                     <em class="invalid">{{ $errors->first('loaikt') }}</em>
                                 @endif
                             </div>
@@ -203,7 +203,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Danh hiệu khen thưởng<span class="require">*</span></label>
-                                {!!Form::text('dhkt',null, array('id' => 'dhkt','class' => 'form-control required'))!!}
+                                {!! Form::select('dhkt',getdanhhieu(),null, array('id'=>'dhkt','class'=>'form-control'))!!}
                                 @if ($errors->has('dhkt'))
                                     <em class="invalid">{{ $errors->first('dhkt') }}</em>
                                 @endif

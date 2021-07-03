@@ -8,6 +8,12 @@
 @section('custom-script')
     <script type="text/javascript" src="{{url('assets/global/plugins/jquery-validation/js/jquery.validate.min.js')}}"></script>
     <script type="text/javascript" src="{{url('assets/global/plugins/select2/select2.min.js')}}"></script>
+    <script src="{{url('minhtran/jquery.inputmask.bundle.min.js')}}"></script>
+    <script>
+        $(document).ready(function(){
+            $(":input").inputmask();
+        });
+    </script>
 
 @stop
 
@@ -35,7 +41,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Mã phiếu thu<span class="require">*</span></label>
-                                        <input type="text" class="form-control required" name="maphieuthu" id="maphieuthu" autofocus>
+                                        <input type="text" class="form-control required" name="maphieu" id="maphieu" autofocus>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -99,33 +105,33 @@
 
             var validator = $("#create_qldauvao").validate({
                 rules: {
-                    maphieuthu :"required",
+                    maphieu :"required",
                     noidung :"required",
 
                 },
                 messages: {
-                    maphieuthu :"Chưa nhập dữ liệu",
+                    maphieu :"Chưa nhập dữ liệu",
                     noidung :"Chưa nhập dữ liệu",
                 }
             });
         }
     </script>
     <script>
-        $('input[name="maphieuthu"]').change(function(){
+        $('input[name="maphieu"]').change(function(){
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 type: 'GET',
-                url: '/checkmaphieuthu',
+                url: '/checkmaphieu',
                 data: {
                     _token: CSRF_TOKEN,
-                    maphieuthu:$(this).val()
+                    maphieu:$(this).val()
                 },
                 dataType: 'JSON',
                 success: function (data) {
                     if(data.status != 'success') {
                         toastr.error("Bạn cần nhập lại mã phiếu thu", "Mã phiếu thu nhập vào đã tồn tại!!!");
-                        $('input[name="maphieuthu"]').val('');
-                        $('input[name="maphieuthu"]').focus();
+                        $('input[name="maphieu"]').val('');
+                        $('input[name="maphieu"]').focus();
                     }else
                         toastr.success("Mã phiếu thu sử dụng được!", "Thành công!");
                 }
@@ -133,4 +139,6 @@
             });
         });
     </script>
+    @include('includes.script.create-header-scripts')
+    @include('includes.script.inputmask-ajax-scripts')
 @stop

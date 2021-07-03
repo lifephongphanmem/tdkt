@@ -29,8 +29,13 @@
                     </li>
                 @endif
                 @if(can('duyethoso','index'))
+                        <li>
+                            <a href="{{url('duyethoso')}}">Duyệt hồ sơ đăng ký thi đua tại đơn vị</a>
+                        </li>
+                @endif
+                @if(can('duyethosocapduoi','index'))
                     <li>
-                        <a href="{{url('duyethoso')}}">Duyệt hồ sơ đăng ký thi đua tại đơn vị</a>
+                        <a href="{{url('duyethosocapduoi')}}">Duyệt hồ sơ đăng ký thi đua cấp dưới</a>
                     </li>
                 @endif
                 @if(can('chuyenhosocaptren','index'))

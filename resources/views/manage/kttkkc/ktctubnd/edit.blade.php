@@ -127,7 +127,7 @@
     <hr>
     <!-- END PAGE HEADER-->
     <div class="row">
-        {!! Form::model($model, ['method' => 'PATCH', 'url'=>'chongmycanhan/'. $model->id, 'class'=>'horizontal-form','id'=>'edit_cpcn', 'files'=>true,'enctype'=>'multipart/form-data']) !!}
+        {!! Form::model($model, ['method' => 'PATCH', 'url'=>'ktctubnd/'. $model->id, 'class'=>'horizontal-form','id'=>'edit_cpcn', 'files'=>true,'enctype'=>'multipart/form-data']) !!}
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -148,7 +148,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Thời gian kháng chiến quy đổi<span class="require">*</span></label>
-                                {!! Form::input('date', 'tgiankcqd', null, array('id' => 'tgiankcqd', 'class' => 'form-control', 'required'))!!}
+                                {!!Form::text('tgiankcqd',null, array('id' => 'tgiankcqd','class' => 'form-control required'))!!}
                                 @if ($errors->has('tgiankcqd'))
                                     <em class="invalid">{{ $errors->first('tgiankcqd') }}</em>
                                 @endif
@@ -182,11 +182,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label">Ngày tháng năm sinh<span class="require">*</span></label>
-                                {!! Form::input('date', 'namsinh', null, array('id' => 'namsinh', 'class' => 'form-control', 'required'))!!}
-                                @if ($errors->has('namsinh'))
-                                    <em class="invalid">{{ $errors->first('namsinh') }}</em>
-                                @endif
+                                <label class="control-label">Ngày tháng năm sinh</label>
+                                {!! Form::input('date', 'namsinh', null, array('id' => 'namsinh', 'class' => 'form-control'))!!}
                             </div>
                         </div>
                     </div>
@@ -194,7 +191,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Loại khen thưởng<span class="require">*</span></label>
-                                {!!Form::text('loaikt',null, array('id' => 'loaikt','class' => 'form-control required'))!!}
+                                {!! Form::select('loaikt',getloaihinhkt(),null, array('id'=>'loaikt','class'=>'form-control'))!!}
                                 @if ($errors->has('loaikt'))
                                     <em class="invalid">{{ $errors->first('loaikt') }}</em>
                                 @endif
@@ -203,7 +200,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Danh hiệu khen thưởng<span class="require">*</span></label>
-                                {!!Form::text('dhkt',null, array('id' => 'dhkt','class' => 'form-control required'))!!}
+                                {!! Form::select('dhkt',getdanhhieu(),null, array('id'=>'dhkt','class'=>'form-control'))!!}
                                 @if ($errors->has('dhkt'))
                                     <em class="invalid">{{ $errors->first('dhkt') }}</em>
                                 @endif
@@ -267,7 +264,7 @@
             </div>
             <!-- END EXAMPLE TABLE PORTLET-->
             <div style="text-align: center">
-                <a href="{{url('chongmycanhan')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                <a href="{{url('ktctubnd')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                 <button type="reset" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Nhập lại</button>
                 <button type="submit" class="btn green" onclick="validateForm()"><i class="fa fa-check"></i> Hoàn thành</button>
             </div>

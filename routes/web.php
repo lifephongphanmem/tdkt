@@ -13,6 +13,7 @@ include('manage/kttkkc.php');
 include('manage/ktcaccap.php');
 include('manage/hiepy.php');
 include('manage/quytdkt.php');
+include('manage/vbpl.php');
 //End Manage
 
 //View

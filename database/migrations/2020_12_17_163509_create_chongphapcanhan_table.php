@@ -25,7 +25,7 @@ class CreateChongphapcanhanTable extends Migration
             $table->string('cvchohn')->nullable();
             $table->string('loaihskc')->nullable();
             $table->date('tgiantgkc')->nullable();
-            $table->date('tgiankcqd')->nullable();
+            $table->string('tgiankcqd')->nullable();
             $table->date('ngaynhap')->nullable();
             $table->string('ghichu')->nullable();
             $table->timestamps();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\manage\ktcaccap;
 
 use App\Model\manage\ktcaccap\DangKyTd;
+use App\Model\manage\ktcaccap\LapHoSoTd;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
@@ -30,9 +31,17 @@ class DangKyTdXdController extends Controller
             $id = $inputs['idget'];
             $model = DangKyTd::findorFail($id);
             $inputs['trangthai'] = 'DD';
-            $inputs['ttthaotac'] = session('admin')->username.'('.session('admin')->name.') nhận hồ sơ';
+            $inputs['ttthaotac'] = session('admin')->username.'('.session('admin')->name.') duyệt đăng ký';
             $model->ngaynhan = $inputs['ngaynhan'];
             $model->update($inputs);
+            $a_hs = DangKyTd::find($id)->toarray();
+            $a_hs['trangthai'] = 'CD';
+            $a_hs['trangthai'] = 'CD';
+            $a_hs['ttthaotac'] = session('admin')->username.'('.session('admin')->name.') tạo hồ sơ thi đua';
+            $a_hs['kihieudhtd'] = getdate()[0];
+            unset($a_hs['id']);
+            $model = new LapHoSoTd();
+            $model->create($a_hs);
             return redirect('duyetdktd');
         }else
             return view('errors.notlogin');

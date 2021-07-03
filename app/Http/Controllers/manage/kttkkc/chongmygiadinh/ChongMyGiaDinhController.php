@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\manage\kttkkc\chongmygiadinh;
 
+use App\dmdanhhieutd;
+use App\dmloaihinhkt;
 use App\Http\Requests\manage\ChongMyGiaDinhRequest;
 use App\Model\manage\kttkkc\chongmygiadinh\ChongMyGiaDinh;
 use Illuminate\Http\Request;
@@ -13,12 +15,16 @@ class ChongMyGiaDinhController extends Controller
     public function index(Request $request){
         if(Session::has('admin')){
             $inputs = $request->all();
+            $model_lh = dmloaihinhkt::select('maloaihinhkt','tenloaihinhkt')->get();
+            $model_dh = dmdanhhieutd::select('madanhhieutd','tendanhhieutd')->get();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
             $model = ChongMyGiaDinh::whereYear('ngaynhap',$inputs['nam'])
                 ->get();
             return view('manage.kttkkc.chongmygiadinh.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)
+                ->with('model_dh', $model_dh)
+                ->with('model_lh', $model_lh)
                 ->with('pageTitle','Danh sách khen thưởng kháng chiến chống Mỹ(gia đình)');
         }else
             return view('errors.notlogin');
@@ -66,7 +72,7 @@ class ChongMyGiaDinhController extends Controller
             $model = ChongMyGiaDinh::findOrFail($id);
             $inputs['namsinh'] = getDateToDb($inputs['namsinh']);
             $inputs['tgiantgkc'] = getDateToDb($inputs['tgiantgkc']);
-            $inputs['tgiankcqd'] = getDateToDb($inputs['tgiankcqd']);
+            $inputs['tgiankcqd'] = $inputs['tgiankcqd'];
             $model->update($inputs);
             return redirect('chongmygiadinh');
         }else
@@ -76,8 +82,12 @@ class ChongMyGiaDinhController extends Controller
     public function show($id){
         if(Session::has('admin')) {
             $model = ChongMyGiaDinh::findOrFail($id);
+            $model_lh = dmloaihinhkt::select('maloaihinhkt','tenloaihinhkt')->get();
+            $model_dh = dmdanhhieutd::select('madanhhieutd','tendanhhieutd')->get();
             return view('manage.kttkkc.chongmygiadinh.show')
                 ->with('model', $model)
+                ->with('model_dh', $model_dh)
+                ->with('model_lh', $model_lh)
                 ->with('pageTitle', 'Danh sách khen thưởng kháng chiến chống Mỹ(gia đình)');
         }else
             return view('errors.notlogin');

@@ -197,7 +197,7 @@ class DangKyTdController extends Controller
             'message' => 'error',
         );
         $inputs = $request->all();
-
+        dd($inputs);
         if (isset($inputs['kihieudhtd'])) {
             $model = DangKyTd::where('kihieudhtd', $inputs['kihieudhtd'])->count();
             if ($model == 0) {

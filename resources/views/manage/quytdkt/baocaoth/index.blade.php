@@ -28,6 +28,7 @@
                             <ol>
                                 <li><a data-target="#pl1-thoai-confirm" data-toggle="modal" data-href="">Sổ quỹ các khoản thu</a> </li>
                                 <li><a data-target="#pl2-thoai-confirm" data-toggle="modal" data-href="">Sổ quỹ các khoản chi</a> </li>
+                                <li><a data-target="#pl3-thoai-confirm" data-toggle="modal" data-href="">Sổ quỹ các khoản thu, chi</a> </li>
                             </ol>
                         </div>
                     </div>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\manage\kttkkc\ktctubnd;
 
+use App\dmdanhhieutd;
+use App\dmloaihinhkt;
 use App\Http\Requests\manage\KtCtUbNdRequest;
 use App\Model\manage\kttkkc\ktctubnd\KtCtUbNd;
 use Illuminate\Http\Request;
@@ -13,12 +15,16 @@ class KtCtUbNdController extends Controller
     public function index(Request $request){
         if(Session::has('admin')){
             $inputs = $request->all();
+            $model_lh = dmloaihinhkt::select('maloaihinhkt','tenloaihinhkt')->get();
+            $model_dh = dmdanhhieutd::select('madanhhieutd','tendanhhieutd')->get();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
             $model = KtCtUbNd::whereYear('ngaynhap',$inputs['nam'])
                 ->get();
             return view('manage.kttkkc.ktctubnd.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)
+                ->with('model_dh', $model_dh)
+                ->with('model_lh', $model_lh)
                 ->with('pageTitle','Danh sách bằng khen chủ tịch UBND tỉnh (tỉnh Hà Bắc cũ)');
         }else
             return view('errors.notlogin');
@@ -43,6 +49,7 @@ class KtCtUbNdController extends Controller
             $inputs['tgiankcqd'] = getDateToDb($inputs['tgiankcqd']);
             $inputs['ngaynhap'] = date('Y-m-d');
             $model = new KtCtUbNd();
+
             $model->create($inputs);
             return redirect('ktctubnd');
 
@@ -76,8 +83,12 @@ class KtCtUbNdController extends Controller
     public function show($id){
         if(Session::has('admin')) {
             $model = KtCtUbNd::findOrFail($id);
+            $model_lh = dmloaihinhkt::select('maloaihinhkt','tenloaihinhkt')->get();
+            $model_dh = dmdanhhieutd::select('madanhhieutd','tendanhhieutd')->get();
             return view('manage.kttkkc.ktctubnd.show')
                 ->with('model', $model)
+                ->with('model_dh', $model_dh)
+                ->with('model_lh', $model_lh)
                 ->with('pageTitle', 'Danh sách bằng khen chủ tịch UBND tỉnh (tỉnh Hà Bắc cũ)');
         }else
             return view('errors.notlogin');

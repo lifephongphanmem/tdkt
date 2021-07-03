@@ -77,11 +77,11 @@
             </tr>
             <tr>
                 <th width="30%" style="padding-left: 50px;">Loại khen thưởng: </td>
-                <td style="padding-left: 100px;"> {{$model->loaikt}} </td>
+                <td style="padding-left: 100px;"> {{$model_lh->where('maloaihinhkt',$model->loaikt)->first()->tenloaihinhkt}} </td>
             </tr>
             <tr>
                 <th width="30%" style="padding-left: 50px;">Danh hiệu khen thưởng: </td>
-                <td style="padding-left: 100px;"> {{$model->dhkt}} </td>
+                <td style="padding-left: 100px;"> {{$model_dh->where('madanhhieutd',$model->dhkt)->first()->tendanhhieutd}} </td>
             </tr>
             <tr>
                 <th width="30%" style="padding-left: 50px;">Số quyết định: </td>

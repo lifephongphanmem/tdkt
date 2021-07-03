@@ -148,7 +148,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Thời gian kháng chiến quy đổi<span class="require">*</span></label>
-                                {!! Form::input('date', 'tgiankcqd', null, array('id' => 'tgiankcqd', 'class' => 'form-control', 'required'))!!}
+                                {!!Form::text('tgiankcqd',null, array('id' => 'tgiankcqd','class' => 'form-control required'))!!}
                                 @if ($errors->has('tgiankcqd'))
                                     <em class="invalid">{{ $errors->first('tgiankcqd') }}</em>
                                 @endif
@@ -192,7 +192,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Loại khen thưởng<span class="require">*</span></label>
-                                {!!Form::text('loaikt',null, array('id' => 'loaikt','class' => 'form-control required'))!!}
+                                {!! Form::select('loaikt',getloaihinhkt(),null, array('id'=>'loaikt','class'=>'form-control'))!!}
                                 @if ($errors->has('loaikt'))
                                     <em class="invalid">{{ $errors->first('loaikt') }}</em>
                                 @endif
@@ -201,7 +201,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Danh hiệu khen thưởng<span class="require">*</span></label>
-                                {!!Form::text('dhkt',null, array('id' => 'dhkt','class' => 'form-control required'))!!}
+                                {!! Form::select('dhkt',getdanhhieu(),null, array('id'=>'dhkt','class'=>'form-control'))!!}
                                 @if ($errors->has('dhkt'))
                                     <em class="invalid">{{ $errors->first('dhkt') }}</em>
                                 @endif

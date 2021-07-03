@@ -214,6 +214,10 @@ License: You must have a valid license purchased only from themeforest(the above
                             <a href="{{url('user_setting')}}">
                                 <i class="icon-settings"></i> Thông tin tài khoản</a>
                         </li>
+                        <li>
+                            <a href="{{url('dmdonvi')}}">
+                                <i class="icon-settings"></i> Danh sách đơn vị</a>
+                        </li>
                         @endif
                         @if(session('admin')->level =='X')
                         <li>
@@ -282,6 +286,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     @include('includes.main.maintdktcaccap')
                     @endif
                 @endif
+                <!--
                 @if(canGeneral('qltailieu','index'))
                     @if(can('qltailieu','index'))
                     <li class="heading">
@@ -290,6 +295,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     @include('includes.main.mainqltailieu')
                     @endif
                 @endif
+
                 @if(canGeneral('hiepykhenthuong','index'))
                     @if(can('hiepykhenthuong','index'))
                         <li class="heading">
@@ -298,6 +304,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         @include('includes.main.mainhiepykhenthuong')
                     @endif
                 @endif
+                            -->
                 @if(canGeneral('qlvbnn','index'))
                     @if(can('qlvbnn','index'))
                         <li class="heading">
@@ -335,6 +342,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <li><a href="{{url('general')}}">Cấu hình hệ thống</a></li>
                             @endif
                             @if(session('admin')->level == 'T' || session('admin')->level == 'H')
+                                <li><a href="{{url('dmdonvi')}}">Danh mục đơn vị</a></li>
                                 <li><a href="{{url('users')}}">Tài khoản đơn vị</a></li>
                             @endif
                             @if(session('admin')->level == 'T' || session('admin')->level == 'H')

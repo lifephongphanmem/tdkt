@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\manage\kttkkc\chongphapcanhan;
 
+use App\dmdanhhieutd;
+use App\dmloaihinhkt;
 use App\Http\Requests\manage\ChongPhapCaNhanRequest;
 use App\Model\manage\kttkkc\chongphapcanhan\ChongPhapCaNhan;
 use Illuminate\Http\Request;
@@ -13,6 +15,8 @@ class ChongPhapCaNhanController extends Controller
     public function index(Request $request){
         if(Session::has('admin')){
             $inputs = $request->all();
+            $model_lh = dmloaihinhkt::select('maloaihinhkt','tenloaihinhkt')->get();
+            $model_dh = dmdanhhieutd::select('madanhhieutd','tendanhhieutd')->get();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');/*
             $inputs['loaikt'] = isset($inputs['loaikt']) ? $inputs['loaikt'] : 'all';*/
             $model = ChongPhapCaNhan::whereYear('ngaynhap',$inputs['nam'])
@@ -21,6 +25,8 @@ class ChongPhapCaNhanController extends Controller
             return view('manage.kttkkc.chongphapcanhan.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)
+                ->with('model_dh', $model_dh)
+                ->with('model_lh', $model_lh)
                 ->with('pageTitle','Danh sách khen thưởng kháng chiến chống Pháp(cá nhân)');
         }else
             return view('errors.notlogin');
@@ -30,8 +36,12 @@ class ChongPhapCaNhanController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
+            $model_lh = dmloaihinhkt::all();
+            $model_dh = dmdanhhieutd::select('madanhhieutd','tendanhhieutd')->get();
             return view('manage.kttkkc.chongphapcanhan.create')
                 ->with('inputs', $inputs)
+                ->with('model_dh', $model_dh)
+                ->with('model_lh', $model_lh)
                 ->with('pageTitle', 'Danh sách khen thưởng kháng chiến chống Pháp(cá nhân) thêm mới');
         } else
             return view('errors.notlogin');
@@ -78,8 +88,12 @@ class ChongPhapCaNhanController extends Controller
     public function show($id){
         if(Session::has('admin')) {
             $model = ChongPhapCaNhan::findOrFail($id);
+            $model_lh = dmloaihinhkt::select('maloaihinhkt','tenloaihinhkt')->get();
+            $model_dh = dmdanhhieutd::select('madanhhieutd','tendanhhieutd')->get();
             return view('manage.kttkkc.chongphapcanhan.show')
                 ->with('model', $model)
+                ->with('model_dh', $model_dh)
+                ->with('model_lh', $model_lh)
                 ->with('pageTitle', 'Danh sách khen thưởng kháng chiến chống Pháp(cá nhân)');
         }else
             return view('errors.notlogin');

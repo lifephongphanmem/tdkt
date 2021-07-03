@@ -38,7 +38,16 @@
         $(function(){
             $('#nam').change(function() {
                 var nam = '&nam='+$('#nam').val();
-                var url = '/duyethoso?'+nam;
+                var trangthai = '&trangthai='+$('#trangthai').val();
+                var url = '/duyethoso?'+nam+trangthai;
+                window.location.href = url;
+            });
+        });
+        $(function(){
+            $('#trangthai').change(function() {
+                var nam = '&nam='+$('#nam').val();
+                var trangthai = '&trangthai='+$('#trangthai').val();
+                var url = '/duyethoso?'+nam+trangthai;
                 window.location.href = url;
             });
         });
@@ -67,6 +76,17 @@
                                     @for($i = $imin; $i <= $imax;$i++)
                                         <option value="{{$i}}" {{$i == $inputs['nam'] ? 'selected' : '' }}>Năm {{$i}}</option>
                                     @endfor
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label style="font-weight: bold">Phân Loại Hồ Sơ</label>
+                                <select class="form-control" name="trangthai" id="trangthai">
+                                    <option value="" {{ $inputs['trangthai'] =="" ? 'selected' : '' }}>--Chọn phân loại hồ sơ--</option>
+                                    <option value="CD" {{$inputs['trangthai'] == "CD" ? 'selected' : '' }}>Chờ duyệt</option>
+                                    <option value="BTL" {{$inputs['trangthai'] == "BTL"? 'selected' : '' }}>Bị trả lại</option>
+                                    <option value="DD" {{$inputs['trangthai'] == "DD" ? 'selected' : '' }}>Đã duyệt</option>
                                 </select>
                             </div>
                         </div>
@@ -117,7 +137,7 @@
                                         <a href="{{url('duyethoso/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
                                         @if($tt->trangthai == 'CD')
                                             <button type="button" onclick="getIdGet('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#get-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;
-                                                Nhận</button>
+                                                Duyệt</button>
                                             <button type="button" onclick="getIdBack('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#back-modal" data-toggle="modal"><i class="fa fa-backward"></i>&nbsp;
                                                 Trả</button>
                                         @elseif($tt->trangthai == 'BTL')
@@ -145,7 +165,7 @@
                     {!! Form::open(['url'=>'duyethoso/get','id' => 'frm_get'])!!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">Đồng ý nhận?</h4>
+                        <h4 class="modal-title">Đồng ý duyệt hồ sơ và chuyển hồ sơ sang lập hồ sơ thi đua khen thưởng</h4>
                     </div>
                     <input type="hidden" name="idget" id="idget">
                     <div class="modal-body">

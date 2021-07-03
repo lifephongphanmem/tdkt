@@ -119,6 +119,7 @@
                             </div>
                         </div-->
                     </div>
+                    </div>
                     <div class="portlet-body">
                         <table class="table table-striped table-bordered table-hover" id="sample_3">
                         <thead>
@@ -136,7 +137,7 @@
                             <td style="text-align: center">{{$key + 1}}</td>
                             <td>{{$tt->madmchi}}</td>
                             <td class="active">{{$tt->noidung}}</td>
-                            <td class="active">{{dinhdangso($tt->sotien)}}</td>
+                            <td style="text-align: right" class="active">{{dinhdangso($tt->sotien)}}</td>
                             <td>
                                 @if(can('users','edit'))
                                 <a href="{{url('qldmchi/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>

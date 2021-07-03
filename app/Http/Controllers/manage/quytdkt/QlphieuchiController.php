@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\manage\quytdkt;
 
 use App\Model\manage\quytdkt\qlphieuchi;
+use App\Model\manage\quytdkt\qlphieuthuchi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,11 +20,11 @@ class QlphieuchiController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $inputs['maphieuchi'] = isset($inputs['maphieuchi']) ? $inputs['maphieuchi'] : '';
+            $inputs['maphieu'] = isset($inputs['maphieu']) ? $inputs['maphieu'] : '';
             $inputs['phanloai'] = isset($inputs['phanloai']) ? $inputs['phanloai'] : '';
-            $model = qlphieuchi::all();
-            if($inputs['maphieuchi'] != '')
-                $model=$model->where('maphieuchi',$inputs['maphieuchi']);
+            $model = qlphieuthuchi::where('loaiphieu','PC')->get();
+            if($inputs['maphieu'] != '')
+                $model=$model->where('maphieu',$inputs['maphieu']);
             if($inputs['phanloai'] != '')
                 $model = $model->where('phanloai',$inputs['phanloai']);
             return view('manage.quytdkt.chi.index')
@@ -60,8 +61,9 @@ class QlphieuchiController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $model = new qlphieuchi();
+            $model = new qlphieuthuchi();
             $inputs['ttnguoitao'] = session('admin')->name.'('.session('admin')->username.')'. getDateTime(Carbon::now()->toDateTimeString());
+            $inputs['loaiphieu'] ='PC';
             $model->create($inputs);
             return redirect('qlchihdtdkt');
 
@@ -91,7 +93,7 @@ class QlphieuchiController extends Controller
     {
         if (Session::has('admin')) {
 
-            $model = qlphieuchi::findOrFail($id);
+            $model = qlphieuthuchi::findOrFail($id);
             return view('manage.quytdkt.chi.edit')
                 ->with('model', $model)
                 ->with('pageTitle', 'Chỉnh sửa thông tin phiếu chi');
@@ -110,7 +112,7 @@ class QlphieuchiController extends Controller
     {
         if (Session::has('admin')) {
             $input = $request->all();
-            $model = qlphieuchi::findOrFail($id);
+            $model = qlphieuthuchi::findOrFail($id);
             $model->update($input);
             return redirect('qlchihdtdkt');
 
@@ -129,7 +131,7 @@ class QlphieuchiController extends Controller
     {
         if (Session::has('admin')) {
             $id = $request->all()['iddelete'];
-            $model = qlphieuchi::findorFail($id);
+            $model = qlphieuthuchi::findorFail($id);
             $model->delete();
 
             return redirect('qlchihdtdkt');
@@ -138,15 +140,15 @@ class QlphieuchiController extends Controller
             return view('errors.notlogin');
     }
 
-    public function checkmaphieuchi(Request $request){
+    public function checkmaphieu(Request $request){
         $result = array(
             'status' => 'fail',
             'message' => 'error',
         );
         $inputs = $request->all();
 
-        if (isset($inputs['maphieuchi'])) {
-            $model = qlphieuchi::where('maphieuchi', $inputs['maphieuchi'])->count();
+        if (isset($inputs['maphieu'])) {
+            $model = qlphieuthuchi::where('maphieu', $inputs['maphieu'])->count();
             if ($model == 0) {
                 $result['status'] = 'success';
                 $result['message'] = 'ok';

@@ -39,6 +39,11 @@ Route::resource('userscompany','UsersCompanyController');
 Route::get('userscompany/{id}/permission','UsersCompanyController@permission');
 Route::post('userscompany/phan-quyen','UsersCompanyController@uppermission');
 //EndUsers
+//Danh mục đơn vị
+Route::resource('dmdonvi','DmDonViController');
+Route::post('dmdonvi/delete','DmDonViController@destroy');
+Route::get('checkmadonvi','DmDonViController@checkmadonvi');
+
 Route::get('thongtindonvi','ThongTinDonViController@index');
 Route::get('thongtindonvi/edit','ThongTinDonViController@edit');
 Route::post('thongtindonvi','ThongTinDonViController@update');
