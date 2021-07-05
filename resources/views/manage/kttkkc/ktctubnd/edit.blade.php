@@ -169,8 +169,7 @@
                                 @endif
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Số được duyệt<span class="require">*</span></label>
@@ -180,18 +179,30 @@
                                 @endif
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Ngày tháng năm sinh</label>
                                 {!! Form::input('date', 'namsinh', null, array('id' => 'namsinh', 'class' => 'form-control'))!!}
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Loại khen thưởng<span class="require">*</span></label>
                                 {!! Form::select('loaikt',getloaihinhkt(),null, array('id'=>'loaikt','class'=>'form-control'))!!}
+                                @if ($errors->has('loaikt'))
+                                    <em class="invalid">{{ $errors->first('loaikt') }}</em>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Hình thức khen thưởng<span class="require">*</span></label>
+                                {!! Form::select('loaikt',gethinhthuckt(),null, array('id'=>'loaikt','class'=>'form-control'))!!}
                                 @if ($errors->has('loaikt'))
                                     <em class="invalid">{{ $errors->first('loaikt') }}</em>
                                 @endif

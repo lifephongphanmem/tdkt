@@ -26,6 +26,17 @@ function getloaihinhkt()
     return $options;
 }
 
+function gethinhthuckt()
+{
+    $hinhthuckt = \App\dmhinhthuckt::all();
+    $options = array();
+    $options[''] = '--Chọn loại hình thức khen thưởng--';
+    foreach ($hinhthuckt as $hinhthuckt) {
+        $options[$hinhthuckt->mahinhthuckt] = $hinhthuckt->tenhinhthuckt;
+    }
+    return $options;
+}
+
 function getphanloaichi()
 {
     $phanloai = \App\Model\manage\quytdkt\qldmchi::all();
