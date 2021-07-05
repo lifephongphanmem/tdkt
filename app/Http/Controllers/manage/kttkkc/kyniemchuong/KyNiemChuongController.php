@@ -46,7 +46,7 @@ class KyNiemChuongController extends Controller
             $inputs = $request->all();
             $inputs['namsinh'] = getDateToDb($inputs['namsinh']);
             $inputs['tgiantgkc'] = getDateToDb($inputs['tgiantgkc']);
-            $inputs['tgiankcqd'] = getDateToDb($inputs['tgiankcqd']);
+            $inputs['tgiankcqd'] =$inputs['tgiankcqd'];
             $inputs['ngaynhap'] = date('Y-m-d');
             $model = new KyNiemChuong();
             $model->create($inputs);
@@ -72,7 +72,7 @@ class KyNiemChuongController extends Controller
             $model = KyNiemChuong::findOrFail($id);
             $inputs['namsinh'] = getDateToDb($inputs['namsinh']);
             $inputs['tgiantgkc'] = getDateToDb($inputs['tgiantgkc']);
-            $inputs['tgiankcqd'] = getDateToDb($inputs['tgiankcqd']);
+            $inputs['tgiankcqd'] =$inputs['tgiankcqd'];
             $model->update($inputs);
             return redirect('kyniemchuong');
         }else

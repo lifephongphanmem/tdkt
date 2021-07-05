@@ -165,7 +165,7 @@
                     {!! Form::open(['url'=>'duyethoso/get','id' => 'frm_get'])!!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">Đồng ý duyệt hồ sơ và chuyển hồ sơ sang lập hồ sơ thi đua khen thưởng</h4>
+                        <h4 class="modal-title">Đồng ý duyệt hồ sơ /h4>
                     </div>
                     <input type="hidden" name="idget" id="idget">
                     <div class="modal-body">

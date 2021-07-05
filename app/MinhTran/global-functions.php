@@ -258,6 +258,9 @@ function getPermissionDefault($level) {
             'delete'=>1,
         ),
     );
+    $roles['H'] = array();
+    $roles['X'] = array();
+    /*
     $roles['H'] = array(
         //Thi đua khen thưởng thời kỳ kháng chiến
         'tdktkhangchien'=>array(
@@ -528,8 +531,8 @@ function getPermissionDefault($level) {
             'index'=>1,
         ),
         'dangkytd'=>array(
-            'index'=>1,
-            'create'=>1,
+            'index'=>0,
+            'create'=>0,
             'edit'=>1,
             'delete'=>1,
             'approve'=>1,
@@ -731,6 +734,7 @@ function getPermissionDefault($level) {
             'delete'=>1,
         ),
     );
+    */
 //End Quyền tỉnh
 
     return json_encode($roles[$level]);

@@ -17,8 +17,11 @@ class TrinhHoSoController extends Controller
         if(Session::has('admin')){
             $inputs = $request->all();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
-            $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])
-                ->get();
+            if(session('admin')->sadmin == 'ssa')
+                $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->get();
+            else
+                $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->where('madonvi',session('admin')->madonvi)
+                    ->get();
             return view('manage.ktcaccap.trinhhoso.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)
@@ -101,6 +104,7 @@ class TrinhHoSoController extends Controller
         if(Session::has('admin')) {
             $inputs = $request->all();
             $id = $request->all()['idtrans'];
+            dd($inputs);
             $model = LapHoSoTd::findorFail($id);
             $inputs['trangthai'] = 'CD';
             $inputs['ttthaotac'] = session('admin')->username.'('.session('admin')->name.') chuyển hồ sơ ';

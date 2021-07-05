@@ -17,9 +17,13 @@ class ChuyenHoSoCapTrenController extends Controller
         if(Session::has('admin')){
             $inputs = $request->all();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
-            $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])
-                ->where('trangthai','<>','CC')
-                ->get();
+            if(session('admin')->sadmin == 'ssa')
+                $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->get();
+            else
+                $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])
+                    ->where('trangthai','<>','CC')
+                    ->where('madonvi',session('admin')->madonvi)
+                    ->get();
             return view('manage.ktcaccap.chuyenhosocaptren.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)

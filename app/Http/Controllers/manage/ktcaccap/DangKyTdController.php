@@ -17,7 +17,10 @@ class DangKyTdController extends Controller
         if(Session::has('admin')){
             $inputs = $request->all();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
-            $model = DangKyTd::whereYear('ngayky',$inputs['nam'])
+            if(session('admin')->sadmin == 'ssa')
+                $model = DangKyTd::whereYear('ngayky',$inputs['nam'])->get();
+            else
+                $model = DangKyTd::whereYear('ngayky',$inputs['nam'])->where('madonvi',session('admin')->madonvi)
                 ->get();
             return view('manage.ktcaccap.dangkytd.index')
                 ->with('inputs',$inputs)
@@ -197,7 +200,6 @@ class DangKyTdController extends Controller
             'message' => 'error',
         );
         $inputs = $request->all();
-        dd($inputs);
         if (isset($inputs['kihieudhtd'])) {
             $model = DangKyTd::where('kihieudhtd', $inputs['kihieudhtd'])->count();
             if ($model == 0) {

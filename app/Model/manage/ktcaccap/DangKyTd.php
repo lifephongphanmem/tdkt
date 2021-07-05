@@ -42,5 +42,7 @@ class DangKyTd extends Model
         'bienban',
         'tailieukhac',
         'ttthaotac',
+        'madonvi',
+        'plphongtrao',
     ];
 }

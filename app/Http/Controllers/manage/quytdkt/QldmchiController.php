@@ -21,7 +21,7 @@ class QldmchiController extends Controller
             $inputs = $request->all();
             $inputs['madmchi'] = isset($inputs['madmchi']) ? $inputs['madmchi'] : '';
             $inputs['phanloai'] = isset($inputs['phanloai']) ? $inputs['phanloai'] : '';
-            $model = qldmchi::all();
+            $model = qldmchi::where('madonvi',session('admin')->madonvi)->get();
             if($inputs['madmchi'] != '')
                 $model=$model->where('madmchi',$inputs['madmchi']);
             if($inputs['phanloai'] != '')
@@ -43,10 +43,8 @@ class QldmchiController extends Controller
     public function create()
     {
         if (Session::has('admin')) {
-            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
-                return view('manage.quytdkt.dmchi.create')
-                    ->with('pageTitle', 'Tạo mới thông tin danh mục chi');
-            }
+            return view('manage.quytdkt.dmchi.create')
+                ->with('pageTitle', 'Tạo mới thông tin danh mục chi');
         }
     }
 
@@ -61,6 +59,7 @@ class QldmchiController extends Controller
         if (Session::has('admin')) {
             $inputs = $request->all();
             $model = new qldmchi();
+            $inputs['sotien'] = getDouble($inputs['sotien']);
             $inputs['ttnguoitao'] = session('admin')->name.'('.session('admin')->username.')'. getDateTime(Carbon::now()->toDateTimeString());
             $model->create($inputs);
             return redirect('qldmchi');
@@ -111,6 +110,7 @@ class QldmchiController extends Controller
         if (Session::has('admin')) {
             $input = $request->all();
             $model = qldmchi::findOrFail($id);
+            $input['sotien'] = getDouble($input['sotien']);
             $model->update($input);
             return redirect('qldmchi');
 

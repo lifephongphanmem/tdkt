@@ -124,9 +124,7 @@
                             <td style="text-align: center">{{$key + 1}}</td>
                             <td>{{$tt->madonvi}}</td>
                             <td class="active">{{$tt->tendv}}</td>
-                            <td style="text-align: center">
-
-                            </td>
+                            <td style="text-align: left"></td>
                             <td>
                                 @if(can('users','edit'))
                                 <a href="{{url('dmdonvi/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>

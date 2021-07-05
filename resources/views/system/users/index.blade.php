@@ -90,28 +90,14 @@
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet box">
                 @if(session('admin')->sadmin == 'ssa')
-                    <!--div class="portlet-title">
+                    <div class="portlet-title">
                         <div class="caption"></div>
                         <div class="actions">
                             <a href="{{url('users/create')}}" class="btn btn-default btn-sm">
                             <i class="fa fa-plus"></i> Tạo tài khoản</a>
                         </div>
-                    </div-->
-                @endif
-                    <div class="portlet-title">
-                        <div class="caption"></div>
-                        <div class="actions">
-                            @if($inputs['level'] == 'X')
-                                <a href="{{url('users/print?&level='.$inputs['level'].'&mahuyen='.$inputs['mahuyen'])}}" class="btn btn-default btn-sm" target="_blank">
-                                <i class="fa fa-print"></i> Print</a>
-                            @else
-                                @if($inputs['level'] != '')
-                                <a href="{{url('users/print?&level='.$inputs['level'])}}" class="btn btn-default btn-sm" target="_blank">
-                                    <i class="fa fa-print"></i> Print</a>
-                                @endif
-                            @endif
-                        </div>
                     </div>
+                @endif
                 <hr>
                 <div class="portlet-body">
                     <div class="row">
@@ -121,31 +107,19 @@
                                 <select class="form-control" name="level" id="level">
                                     <option value="">--Chọn phân loại tài khoản--</option>
                                     @if(session('admin')->level == 'T')
-                                        <option value="T" {{($inputs['level'] == "T") ? 'selected' : ''}}>Tổng hợp</option>
+                                        <option value="T" {{($inputs['level'] == "T") ? 'selected' : ''}}>Tài khoản cấp Tỉnh</option>
                                         @if(can('districts','index'))
-                                        <option value="H" {{($inputs['level'] == "H") ? 'selected' : ''}}>Đơn vị quản lý</option>
+                                        <option value="H" {{($inputs['level'] == "H") ? 'selected' : ''}}>Tài khoản cấp Huyện</option>
                                         @endif
                                     @endif
                                     @if(session('admin')->level == 'T' || session('admin')->level =='H' || session('admin')->level == 'X')
                                         @if(can('towns','index'))
-                                        <option value="X" {{($inputs['level'] == "X") ? 'selected' : ''}}>Đơn vị</option>
+                                        <option value="X" {{($inputs['level'] == "X") ? 'selected' : ''}}>Tài khoản cấp đơn vị</option>
                                         @endif
                                     @endif
                                 </select>
                             </div>
                         </div>
-                        @if(session('admin')->level == 'T' && $inputs['level'] == 'X')
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label>Đơn vị quản lý</label>
-                                <select class="form-control" name="mahuyen" id="mahuyen">
-                                    @foreach($districts as $district)
-                                        <option value="{{$district->mahuyen}}" {{$district->mahuyen == $inputs['mahuyen'] ? 'selected' : ''}}>{{$district->tendv}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        @endif
                     </div>
                     <div class="portlet-body">
                         <table class="table table-striped table-bordered table-hover" id="sample_3">
@@ -153,6 +127,7 @@
                         <tr>
                             <th style="text-align: center" width="2%">STT</th>
                             <th style="text-align: center">Tên tài khoản</th>
+                            <th style="text-align: center">Tên đơn vị</th>
                             <th style="text-align: center" width="10%">Username</th>
                             <th style="text-align: center" width="5%">Level</th>
                             <th style="text-align: center" width="20%">Trạng thái</th>
@@ -164,6 +139,8 @@
                         <tr class="odd gradeX">
                             <td style="text-align: center">{{$key + 1}}</td>
                             <td>{{$tt->name}}</td>
+                            <?php $tendv = $m_dv->where('madonvi',$tt->madonvi)->first()->tendv;?>
+                            <td>{{$tendv}}</td>
                             <td class="active">{{$tt->username}}</td>
                             <td style="text-align: center">{{$tt->level}}</td>
                             <td style="text-align: center">

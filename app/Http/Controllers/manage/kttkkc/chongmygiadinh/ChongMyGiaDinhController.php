@@ -46,7 +46,7 @@ class ChongMyGiaDinhController extends Controller
             $inputs = $request->all();
             $inputs['namsinh'] = getDateToDb($inputs['namsinh']);
             $inputs['tgiantgkc'] = getDateToDb($inputs['tgiantgkc']);
-            $inputs['tgiankcqd'] = getDateToDb($inputs['tgiankcqd']);
+            $inputs['tgiankcqd'] =$inputs['tgiankcqd'];
             $inputs['ngaynhap'] = date('Y-m-d');
             $model = new ChongMyGiaDinh();
             $model->create($inputs);

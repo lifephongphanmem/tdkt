@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\manage\quytdkt;
 
+use App\dmdonvi;
 use App\Model\manage\quytdkt\qlphieuchi;
 use App\Model\manage\quytdkt\qlphieuthu;
 use App\Model\manage\quytdkt\qlphieuthuchi;
@@ -30,9 +31,15 @@ class BaocaoquyController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $model = qlphieuthuchi::where('loaiphieu','PT')->get();
+            $m_dv = dmdonvi::where('madonvi',session('admin')->madonvi)->first();
+            $model = qlphieuthuchi::where('loaiphieu','PT')
+                ->where('ngaythang','>=',$inputs['tungay'])
+                ->where('ngaythang','<=',$inputs['denngay'])
+                ->where('madonvi',session('admin')->madonvi)
+                ->get();
             return view('manage.quytdkt.baocaoth.soquythu')
                 ->with('model', $model)
+                ->with('m_dv', $m_dv)
                 ->with('inputs', $inputs)
                 ->with('pageTitle', 'Sổ quỹ các khoản thu');
 
@@ -43,9 +50,15 @@ class BaocaoquyController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $model = qlphieuthuchi::where('loaiphieu','PC')->get();
+            $m_dv = dmdonvi::where('madonvi',session('admin')->madonvi)->first();
+            $model = qlphieuthuchi::where('loaiphieu','PC')
+                ->where('ngaythang','>=',$inputs['tungay'])
+                ->where('ngaythang','<=',$inputs['denngay'])
+                ->where('madonvi',session('admin')->madonvi)
+                ->get();
             return view('manage.quytdkt.baocaoth.soquychi')
                 ->with('model', $model)
+                ->with('m_dv', $m_dv)
                 ->with('inputs', $inputs)
                 ->with('pageTitle', 'Sổ quỹ các khoản chi');
 
@@ -57,9 +70,14 @@ class BaocaoquyController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $model = qlphieuthuchi::orderby('ngaythang')->get();
+            $m_dv = dmdonvi::where('madonvi',session('admin')->madonvi)->first();
+            $model = qlphieuthuchi::where('ngaythang','>=',$inputs['tungay'])
+                ->where('ngaythang','<=',$inputs['denngay'])
+                ->where('madonvi',session('admin')->madonvi)
+                ->orderby('ngaythang')->get();
             return view('manage.quytdkt.baocaoth.soquythuchi')
                 ->with('model', $model)
+                ->with('m_dv', $m_dv)
                 ->with('inputs', $inputs)
                 ->with('pageTitle', 'Sổ quỹ các khoản thu, chi');
 

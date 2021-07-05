@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\District;
+use App\dmdonvi;
 use App\DmDvQl;
 use App\DnDvGs;
 use App\DnDvLt;
@@ -137,6 +138,9 @@ class UsersController extends Controller
                     $model = Users::where('level', $inputs['level'])
                         ->orderBy('id', 'desc');*/
                     $model = Users::all();
+                    $m_dv = dmdonvi::all();
+                    if($inputs['level'] != '')
+                        $model = $model->where('level',$inputs['level']);
                     $districts = District::all();
                     /*/$inputs['mahuyen'] = isset($inputs['mahuyen']) ? $inputs['mahuyen'] : $districts->first()->mahuyen;
                     if($inputs['level'] == 'X'){
@@ -149,7 +153,7 @@ class UsersController extends Controller
 */
                     $index_unset = 0;
                     foreach ($model as $user) {
-                        if ($user->username == 'minhtran') {
+                        if ($user->username == 'quantri') {
                             unset($model[$index_unset]);
                         }
                         $index_unset++;
@@ -158,6 +162,7 @@ class UsersController extends Controller
                     return view('system.users.index')
                         ->with('model', $model)
                         ->with('inputs', $inputs)
+                        ->with('m_dv',$m_dv)
                         ->with('districts',$districts)
                         ->with('pageTitle', 'Danh sách tài khoản đơn vị');
                 }else
@@ -172,7 +177,9 @@ class UsersController extends Controller
     {
         if (Session::has('admin')) {
             if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+                $modeldvql = dmdonvi::all();
                 return view('system.users.create')
+                    ->with('modeldvql', $modeldvql)
                     ->with('pageTitle', 'Tạo mới thông tin tài khoản');
             }else{
                 return view('errors.perm');
@@ -226,8 +233,10 @@ class UsersController extends Controller
         if (Session::has('admin')) {
 
             $model = Users::findOrFail($id);
+            $modeldvql = dmdonvi::all();
             return view('system.users.edit')
                 ->with('model', $model)
+                ->with('modeldvql', $modeldvql)
                 ->with('pageTitle', 'Chỉnh sửa thông tin tài khoản');
         } else
             return view('errors.notlogin');
@@ -250,7 +259,7 @@ class UsersController extends Controller
                     $input['password'] = md5($input['newpass']);
                 $model->update($input);
 
-                return redirect('users?&level='.$model->level);
+                return redirect('users');
             }else
                 return view('errors.noperm');
 
@@ -277,13 +286,8 @@ class UsersController extends Controller
         if (Session::has('admin')) {
 
             $model = Users::findorFail($id);
-            if ($model->level == 'DVVT') {
-                $ttdn = Company::where('maxa', $model->maxa)
-                    ->where('level', 'DVVT')
-                    ->first();
-                $setting = $ttdn->settingdvvt;
-            } else
-                $setting = '';
+            $setting = '';
+            //dd( $model->permission );
             $permission = !empty($model->permission) || $model->permission != '' ? $model->permission : getPermissionDefault($model->level);
             //dd(json_decode($permission));
             return view('system.users.perms')
@@ -299,7 +303,6 @@ class UsersController extends Controller
     {
         if (Session::has('admin')) {
             $update = $request->all();
-
             $id = $update['id'];
 
             $model = Users::findOrFail($id);
@@ -309,7 +312,7 @@ class UsersController extends Controller
 
                 $model->permission = json_encode($update['roles']);
                 $model->save();
-                return redirect('users?&level='.$model->level);
+                return redirect('users');
 
             } else
                 dd('Tài khoản không tồn tại');

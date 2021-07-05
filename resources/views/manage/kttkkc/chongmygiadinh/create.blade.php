@@ -148,7 +148,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Thời gian kháng chiến quy đổi<span class="require">*</span></label>
-                                {!! Form::input('date', 'tgiankcqd', null, array('id' => 'tgiankcqd', 'class' => 'form-control', 'required'))!!}
+                                {!!Form::text('tgiankcqd',null, array('id' => 'tgiankcqd','class' => 'form-control required'))!!}
                                 @if ($errors->has('tgiankcqd'))
                                     <em class="invalid">{{ $errors->first('tgiankcqd') }}</em>
                                 @endif

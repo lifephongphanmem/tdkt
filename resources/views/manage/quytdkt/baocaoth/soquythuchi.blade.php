@@ -11,8 +11,8 @@
 <table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
     <tr>
         <td width="40%" style="vertical-align: top;">
-            <span style="text-transform: uppercase">Đơn vị:</span><br>
-            <span style="text-transform: uppercase;font-weight: bold">Mã QHNS:</span>
+            <span style="text-transform: uppercase">Đơn vị:{{$m_dv->tendv}} </span><br>
+            <span style="text-transform: uppercase;font-weight: bold">Mã QHNS:{{$m_dv->maqhns}}</span>
             <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
 
         </td>
@@ -23,7 +23,7 @@
 </table>
 
 <p style="text-align: center; font-weight: bold; font-size: 16px;">SỔ QUỸ CÁC KHOẢN THU, CHI</p>
-<p style="text-align: center; font-weight: inherit; font-size: 14px;">Từ ngày {{$inputs['tungay']}} đến {{$inputs['denngay']}}</p>
+<p style="text-align: center; font-weight: inherit; font-size: 14px;">Từ ngày {{getDayVn($inputs['tungay'])}} đến {{getDayVn($inputs['denngay'])}}</p>
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;" id="data">
     <thead>
         <tr>
@@ -55,7 +55,7 @@
         @foreach($model as $key=>$tt)
             <tr>
                 <td style="text-align: center">{{$key+1}}</td>
-                <td style="text-align: center">{{$tt->ngaythang}}</td>
+                <td style="text-align: center">{{getDayVn($tt->ngaythang)}}</td>
                 <td class="active" style="font-weight: bold">{{$tt->maphieu}}</td>
                 <td>{{$tt->noidung}}</td>
                 @if($tt->loaiphieu == 'PT')

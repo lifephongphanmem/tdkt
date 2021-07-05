@@ -11,6 +11,7 @@ class Users extends Model
         'name',
         'username',
         'password',
+        'madonvi',
         'phone',
         'email',
         'status',

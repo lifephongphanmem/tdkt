@@ -25,17 +25,17 @@
                 @endif
                 @if(can('ktthutuong','index'))
                     <li>
-                        <a href="{{url('ktthutuong')}}">Quản lý bằng khen thủ tướng (tỉnh Hà Bắc cũ)</a>
+                        <a href="{{url('ktthutuong')}}">Quản lý bằng khen thủ tướng</a>
                     </li>
                 @endif
                     @if(can('ktctubnd','index'))
                         <li>
-                            <a href="{{url('ktctubnd')}}">Quản lý bằng khen chủ tịch UBND tỉnh (tỉnh Hà Bắc cũ)</a>
+                            <a href="{{url('ktctubnd')}}">Quản lý bằng khen chủ tịch UBND tỉnh</a>
                         </li>
                     @endif
                     @if(can('kyniemchuong','index'))
                         <li>
-                            <a href="{{url('kyniemchuong')}}">Quản lý kỷ niệm chương (tỉnh Hà Bắc cũ)</a>
+                            <a href="{{url('kyniemchuong')}}">Quản lý kỷ niệm chương</a>
                         </li>
                     @endif
             </ul>

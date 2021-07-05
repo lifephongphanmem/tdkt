@@ -4,6 +4,14 @@
         $('#frm_bc1').attr('action',url);
         $('#frm_bc1').submit();
     }
+    function ClickBC2(url){
+        $('#frm_bc2').attr('action',url);
+        $('#frm_bc2').submit();
+    }
+    function ClickBC3(url){
+        $('#frm_bc3').attr('action',url);
+        $('#frm_bc3').submit();
+    }
 </script>
 
 <!--Modal Thoại PL1-->
@@ -65,7 +73,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                <button type="submit" data-dismiss="modal" class="btn btn-success" onclick="ClickBC1('soquychi')">Đồng ý</button>
+                <button type="submit" data-dismiss="modal" class="btn btn-success" onclick="ClickBC2('soquychi')">Đồng ý</button>
                 <!--button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="ClickBCExcel('/reports/thuetn/bcgiathuetnexcel')">Xuất Excel</button-->
             </div>
             {!! Form::close() !!}
@@ -75,7 +83,7 @@
 </div>
 <div id="pl3-thoai-confirm" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
     <div class="modal-dialog">
-        {!! Form::open(['url'=>'','target'=>'_blank' , 'id' => 'frm_bc2', 'class'=>'form-horizontal form-validate']) !!}
+        {!! Form::open(['url'=>'','target'=>'_blank' , 'id' => 'frm_bc3', 'class'=>'form-horizontal form-validate']) !!}
         <div class="modal-content">
             <div class="modal-header modal-header-primary">
                 <button type="button" data-dismiss="modal" aria-hidden="true"
@@ -98,7 +106,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                <button type="submit" data-dismiss="modal" class="btn btn-success" onclick="ClickBC1('soquythuchi')">Đồng ý</button>
+                <button type="submit" data-dismiss="modal" class="btn btn-success" onclick="ClickBC3('soquythuchi')">Đồng ý</button>
                 <!--button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="ClickBCExcel('/reports/thuetn/bcgiathuetnexcel')">Xuất Excel</button-->
             </div>
             {!! Form::close() !!}

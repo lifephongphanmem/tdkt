@@ -49,6 +49,9 @@ class CreateLaphosotdTable extends Migration
             $table->string('bienban')->nullable();
             $table->string('tailieukhac')->nullable();
             $table->string('ttthaotac')->nullable();
+            $table->string('madonvi', 50)->nullable();
+            $table->string('macqcq',50)->nullable();
+            $table->string('plphongtrao')->nullable();
             $table->timestamps();
         });
     }

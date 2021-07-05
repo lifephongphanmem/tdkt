@@ -44,19 +44,19 @@
                 </div>
                 <hr>
                 <div class="portlet-body">
-                    @include('system.users.include.perms.csdlmucgiahhdv')
-                    @include('system.users.include.perms.csdlthamdinhgia')
-                    @include('system.users.include.perms.csdlvbqlnn')
-                    @include('system.users.include.perms.csdlttpvctqlnn')
+                    @include('system.users.include.perms.tdktkhangchien')
+                    @include('system.users.include.perms.tdktcaccap')
+                    @include('system.users.include.perms.qlvbnn')
+                    @include('system.users.include.perms.qlquytdkt')
                     @include('system.users.include.perms.system')
                 </div>
             </div>
         </div>
         <div class="col-md-12" style="text-align: center">
             @if($model->level == 'X')
-                <a href="{{url('users?&level='.$model->level.'&mahuyen='.$model->mahuyen)}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                <a href="{{url('users')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
             @else
-                <a href="{{url('users?&level='.$model->level)}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                <a href="{{url('users')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
             @endif
             <button type="reset" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Nhập lại</button>
             <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Cập nhật</button>

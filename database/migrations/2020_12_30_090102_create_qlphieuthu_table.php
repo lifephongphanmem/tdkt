@@ -26,6 +26,7 @@ class CreateQlphieuthuchiTable extends Migration
             $table->string('ghichu')->nullable();
             $table->string('loaiphieu')->nullable();
             $table->string('ttnguoitao')->nullable();
+            $table->string('madonvi')->nullable();
             $table->timestamps();
         });
     }

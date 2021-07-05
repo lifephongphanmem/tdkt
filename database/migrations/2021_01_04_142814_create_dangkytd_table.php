@@ -16,6 +16,7 @@ class CreateDangkytdTable extends Migration
         Schema::create('dangkytd', function (Blueprint $table) {
             $table->increments('id');
             $table->string('kihieudhtd')->unique();
+            $table->string('plphongtrao')->nullable();
             $table->string('tendanhhieutd')->nullable();
             $table->string('tenhinhthuckt')->nullable();
             $table->string('tendtkt')->nullable();
@@ -47,6 +48,7 @@ class CreateDangkytdTable extends Migration
             $table->string('qdkt')->nullable();
             $table->string('bienban')->nullable();
             $table->string('tailieukhac')->nullable();
+            $table->string('madonvi')->nullable();
             $table->string('ttthaotac')->nullable();
             $table->timestamps();
         });

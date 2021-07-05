@@ -32,18 +32,41 @@
                         <meta name="csrf-token" content="{{ csrf_token() }}" />
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <!--div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Mã đơn vị<span class="require">*</span></label>
                                         <input type="text" class="form-control required" name="madonvi" id="madonvi" autofocus>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                </div-->
+                                <input name="madonvi" id="madonvi" hidden>
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label">Tên đơn vị<span class="require">*</span></label>
                                         <input type="text" class="form-control required"  name="tendv" id="tendv">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Cấp hành chính</label>
+                                        <select class="form-control" name="caphanhchinh" id="caphanhchinh">
+                                            <option value="XA" >Xã</option>
+                                            <option value="HUYEN" >Huyện</option>
+                                            <option value="TINH" >Tỉnh</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Đơn vị chủ quản</label>
+                                    <select class="form-control" name="macqcq" id="macqcq">
+                                        @foreach($modeldvql as $tt)
+                                            <option value="{{$tt->madonvi}}" >{{$tt->tendv}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             </div>
                         </div>
                         </div>

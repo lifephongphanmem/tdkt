@@ -136,6 +136,22 @@
                     <h4 class="form-section" style="color: #0000ff">Thông tin hồ sơ</h4>
                     <div class="row">
                         <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Phân loại phong trào TĐ</label>
+                                    {!! Form::select(
+                                    'plphongtrao',
+                                    array(
+                                    'Cấp trung ương' => 'Cấp trung ương',
+                                    'Cấp bộ ban ngành' => 'Cấp bộ ban ngành',
+                                    ),
+                                    null,
+                                    array('id' => 'plphongtrao', 'class' => 'form-control'))
+                                    !!}
+                                </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Kí hiệu danh hiệu thi đua<span class="require">*</span></label>
                                 {!!Form::text('kihieudhtd',null, array('id' => 'kihieudhtd','class' => 'form-control required'))!!}
@@ -404,6 +420,8 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="madonvi" id="madonvi" value="{{session('admin')->madonvi}}">
+            <input type="hidden" name="macqcq" id="macqcq" value="{{session('admin')->macqcq}}">
             <!-- END EXAMPLE TABLE PORTLET-->
             <div style="text-align: center">
                 <a href="{{url('dangkytd')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
@@ -438,7 +456,7 @@
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 type: 'GET',
-                url: '/dangkytd/checkkihieu11',
+                url: '/checkmatd',
                 data: {
                     _token: CSRF_TOKEN,
                     kihieudhtd:$(this).val()

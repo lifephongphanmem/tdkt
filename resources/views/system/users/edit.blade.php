@@ -34,6 +34,28 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label class="control-label">Đơn vị chủ quản</label>
+                                        <select class="form-control" name="macqcq" id="macqcq">
+                                            @foreach($modeldvql as $tt)
+                                                <option value="{{$tt->madonvi}}" {{$tt->madonvi == $model->madonvi ? 'selected' : ''}}>{{$tt->tendv}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Cấp độ tài khoản</label>
+                                        <select class="form-control" name="level" id="level">
+                                            <option value="X" {{($model->level == 'X' ? 'selected' : '')}}>Xã</option>
+                                            <option value="H" {{($model->level == 'H' ? 'selected' : '')}}>Huyện</option>
+                                            <option value="T" {{($model->level == 'T' ? 'selected' : '')}}>Tinh</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label class="control-label">Tên tài khoản<span class="require">*</span></label>
                                         {!!Form::text('name', null, array('id' => 'name','class' => 'form-control required','autofocus'))!!}
                                     </div>

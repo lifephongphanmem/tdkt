@@ -46,7 +46,7 @@ class ChongMyCaNhanController extends Controller
             $inputs = $request->all();
             $inputs['namsinh'] = getDateToDb($inputs['namsinh']);
             $inputs['tgiantgkc'] = getDateToDb($inputs['tgiantgkc']);
-            $inputs['tgiankcqd'] = getDateToDb($inputs['tgiankcqd']);
+            $inputs['tgiankcqd'] =$inputs['tgiankcqd'];
             $inputs['ngaynhap'] = date('Y-m-d');
             $model = new ChongMyCaNhan();
             $model->create($inputs);
@@ -71,7 +71,7 @@ class ChongMyCaNhanController extends Controller
             $model = ChongMyCaNhan::findOrFail($id);
             $inputs['namsinh'] = getDateToDb($inputs['namsinh']);
             $inputs['tgiantgkc'] = getDateToDb($inputs['tgiantgkc']);
-            $inputs['tgiankcqd'] = getDateToDb($inputs['tgiankcqd']);
+            $inputs['tgiankcqd'] =$inputs['tgiankcqd'];
             $model->update($inputs);
             return redirect('chongmycanhan');
         }else

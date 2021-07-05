@@ -50,7 +50,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Phân loại</label>
-                                        <input type="text" class="form-control "  name="phanloai" id="phanloai">
+                                        <select id="phanloai" name="phanloai" class="form-control js-example-basic-single">
+                                            @foreach($modelpl as $pl)
+                                                <option value="{{$pl->madmchi}}">{{$pl->phanloai}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -78,6 +82,7 @@
                         </div>
                     <!-- END FORM-->
             </div>
+            <input name="madonvi" id="madonvi" value="{{session('admin')->madonvi}}" hidden>
             <div style="text-align: center">
                 <a href="{{url('qlchihdtdkt')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                 <button type="reset" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Nhập lại</button>

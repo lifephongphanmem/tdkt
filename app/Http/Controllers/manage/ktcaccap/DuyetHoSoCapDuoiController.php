@@ -13,10 +13,14 @@ class DuyetHoSoCapDuoiController extends Controller
         if(Session::has('admin')){
             $inputs = $request->all();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
-            $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])
-                ->where('trangthai', 'DD')
-                ->where('trangthaihuyen','<>', 'CC')
-                ->get();
+            if(session('admin')->sadmin == 'ssa')
+                $model = DangKyTd::whereYear('ngayky',$inputs['nam'])->get();
+            else
+                $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])
+                    ->where('trangthai', 'DD')
+                    ->where('macqcq',session('admin')->madonvi)
+                    ->where('trangthaihuyen','<>', 'CC')
+                    ->get();
             return view('manage.ktcaccap.duyethosocapduoi.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)

@@ -45,18 +45,89 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="row">
+                            <!--div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Phân loại</label>
                                     <select class="form-control" name="phanloai" id="phanloai">
-                                        <option value="Xã" {{($model->status == 'Xã' ? 'selected' : '')}}>Danh hiệu thi đua cấp Xã</option>
-                                        <option value="Huyện" {{($model->status == 'Huyện' ? 'selected' : '')}}>Danh hiệu thi đua cấp Huyện</option>
-                                        <option value="Tỉnh" {{($model->status == 'Tỉnh' ? 'selected' : '')}}>Danh hiệu thi đua cấp Tỉnh</option>
-                                        <option value="Cơ sở" {{($model->status == 'Cơ sở' ? 'selected' : '')}}>Danh hiệu thi đua cấp Cơ sở</option>
+                                        <option value="Xã" {{($model->phanloai == 'Xã' ? 'selected' : '')}}>Danh hiệu thi đua cấp Xã</option>
+                                        <option value="Huyện" {{($model->phanloai == 'Huyện' ? 'selected' : '')}}>Danh hiệu thi đua cấp Huyện</option>
+                                        <option value="Tỉnh" {{($model->phanloai == 'Tỉnh' ? 'selected' : '')}}>Danh hiệu thi đua cấp Tỉnh</option>
+                                        <option value="Cơ sở" {{($model->phanloai == 'Cơ sở' ? 'selected' : '')}}>Danh hiệu thi đua cấp Cơ sở</option>
                                     </select>
+                                </div>
+                            </div-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Cấp hành chính</label>
+                                        <select class="form-control" name="caphanhchinh" id="caphanhchinh">
+                                            <option value="XA" {{($model->phanloai == 'XA' ? 'selected' : '')}}>Xã</option>
+                                            <option value="HUYEN" {{($model->phanloai == 'HUYEN' ? 'selected' : '')}}>Huyện</option>
+                                            <option value="TINH" {{($model->phanloai == 'TINH' ? 'selected' : '')}}>Tỉnh</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Đơn vị chủ quản</label>
+                                        <select class="form-control" name="macqcq" id="macqcq">
+                                            @foreach($modeldvql as $tt)
+                                                <option value="{{$tt->madonvi}}" {{$tt->madonvi == $model->macqcq ? 'selected' : ''}}>{{$tt->tendv}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Tên đơn vị hiển thị báo cáo<span class="require">*</span></label>
+                                        {!!Form::text('tendvhienthi', null, array('id' => 'tendvhienthi','class' => 'form-control required'))!!}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Tên đơn vị cấp trên hiển thị báo cáo<span class="require">*</span></label>
+                                        {!!Form::text('tendvcqhienthi', null, array('id' => 'tendvcqhienthi','class' => 'form-control required'))!!}
+                                    </div>
+                                </div>
+                            </div-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Chức vụ người ký<span class="require">*</span></label>
+                                        {!!Form::text('cdlanhdao', null, array('id' => 'cdlanhdao','class' => 'form-control required'))!!}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Chức vụ người ký thay</label>
+                                        {!!Form::text('chucvukythay', null, array('id' => 'chucvukythay','class' => 'form-control'))!!}
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Họ và tên người ký<span class="require">*</span></label>
+                                        {!!Form::text('lanhdao', null, array('id' => 'lanhdao','class' => 'form-control required'))!!}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Địa danh<span class="require">*</span></label>
+                                        {!!Form::text('diadanh', null, array('id' => 'didanh','class' => 'form-control required'))!!}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Địa chỉ<span class="require">*</span></label>
+                                        {!!Form::text('diachi', null, array('id' => 'diachi','class' => 'form-control required'))!!}
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Ghi chú</label>

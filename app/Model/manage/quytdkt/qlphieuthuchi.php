@@ -19,6 +19,7 @@ class qlphieuthuchi extends Model
         'mahuyen',
         'ghichu',
         'loaiphieu',
+        'madonvi',
         'ttnguoitao',
     ];
 }

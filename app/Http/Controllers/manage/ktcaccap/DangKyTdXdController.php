@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\manage\ktcaccap;
 
+use App\dmdonvi;
 use App\Model\manage\ktcaccap\DangKyTd;
 use App\Model\manage\ktcaccap\LapHoSoTd;
 use Illuminate\Http\Request;
@@ -14,9 +15,12 @@ class DangKyTdXdController extends Controller
         if(Session::has('admin')){
             $inputs = $request->all();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
-            $model = DangKyTd::whereYear('ngayky',$inputs['nam'])
-                ->where('trangthai','<>', 'CC')
-                ->get();
+            if(session('admin')->sadmin == 'ssa')
+                $model = DangKyTd::whereYear('ngayky',$inputs['nam'])->get();
+            else
+                $model = DangKyTd::whereYear('ngayky',$inputs['nam'])->where('madonvi',session('admin')->madonvi)
+                    ->where('trangthai','<>', 'CC')
+                    ->get();
             return view('manage.ktcaccap.xetduyettd.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)
@@ -35,10 +39,12 @@ class DangKyTdXdController extends Controller
             $model->ngaynhan = $inputs['ngaynhan'];
             $model->update($inputs);
             $a_hs = DangKyTd::find($id)->toarray();
-            $a_hs['trangthai'] = 'CD';
-            $a_hs['trangthai'] = 'CD';
+            $macqcq = dmdonvi::where('madonvi',$a_hs['madonvi'])->first()->macqcq;
+            $a_hs['trangthai'] = 'CC';
+            $a_hs['trangthaihuyen'] = '';
             $a_hs['ttthaotac'] = session('admin')->username.'('.session('admin')->name.') tạo hồ sơ thi đua';
             $a_hs['kihieudhtd'] = getdate()[0];
+            $a_hs['macqcq'] = $macqcq;
             unset($a_hs['id']);
             $model = new LapHoSoTd();
             $model->create($a_hs);

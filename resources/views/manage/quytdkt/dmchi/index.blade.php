@@ -90,7 +90,6 @@
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet box">
-                @if(session('admin')->sadmin == 'ssa')
                     <div class="portlet-title">
                         <div class="caption"></div>
                         <div class="actions">
@@ -98,7 +97,6 @@
                             <i class="fa fa-plus"></i> Thêm mới</a>
                         </div>
                     </div>
-                @endif
                 <hr>
                 <div class="portlet-body">
                     <div class="row">
@@ -126,9 +124,10 @@
                         <tr>
                             <th style="text-align: center" width="2%">STT</th>
                             <th style="text-align: center">Mã danh mục chi</th>
+                            <th style="text-align: center" width="20%">Phân loại chi</th>
                             <th style="text-align: center" width="20%">Nội dung chi</th>
-                            <th style="text-align: center" width="50%">Số tiền</th>
-                            <th style="text-align: center" width="10%">Thao tác</th>
+                            <th style="text-align: center" width="15%">Số tiền</th>
+                            <th style="text-align: center" width="15%">Thao tác</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -136,10 +135,11 @@
                         <tr class="odd gradeX">
                             <td style="text-align: center">{{$key + 1}}</td>
                             <td>{{$tt->madmchi}}</td>
+                            <td>{{$tt->phanloai}}</td>
                             <td class="active">{{$tt->noidung}}</td>
                             <td style="text-align: right" class="active">{{dinhdangso($tt->sotien)}}</td>
                             <td>
-                                @if(can('users','edit'))
+                                @if(can('qldmchi','edit'))
                                 <a href="{{url('qldmchi/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                 @endif
                                 <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;

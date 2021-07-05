@@ -17,6 +17,7 @@ class qlphieuchi extends Model
         'maxa',
         'mahuyen',
         'ghichu',
+        'madonvi',
         'ttnguoitao',
     ];
 }

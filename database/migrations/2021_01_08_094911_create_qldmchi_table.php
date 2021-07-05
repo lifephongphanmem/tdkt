@@ -23,6 +23,7 @@ class CreateQldmchiTable extends Migration
             $table->string('mahuyen')->nullable();
             $table->string('ghichu')->nullable();
             $table->string('ttnguoitao')->nullable();
+            $table->string('madonvi')->nullable();
             $table->timestamps();
         });
     }

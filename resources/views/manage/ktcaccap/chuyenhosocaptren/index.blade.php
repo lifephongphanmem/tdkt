@@ -117,7 +117,7 @@
                                             <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
                                         </td>
                                     @endif
-                                    @if($tt->trangthaihuyen == "CC")
+                                    @if($tt->trangthaihuyen == "CC" || $tt->trangthaihuyen == "")
                                         <td align="center"><span class="badge badge-warning">Chờ chuyển</span></td>
                                     @elseif($tt->trangthaihuyen == 'CD')
                                         <td align="center"><span class="badge badge-blue">Chờ duyệt</span>

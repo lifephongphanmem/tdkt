@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\manage\quytdkt;
 
+use App\Model\manage\quytdkt\qldmchi;
 use App\Model\manage\quytdkt\qlphieuchi;
 use App\Model\manage\quytdkt\qlphieuthuchi;
 use Carbon\Carbon;
@@ -44,10 +45,10 @@ class QlphieuchiController extends Controller
     public function create()
     {
         if (Session::has('admin')) {
-            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
-                return view('manage.quytdkt.chi.create')
-                    ->with('pageTitle', 'Tạo mới thông tin phiếu chi');
-            }
+            $modelpl = qldmchi::where('madonvi',session('admin')->madonvi)->get();
+            return view('manage.quytdkt.chi.create')
+                ->with('modelpl', $modelpl)
+                ->with('pageTitle', 'Tạo mới thông tin phiếu chi');
         }
     }
 
@@ -62,6 +63,7 @@ class QlphieuchiController extends Controller
         if (Session::has('admin')) {
             $inputs = $request->all();
             $model = new qlphieuthuchi();
+            $inputs['sotien'] = getDouble($inputs['sotien']);
             $inputs['ttnguoitao'] = session('admin')->name.'('.session('admin')->username.')'. getDateTime(Carbon::now()->toDateTimeString());
             $inputs['loaiphieu'] ='PC';
             $model->create($inputs);
@@ -92,10 +94,11 @@ class QlphieuchiController extends Controller
     public function edit($id)
     {
         if (Session::has('admin')) {
-
+            $modelpl = qldmchi::where('madonvi',session('admin')->madonvi)->get();
             $model = qlphieuthuchi::findOrFail($id);
             return view('manage.quytdkt.chi.edit')
                 ->with('model', $model)
+                ->with('modelpl', $modelpl)
                 ->with('pageTitle', 'Chỉnh sửa thông tin phiếu chi');
         } else
             return view('errors.notlogin');
@@ -113,6 +116,7 @@ class QlphieuchiController extends Controller
         if (Session::has('admin')) {
             $input = $request->all();
             $model = qlphieuthuchi::findOrFail($id);
+            $input['sotien'] = getDouble($input['sotien']);
             $model->update($input);
             return redirect('qlchihdtdkt');
 

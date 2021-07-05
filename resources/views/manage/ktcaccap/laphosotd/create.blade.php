@@ -404,6 +404,8 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="madonvi" id="madonvi" value="{{session('admin')->madonvi}}">
+            <input type="hidden" name="macqcq" id="macqcq" value="{{session('admin')->macqcq}}">
             <!-- END EXAMPLE TABLE PORTLET-->
             <div style="text-align: center">
                 <a href="{{url('laphosotd')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
@@ -438,7 +440,7 @@
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 type: 'GET',
-                url: '/checkkihieu',
+                url: '/checkmahs',
                 data: {
                     _token: CSRF_TOKEN,
                     kihieudhtd:$(this).val()

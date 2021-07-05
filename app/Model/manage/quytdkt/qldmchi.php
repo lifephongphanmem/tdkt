@@ -16,6 +16,7 @@ class qldmchi extends Model
         'maxa',
         'mahuyen',
         'ghichu',
+        'madonvi',
         'ttnguoitao',
     ];
 }

@@ -4,7 +4,7 @@ Route::get('/dangkytd/lydo','manage\ktcaccap\DangKyTdController@lydo');
 Route::resource('dangkytd','manage\ktcaccap\DangKyTdController');
 Route::post('dangkytd/delete','manage\ktcaccap\DangKyTdController@delete');
 Route::post('dangkytd/trans','manage\ktcaccap\DangKyTdController@trans');
-Route::get('/dangkytd/checkkihieu','manage\ktcaccap\DangKyTdController@checkkihieu');
+Route::get('checkmatd','manage\ktcaccap\DangKyTdController@checkkihieu');
 
 //duyetdktd
 Route::get('/duyetdktd/lydo','manage\ktcaccap\DangKyTdXdController@lydo');
@@ -15,7 +15,8 @@ Route::resource('duyetdktd','manage\ktcaccap\DangKyTdXdController');
 //laphosotd
 Route::resource('laphosotd','manage\ktcaccap\LapHoSoTdController');
 Route::post('laphosotd/delete','manage\ktcaccap\LapHoSoTdController@delete');
-Route::get('checkkihieu','manage\ktcaccap\LapHoSoTdController@checkkihieu');
+Route::post('laphosotd/trans','manage\ktcaccap\LapHoSoTdController@trans');
+Route::get('checkmahs','manage\ktcaccap\LapHoSoTdController@checkkihieu');
 
 //trinhhoso
 Route::get('/trinhhoso/lydo','manage\ktcaccap\TrinhHoSoController@lydo');

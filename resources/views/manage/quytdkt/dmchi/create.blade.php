@@ -8,6 +8,7 @@
 @section('custom-script')
     <script type="text/javascript" src="{{url('assets/global/plugins/jquery-validation/js/jquery.validate.min.js')}}"></script>
     <script type="text/javascript" src="{{url('assets/global/plugins/select2/select2.min.js')}}"></script>
+    <script src="{{url('minhtran/jquery.inputmask.bundle.min.js')}}"></script>
 
 @stop
 
@@ -71,6 +72,7 @@
                         </div>
                         </div>
                     <!-- END FORM-->
+                <input name="madonvi" id="madonvi" value="{{session('admin')->madonvi}}" hidden>
             </div>
             <div style="text-align: center">
                 <a href="{{url('qldmchi')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
@@ -120,4 +122,6 @@
             });
         });
     </script>
+    @include('includes.script.create-header-scripts')
+    @include('includes.script.inputmask-ajax-scripts')
 @stop

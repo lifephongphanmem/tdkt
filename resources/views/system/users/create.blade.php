@@ -31,7 +31,28 @@
                     {!! Form::open(['url'=>'users', 'id' => 'create_tttaikhoan', 'class'=>'horizontal-form']) !!}
                         <meta name="csrf-token" content="{{ csrf_token() }}" />
                         <div class="form-body">
-
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Đơn vị:</label>
+                                        <select class="form-control" name="madonvi" id="madonvi">
+                                            @foreach($modeldvql as $tt)
+                                                <option value="{{$tt->madonvi}}" >{{$tt->tendv}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Cấp độ tài khoản</label>
+                                        <select class="form-control" name="level" id="level">
+                                            <option value="X" selected>Xã</option>
+                                            <option value="H">Huyện</option>
+                                            <option value="T">Tỉnh</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -51,23 +72,6 @@
                                 </div>
                                 <!--/span-->
                             </div>
-                            <!--div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Email</label>
-                                        <input type="text" class="form-control" name="email" id="email">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Trạng thái</label>
-                                        <select class="form-control" name="status" id="status">
-                                            <option value="Kích hoạt" selected>Kích hoạt</option>
-                                            <option value="Vô hiệu">Vô hiệu</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div-->
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">

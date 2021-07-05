@@ -23,6 +23,10 @@
     <td style="text-align: center"><input type="checkbox" {{ (isset($setting->duyethoso->index) && $setting->duyethoso->index == 1) ? 'checked' : '' }} value="1" name="roles[duyethoso][index]"/></td>
 </tr>
 <tr class="warning">
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;Duyệt hồ sơ đơn vị cấp dưới</td>
+    <td style="text-align: center"><input type="checkbox" {{ (isset($setting->duyethosocapduoi->index) && $setting->duyethosocapduoi->index == 1) ? 'checked' : '' }} value="1" name="roles[duyethosocapduoi][index]"/></td>
+</tr>
+<tr class="warning">
     <td>&nbsp;&nbsp;&nbsp;&nbsp;Trình hồ sơ lên cơ quan cấp trên</td>
     <td style="text-align: center"><input type="checkbox" {{ (isset($setting->chuyenhosocaptren->index) && $setting->chuyenhosocaptren->index == 1) ? 'checked' : '' }} value="1" name="roles[chuyenhosocaptren][index]"/></td>
 </tr>

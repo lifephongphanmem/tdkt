@@ -17,8 +17,11 @@ class LapHoSoTdController extends Controller
         if(Session::has('admin')){
             $inputs = $request->all();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
-            $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])
-                ->get();
+            if(session('admin')->sadmin == 'ssa')
+                $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->get();
+            else
+                $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->where('madonvi',session('admin')->madonvi)
+                    ->get();
             return view('manage.ktcaccap.laphosotd.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)
@@ -145,6 +148,21 @@ class LapHoSoTdController extends Controller
             $id = $request->all()['iddelete'];
             $model = LapHoSoTd::findorFail($id);
             $model->delete();
+            return redirect('laphosotd');
+        }else
+            return view('errors.notlogin');
+    }
+
+    public function trans(Request $request){
+        if(Session::has('admin')) {
+            $inputs = $request->all();
+            $id = $request->all()['idtrans'];
+            $model = LapHoSoTd::findorFail($id);
+            $inputs['trangthai'] = 'CD';
+            $inputs['ttthaotac'] = session('admin')->username.'('.session('admin')->name.') chuyển hồ sơ ';
+            $inputs['ngaychuyen'] = date('Y-m-d H:i:s');
+            $model->nguoichuyen = $inputs['nguoichuyen'];
+            $model->update($inputs);
             return redirect('laphosotd');
         }else
             return view('errors.notlogin');

@@ -91,6 +91,7 @@
                         </div>
                     <!-- END FORM-->
             </div>
+            <input name="madonvi" id="madonvi" value="{{session('admin')->madonvi}}" hidden>
             <div style="text-align: center">
                 <a href="{{url('qldauvao')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                 <button type="reset" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Nhập lại</button>

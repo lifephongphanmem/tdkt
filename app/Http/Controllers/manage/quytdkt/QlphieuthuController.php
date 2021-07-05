@@ -44,10 +44,8 @@ class QlphieuthuController extends Controller
     public function create()
     {
         if (Session::has('admin')) {
-            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
-                return view('manage.quytdkt.thu.create')
-                    ->with('pageTitle', 'Tạo mới thông tin phiếu thu quỹ');
-            }
+            return view('manage.quytdkt.thu.create')
+                ->with('pageTitle', 'Tạo mới thông tin phiếu thu quỹ');
         }
     }
 
@@ -62,6 +60,7 @@ class QlphieuthuController extends Controller
         if (Session::has('admin')) {
             $inputs = $request->all();
             $model = new qlphieuthuchi();
+            $inputs['sotien'] = getDouble($inputs['sotien']);
             $inputs['ttnguoitao'] = session('admin')->name.'('.session('admin')->username.')'. getDateTime(Carbon::now()->toDateTimeString());
             $inputs['loaiphieu'] ='PT';
             $model->create($inputs);
@@ -113,6 +112,7 @@ class QlphieuthuController extends Controller
         if (Session::has('admin')) {
             $input = $request->all();
             $model = qlphieuthuchi::findOrFail($id);
+            $input['sotien'] = getDouble($input['sotien']);
             $model->update($input);
             return redirect('qldauvao');
 

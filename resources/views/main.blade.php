@@ -345,9 +345,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <li><a href="{{url('dmdonvi')}}">Danh mục đơn vị</a></li>
                                 <li><a href="{{url('users')}}">Tài khoản đơn vị</a></li>
                             @endif
+                                {{--
                             @if(session('admin')->level == 'T' || session('admin')->level == 'H')
                                 <li><a href="{{url('users')}}">Nhật ký thao tác</a></li>
-                            @endif
+                            @endif --}}
                         </ul>
                     </li>
                         <li>
@@ -370,12 +371,13 @@ License: You must have a valid license purchased only from themeforest(the above
                                 @if(session('admin')->level == 'T' || session('admin')->level == 'H')
                                     <li><a href="{{url('dmloaihinhkt')}}">Quản lý danh mục các loại hình TĐKT</a></li>
                                 @endif
+                                    {{--
                                 @if(session('admin')->level == 'T' || session('admin')->level == 'H')
                                     <li><a href="{{url('users')}}">Quản lý danh mục hình thức tổ chức TĐKT</a></li>
                                 @endif
                                 @if(session('admin')->level == 'T' || session('admin')->level == 'H')
                                     <li><a href="{{url('dmquoctich')}}">Quản lý danh mục quốc tịch</a></li>
-                                @endif
+                                @endif --}}
                             </ul>
                         </li>
                 @endif

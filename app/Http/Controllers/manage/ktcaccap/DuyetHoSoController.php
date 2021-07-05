@@ -14,9 +14,13 @@ class DuyetHoSoController extends Controller
             $inputs = $request->all();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
             $inputs['trangthai'] = isset($inputs['trangthai']) ? $inputs['trangthai'] : "";
-            $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->where('trangthai','like',$inputs['trangthai'].'%')
-                ->where('trangthai','<>', 'CC')
-                ->get();
+            if(session('admin')->sadmin == 'ssa')
+                $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->get();
+            else
+                $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->where('trangthai','like',$inputs['trangthai'].'%')
+                    ->where('trangthai','<>', 'CC')
+                    ->where('madonvi',session('admin')->madonvi)
+                    ->get();
             return view('manage.ktcaccap.duyethoso.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)

@@ -46,7 +46,7 @@ class KtThuTuongController extends Controller
             $inputs = $request->all();
             $inputs['namsinh'] = getDateToDb($inputs['namsinh']);
             $inputs['tgiantgkc'] = getDateToDb($inputs['tgiantgkc']);
-            $inputs['tgiankcqd'] = getDateToDb($inputs['tgiankcqd']);
+            $inputs['tgiankcqd'] =$inputs['tgiankcqd'];
             $inputs['ngaynhap'] = date('Y-m-d');
             $model = new KtThuTuong();
             $model->create($inputs);
@@ -72,7 +72,7 @@ class KtThuTuongController extends Controller
             $model = KtThuTuong::findOrFail($id);
             $inputs['namsinh'] = getDateToDb($inputs['namsinh']);
             $inputs['tgiantgkc'] = getDateToDb($inputs['tgiantgkc']);
-            $inputs['tgiankcqd'] = getDateToDb($inputs['tgiankcqd']);
+            $inputs['tgiankcqd'] =$inputs['tgiankcqd'];
             $model->update($inputs);
             return redirect('ktthutuong');
         }else

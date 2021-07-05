@@ -43,5 +43,8 @@ class LapHoSoTd extends Model
         'bienban',
         'tailieukhac',
         'ttthaotac',
+        'madonvi',
+        'macqcq',
+        'plphongtrao',
     ];
 }

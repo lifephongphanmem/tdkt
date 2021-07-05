@@ -53,13 +53,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="control-label">Số tiền</label>
-                                    {!!Form::text('sotien', null, array('id' => 'sotien','class' => 'form-control','data-mask'=>'fdecimal'))!!}
-                                </div>
-                            </div>
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Số tiền</label>
+                                        {!!Form::text('sotien', null, array('id' => 'sotien','class' => 'form-control','data-mask'=>'fdecimal'))!!}
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Ghi chú</label>
@@ -72,6 +72,7 @@
                     <!-- END FORM-->
                 </div>
             </div>
+            <input name="madonvi" id="madonvi" value="{{session('admin')->madonvi}}" hidden>
             <div style="text-align: center">
                 <a href="{{url('qldmchi')}}" class="btn btn-danger"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
                 <button type="reset" class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Nhập lại</button>

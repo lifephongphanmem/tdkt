@@ -152,13 +152,13 @@
                     {!! Form::open(['url'=>'duyetdktd/get','id' => 'frm_get'])!!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">Đồng ý nhận?</h4>
+                        <h4 class="modal-title">Đồng ý duyệt hồ sơ và chuyển sang tạo lập hồ sơ thi đua khen thưởng?</h4>
                     </div>
                     <input type="hidden" name="idget" id="idget">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <label class=" control-label">Ngày nhận<span class="require">*</span></label>
+                                <label class=" control-label">Ngày duyệt<span class="require">*</span></label>
                                 {{--{!!Form::text('ngaynhan',isset($model->ngaynhan) ? date('d/m/Y',strtotime($model->ngaynhan)) : date('d/m/Y',strtotime(date('Y-m-d'))), array('id' => 'ngaynhan','data-inputmask'=>"'alias': 'date'",'class' => 'form-control required'))!!}--}}
                                 <input type="date" name="ngaynhan" id="ngaynhan" class="form-control" value="{{date('Y-m-d')}}" style="text-align: center"/>
                             </div>
