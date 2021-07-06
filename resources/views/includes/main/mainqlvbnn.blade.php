@@ -9,16 +9,16 @@
             </a>
             <ul class="sub-menu">
                 @if(can('vbpq','index'))
-                    <!--li>
+                    <li>
                         <a href="{{url('vbpq')}}">Quản lý văn bản pháp quy</a>
                     </li>
                 @endif
                 @if(can('vbhd','index'))
                     <li>
                         <a href="{{url('vbhd')}}">Quản lý văn bản hướng dẫn</a>
-                    </li-->
+                    </li>
                 @endif
-                @if(can('qlhoidap','index'))
+                @if(can('qlquyetdinh','index'))
                     <li>
                         <a href="{{url('qlhoidap')}}">Quản lý hỏi, đáp</a>
                     </li>

@@ -113,9 +113,9 @@
                         <tr>
                             <th style="text-align: center" width="2%">STT</th>
                             <th style="text-align: center">Mã đơn vị</th>
-                            <th style="text-align: center" width="50%">Tên đơn vị</th>
+                            <th style="text-align: center" width="40%">Tên đơn vị</th>
                             <th style="text-align: center" width="20%">Cơ quan chủ quản</th>
-                            <th style="text-align: center" width="10%">Thao tác</th>
+                            <th style="text-align: center" width="15%">Thao tác</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -124,7 +124,7 @@
                             <td style="text-align: center">{{$key + 1}}</td>
                             <td>{{$tt->madonvi}}</td>
                             <td class="active">{{$tt->tendv}}</td>
-                            <td style="text-align: left"></td>
+                            <td style="text-align: left">{{$modeldvql->where('madonvi',$tt->macqcq)->first()->tendv}}</td>
                             <td>
                                 @if(can('users','edit'))
                                 <a href="{{url('dmdonvi/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>

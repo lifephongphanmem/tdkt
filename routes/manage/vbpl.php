@@ -1,16 +1,16 @@
 <?php
 //dangkytd
-Route::get('/qlhoidap/lydo','manage\vbpl\hoidap\HoidapController@lydo');
-Route::resource('qlhoidap','manage\vbpl\hoidap\HoidapController');
-Route::post('qlhoidap/delete','manage\vbpl\hoidap\HoidapController@delete');
-Route::post('qlhoidap/trans','manage\vbpl\hoidap\HoidapController@trans');
+Route::get('/qlquyetdinh/lydo','manage\vbpl\hoidap\HoidapController@lydo');
+Route::resource('qlquyetdinh','manage\vbpl\hoidap\HoidapController');
+Route::post('qlquyetdinh/delete','manage\vbpl\hoidap\HoidapController@delete');
+Route::post('qlquyetdinh/trans','manage\vbpl\hoidap\HoidapController@trans');
 Route::get('checkmahoidap','manage\vbpl\hoidap\HoidapController@checkkihieu');
 
 //duyetdktd
-Route::post('qlhoidap/get','manage\vbpl\hoidap\HoidapController@get');
-Route::post('qlhoidap/back','manage\vbpl\hoidap\HoidapController@back');
-Route::get('qlhoidap/{id}/traloi','manage\vbpl\hoidap\HoidapController@traloi');
-Route::PATCH('qlhoidap/{id}/anser','manage\vbpl\hoidap\HoidapController@anser');
+Route::post('qlquyetdinh/get','manage\vbpl\hoidap\HoidapController@get');
+Route::post('qlquyetdinh/back','manage\vbpl\hoidap\HoidapController@back');
+Route::get('qlquyetdinh/{id}/traloi','manage\vbpl\hoidap\HoidapController@traloi');
+Route::PATCH('qlquyetdinh/{id}/anser','manage\vbpl\hoidap\HoidapController@anser');
 
 //laphosotd
 Route::resource('laphosotd','manage\ktcaccap\LapHoSoTdController');

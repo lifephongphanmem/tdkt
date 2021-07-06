@@ -14,7 +14,7 @@ class DuyetHoSoCapDuoiController extends Controller
             $inputs = $request->all();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
             if(session('admin')->sadmin == 'ssa')
-                $model = DangKyTd::whereYear('ngayky',$inputs['nam'])->get();
+                $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->get();
             else
                 $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])
                     ->where('trangthai', 'DD')

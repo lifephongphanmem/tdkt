@@ -89,7 +89,7 @@
 
 @section('content')
     <h3 class="page-title">
-        Quản lý danh mục<small>&nbsp;danh hiệu thi đua</small>
+        Quản lý danh sách <small>&nbsp;hiệp y khen thưởng</small>
     </h3>
     <!-- END PAGE HEADER-->
     <div class="row">
@@ -133,7 +133,7 @@
                             <th style="text-align: center">Mã hiệp y</th>
                             <th style="text-align: center" width="20%">Tên đối tượng</th>
                             <th style="text-align: center" width="50%">Nội dung</th>
-                            <th style="text-align: center" width="10%">Thao tác</th>
+                            <th style="text-align: center" width="20%">Thao tác</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -147,12 +147,14 @@
                                 @if(can('users','edit'))
                                 <a href="{{url('hiepykhenthuong/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                 @endif
-                                <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
+                                <a href="{{url('hiepykhenthuong/'.$tt->id.'/ykien')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Thêm ý kiến</a>
+                                <a href="{{url('hiepykhenthuong/'.$tt->id.'/dsykien')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;DS ý kiến</a>
+                                <!--button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
                                 Xóa</button>
                                 <button type="button" onclick="getIdyk('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
                                     Ý kiến</button>
                                 <button type="button" onclick="getIdyk('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
-                                    Xóa ý kiến</button>
+                                    Xóa ý kiến</button-->
                             </td>
                         </tr>
                         @endforeach

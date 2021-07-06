@@ -145,7 +145,7 @@
                                                 Chuyển</button>
                                         @endif
                                             @if($tt->trangthai == 'DD')
-                                                <a href="{{url('qlhoidap/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                                <a href="{{url('qlquyetdinh'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                                 <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
                                                     Chuyển</button>
                                             @endif

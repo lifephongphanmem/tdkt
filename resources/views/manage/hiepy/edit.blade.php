@@ -45,13 +45,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Nội dung<span class="require">*</span></label>
                                     {!!Form::text('noidung', null, array('id' => 'noidung','class' => 'form-control required'))!!}
                                 </div>
                             </div>
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Ghi chú</label>

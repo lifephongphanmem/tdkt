@@ -46,6 +46,7 @@
                 <div class="portlet-body">
                     @include('system.users.include.perms.tdktkhangchien')
                     @include('system.users.include.perms.tdktcaccap')
+                    @include('system.users.include.perms.hiepykhenthuong')
                     @include('system.users.include.perms.qlvbnn')
                     @include('system.users.include.perms.qlquytdkt')
                     @include('system.users.include.perms.system')

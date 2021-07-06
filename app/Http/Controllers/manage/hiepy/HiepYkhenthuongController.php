@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\manage\hiepy;
 
 use App\Model\manage\hiepy\hiepykhenthuong;
+use App\model\manage\hiepy\qlykien;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -98,6 +99,29 @@ class HiepYkhenthuongController extends Controller
         } else
             return view('errors.notlogin');
     }
+    public function ykien($id)
+    {
+        if (Session::has('admin')) {
+            $model = hiepykhenthuong::findOrFail($id);
+            return view('manage.hiepy.ykien')
+                ->with('model', $model)
+                ->with('pageTitle', 'Thêm mới ý kiến về thông tin hiệp y khen thưởng');
+        } else
+            return view('errors.notlogin');
+    }
+    public function dsykien($id)
+    {
+        if (Session::has('admin')) {
+
+            $model = hiepykhenthuong::findOrFail($id);
+            $modelyk = qlykien::where('mahiepy',$model->mahiepy)->get();
+            return view('manage.hiepy.dsykien')
+                ->with('model', $model)
+                ->with('modelyk', $modelyk)
+                ->with('pageTitle', 'Danh sách ý kiến về thông tin hiệp y khen thưởng');
+        } else
+            return view('errors.notlogin');
+    }
 
     /**
      * Update the specified resource in storage.
@@ -112,6 +136,21 @@ class HiepYkhenthuongController extends Controller
             $input = $request->all();
             $model = hiepykhenthuong::findOrFail($id);
             $model->update($input);
+            return redirect('hiepykhenthuong');
+
+        } else {
+            return view('errors.notlogin');
+        }
+    }
+
+    public function storeyk(Request $request)
+    {
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            unset($inputs['id']);
+            $model = new qlykien();
+            $inputs['ttnguoitao'] = session('admin')->name.'('.session('admin')->username.')'. getDateTime(Carbon::now()->toDateTimeString());
+            $model->create($inputs);
             return redirect('hiepykhenthuong');
 
         } else {

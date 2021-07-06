@@ -286,7 +286,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     @include('includes.main.maintdktcaccap')
                     @endif
                 @endif
-                <!--
+
                 @if(canGeneral('qltailieu','index'))
                     @if(can('qltailieu','index'))
                     <li class="heading">
@@ -304,7 +304,7 @@ License: You must have a valid license purchased only from themeforest(the above
                         @include('includes.main.mainhiepykhenthuong')
                     @endif
                 @endif
-                            -->
+
                 @if(canGeneral('qlvbnn','index'))
                     @if(can('qlvbnn','index'))
                         <li class="heading">

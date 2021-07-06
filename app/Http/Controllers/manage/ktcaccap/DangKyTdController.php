@@ -7,6 +7,7 @@ use App\dmhinhthuckt;
 use App\dmloaihinhkt;
 use App\dmquoctich;
 use App\Model\manage\ktcaccap\DangKyTd;
+use App\model\manage\qltailieu\qlphongtrao;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
@@ -38,12 +39,14 @@ class DangKyTdController extends Controller
             $nhomht = dmhinhthuckt::all();
             $nhomlh = dmloaihinhkt::all();
             $nhomqt = dmquoctich::all();
+            $m_phongtrao = qlphongtrao::all();
             return view('manage.ktcaccap.dangkytd.create')
                 ->with('inputs', $inputs)
                 ->with('nhomdh', $nhomdh)
                 ->with('nhomht', $nhomht)
                 ->with('nhomlh', $nhomlh)
                 ->with('nhomqt', $nhomqt)
+                ->with('m_phongtrao',$m_phongtrao)
                 ->with('pageTitle', 'Danh sách đăng ký thi đua thêm mới');
         } else
             return view('errors.notlogin');

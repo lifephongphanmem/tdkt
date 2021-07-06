@@ -139,8 +139,7 @@
                         <tr class="odd gradeX">
                             <td style="text-align: center">{{$key + 1}}</td>
                             <td>{{$tt->name}}</td>
-                            <?php $tendv = $m_dv->where('madonvi',$tt->madonvi)->first()->tendv;?>
-                            <td>{{$tendv}}</td>
+                            <td>{{$m_dv->where('madonvi',$tt->madonvi)->first()->tendv}}</td>
                             <td class="active">{{$tt->username}}</td>
                             <td style="text-align: center">{{$tt->level}}</td>
                             <td style="text-align: center">

@@ -138,15 +138,11 @@
                         <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Phân loại phong trào TĐ</label>
-                                    {!! Form::select(
-                                    'plphongtrao',
-                                    array(
-                                    'Cấp trung ương' => 'Cấp trung ương',
-                                    'Cấp bộ ban ngành' => 'Cấp bộ ban ngành',
-                                    ),
-                                    null,
-                                    array('id' => 'plphongtrao', 'class' => 'form-control'))
-                                    !!}
+                                    <select id="tenqt" name="tenqt" class="form-control js-example-basic-single">
+                                        @foreach($m_phongtrao as $pt)
+                                            <option value="{{$pt->maphongtrao}}">{{$pt->veviec}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                         </div>
                     </div>

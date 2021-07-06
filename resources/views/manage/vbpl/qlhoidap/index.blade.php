@@ -143,7 +143,7 @@
                                         </td>
                                     @endif
                                     <td style="text-align: center">
-                                        <a href="{{url('qlhoidap/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
+                                        <a href="{{url('qlquyetdinh'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
                                         @if($tt->trangthai == 'CC' || $tt->trangthai == 'BTL')
                                             <a href="{{url('qlhoidap/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                             <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
@@ -284,7 +284,7 @@
     <div class="modal fade" id="back-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                {!! Form::open(['url'=>'qlhoidap/back','method'=>'post' , 'files'=>true,'id' => 'frm_back','class'=>'form-horizontal','enctype'=>'multipart/form-data'])!!}
+                {!! Form::open(['url'=>'qlquyetdinh','method'=>'post' , 'files'=>true,'id' => 'frm_back','class'=>'form-horizontal','enctype'=>'multipart/form-data'])!!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">Đồng ý trả?</h4>
