@@ -184,7 +184,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!-- BEGIN USER LOGIN DROPDOWN -->
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                 <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
-                    <a href="{{url('giahanghoadichvu')}}" class="dropdown-toggle" target="_blank">
+                    <a href="{{url('')}}" class="dropdown-toggle" target="_blank">
                         <i class="fa fa-cloud"></i>
 					<span class="badge badge-danger">
 					View</span>
@@ -276,6 +276,14 @@ License: You must have a valid license purchased only from themeforest(the above
                         <h3 class="uppercase">Quản lý khen thưởng thời kỳ kháng chiến</h3>
                     </li>
                     @include('includes.main.maintdktkhangchien')
+                    @endif
+                @endif
+                @if(canGeneral('qldoituong','index'))
+                    @if(can('qldoituong','index'))
+                        <li class="heading">
+                            <h3 class="uppercase">Quản lý danh sách đối tượng</h3>
+                        </li>
+                        @include('includes.main.mainqldoituong')
                     @endif
                 @endif
                 @if(canGeneral('tdktcaccap','index'))

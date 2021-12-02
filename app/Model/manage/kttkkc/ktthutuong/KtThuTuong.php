@@ -11,6 +11,7 @@ class KtThuTuong extends Model
         'id',
         'loaikt',
         'dhkt',
+        'hinhthuckt',
         'soqd',
         'noitrkhen',
         'sodd',

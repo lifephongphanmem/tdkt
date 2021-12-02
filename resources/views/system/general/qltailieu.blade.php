@@ -1,5 +1,5 @@
 <tr style="font-weight: bold; " class="active" >
-    <td style="color: #f5f5f5" >C. Quản lý tài liệu liên quan</td>
+    <td style="color: #f5f5f5" >D. Quản lý tài liệu liên quan</td>
     <td style="text-align: center"><input type="checkbox" {{ (isset($setting->qltailieu->index) && $setting->qltailieu->index == 1) ? 'checked' : '' }} value="1" name="roles[qltailieu][index]"/></td>
 </tr>
 <tr class="warning">

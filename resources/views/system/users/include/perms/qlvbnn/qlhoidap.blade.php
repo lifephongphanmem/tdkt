@@ -1,4 +1,4 @@
-@if(canGeneral('qlquyetdinh','index'))
+@if(canGeneral('qlhoidap','index'))
     <div class="row">
         <div class="col-md-12">
             <!-- BEGIN SAMPLE FORM PORTLET-->

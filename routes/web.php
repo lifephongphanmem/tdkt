@@ -10,11 +10,12 @@ include('system/system.php');
 
 //Manage
 include('manage/kttkkc.php');
+include('manage/qldoituong.php');
 include('manage/ktcaccap.php');
 include('manage/qltailieu.php');
 include('manage/hiepy.php');
 include('manage/quytdkt.php');
-include('manage/vbpl.php');
+include('manage/qlvbnn.php');
 //End Manage
 
 //View

@@ -47,6 +47,25 @@ function getphanloaichi()
     }
     return $options;
 }
+function getphanloaiqd()
+{
+    $phanloai = \App\dmphanloaiqd::all();
+    $options = array();
+    foreach ($phanloai as $phanloai) {
+        $options[$phanloai->maplqd] = $phanloai->tenplqd;
+    }
+    return $options;
+}
+function getphongtrao()
+{
+    $phanloai = \App\model\manage\qltailieu\qlphongtrao::all();
+    $options = array();
+    $options[''] = '--Chọn phong trào thi đua khen thưởng--';
+    foreach ($phanloai as $phanloai) {
+        $options[$phanloai->maphongtrao] = $phanloai->veviec;
+    }
+    return $options;
+}
 
 function getLoaiXe(){
     $a_loaixe = array(

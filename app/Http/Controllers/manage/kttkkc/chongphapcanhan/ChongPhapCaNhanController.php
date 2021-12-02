@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\manage\kttkkc\chongphapcanhan;
 
 use App\dmdanhhieutd;
+use App\dmhinhthuckt;
 use App\dmloaihinhkt;
 use App\Http\Requests\manage\ChongPhapCaNhanRequest;
 use App\Model\manage\kttkkc\chongphapcanhan\ChongPhapCaNhan;
@@ -17,6 +18,7 @@ class ChongPhapCaNhanController extends Controller
             $inputs = $request->all();
             $model_lh = dmloaihinhkt::select('maloaihinhkt','tenloaihinhkt')->get();
             $model_dh = dmdanhhieutd::select('madanhhieutd','tendanhhieutd')->get();
+            $model_ht = dmhinhthuckt::select('mahinhthuckt','tenhinhthuckt')->get();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');/*
             $inputs['loaikt'] = isset($inputs['loaikt']) ? $inputs['loaikt'] : 'all';*/
             $model = ChongPhapCaNhan::whereYear('ngaynhap',$inputs['nam'])
@@ -27,6 +29,7 @@ class ChongPhapCaNhanController extends Controller
                 ->with('model',$model)
                 ->with('model_dh', $model_dh)
                 ->with('model_lh', $model_lh)
+                ->with('model_ht', $model_ht)
                 ->with('pageTitle','Danh sách khen thưởng kháng chiến chống Pháp(cá nhân)');
         }else
             return view('errors.notlogin');

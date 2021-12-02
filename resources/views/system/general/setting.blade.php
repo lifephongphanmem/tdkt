@@ -48,6 +48,7 @@
                         </thead>
                         <tbody>
                         @include('system.general.tdktkhangchien')
+                        @include('system.general.qldoituong')
                         @include('system.general.tdktcaccap')
                         @include('system.general.qltailieu')
                         @include('system.general.hiepykhenthuong')

@@ -206,13 +206,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Hình thức khen thưởng<span class="require">*</span></label>
-                                {!! Form::select('loaikt',gethinhthuckt(),null, array('id'=>'loaikt','class'=>'form-control'))!!}
-                                @if ($errors->has('loaikt'))
+                                {!! Form::select('hinhthuckt',gethinhthuckt(),null, array('id'=>'hinhthuckt','class'=>'form-control'))!!}
+                                @if ($errors->has('hinhthuckt'))
                                     <em class="invalid">{{ $errors->first('loaikt') }}</em>
                                 @endif
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <input name="dhkt" id="dhkt" value="01" hidden>
+                        <!--div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Danh hiệu khen thưởng<span class="require">*</span></label>
                                 {!! Form::select('dhkt',getdanhhieu(),null, array('id'=>'dhkt','class'=>'form-control'))!!}
@@ -224,7 +225,7 @@
                                         <option value="{{$nhom->madanhhieutd}}">{{$nhom->tendanhhieutd}}</option>
                                     @endforeach
                                 </select>--}}
-                            </div>
+                            </div-->
                         </div>
                     </div>
                     <div class="row">
@@ -273,6 +274,12 @@
                                 <label class="control-label">Ghi chú</label>
                                 {!! Form::textarea('ghichu', null, ['id' => 'ghichu', 'rows' => 4, 'cols' => 10, 'class' => 'form-control']) !!}
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="control-label">File đính kèm</label>
+                            {!!Form::file('bienban', null, array('id' => 'bienban','class' => 'form-control'))!!}
                         </div>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ class KtCtUbNd extends Model
         'id',
         'loaikt',
         'dhkt',
+        'hinhthuckt',
         'soqd',
         'noitrkhen',
         'sodd',

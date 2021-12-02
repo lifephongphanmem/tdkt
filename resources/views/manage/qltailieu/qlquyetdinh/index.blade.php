@@ -39,7 +39,7 @@
             $('#nam').change(function() {
                 var nam = '&nam='+$('#nam').val();
                 var phanloai = '&phanloai='+$('#phanloai').val();
-                var url = '/qlhoidap?'+nam+phanloai;
+                var url = '/qlquyetdinhkt?'+nam+phanloai;
                 window.location.href = url;
             });
         });
@@ -47,7 +47,7 @@
             $('#phanloai').change(function() {
                 var nam = '&nam='+$('#nam').val();
                 var phanloai = '&phanloai='+$('#phanloai').val();
-                var url = '/qlhoidap?'+nam+phanloai;
+                var url = '/qlquyetdinhkt?'+nam+phanloai;
                 window.location.href = url;
             });
         });
@@ -65,7 +65,7 @@
             <div class="portlet box">
                 <div class="portlet-title">
                     <div class="actions">
-                        <a href="{{url('qlhoidap/create')}}" class="btn btn-default btn-sm">
+                        <a href="{{url('qlquyetdinhkt/create')}}" class="btn btn-default btn-sm">
                             <i class="fa fa-plus"></i> Thêm mới </a>
                     </div>
                 </div>
@@ -104,6 +104,7 @@
                             <tr>
                                 <th style="text-align: center" width="2%">STT</th>
                                 <th style="text-align: center" width="12%">Số quyết định</th>
+                                <th style="text-align: center" width="12%">Nơi khen</th>
                                 <th style="text-align: center" width="50%">Nội dung</th>
                                 <th style="text-align: center" width="10%">Phân loại</th>
                                 <th style="text-align: center" width="22%">Thao tác</th>
@@ -112,39 +113,14 @@
                             @foreach($model as $key => $tt)
                                 <tr>
                                     <td style="text-align: center">{{$key+1}}</td>
-                                    <td>{{$tt->noidung}}</td>
-                                    <td>{{getDayVn($tt->ngaythang)}}</td>
-                                    <td class="active">{{$tt->phanloai}}</td>
-                                    <td style="text-align: center">{{$nhomql->where('madonvi',$tt->donvinhan)->first()->tendv}}</td>
-                                    @if($tt->trangthai == "CC")
-                                        <td align="center"><span class="badge badge-warning">Chờ chuyển</span></td>
-                                    @elseif($tt->trangthai == 'CD')
-                                        <td align="center"><span class="badge badge-blue">Chờ duyệt</span>
-                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
-                                        </td>
-                                    @elseif($tt->trangthai == 'CN')
-                                        <td align="center"><span class="badge badge-warning">Chờ nhận</span>
-                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
-                                        </td>
-                                    @elseif($tt->trangthai == 'BTL')
-                                        <td align="center">
-                                            <span class="badge badge-danger">Bị trả lại</span><br>&nbsp;
-                                        </td>
-                                    @elseif($tt->trangthai == 'TL')
-                                        <td align="center">
-                                            <span class="badge badge-danger">Đã trả lời</span>
-                                            <br>Ngày trả lời:<br><b>{{getDateTime($tt->ngaytraloi)}}</b>
-                                        </td>
-                                    @else
-                                        <td align="center">
-                                            <span class="badge badge-success">Đã nhận</span>
-                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
-                                        </td>
-                                    @endif
+                                    <td>{{$tt->soquyetdinh}}</td>
+                                    <td>{{$tt->noikhenthuong}}</td>
+                                    <td class="active">{{$tt->veviec}}</td>
+                                    <td class="active">{{$hinhthuckt->where('mahinhthuckt',$tt->mahinhthuckt)->first()->tenhinhthuckt}}</td>
                                     <td style="text-align: center">
                                         <a href="{{url('qlquyetdinh'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
                                         @if($tt->trangthai == 'CC' || $tt->trangthai == 'BTL')
-                                            <a href="{{url('qlhoidap/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                            <a href="{{url('qlquyetdinhkt/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                             <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
                                                 Chuyển</button>
                                         @endif
@@ -155,7 +131,7 @@
                                                 Trả</button>
                                         @endif
                                         @if($tt->trangthai == 'DD')
-                                            <a href="{{url('qlhoidap/'.$tt->id).'/traloi'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Trả lời</a>
+                                            <a href="{{url('qlquyetdinhkt/'.$tt->id).'/traloi'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Trả lời</a>
                                         @endif
                                         @if($tt->trangthai == 'BTL')
                                             <button type="button" onclick="viewLiDo('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#lydo-show" data-toggle="modal"><i class="fa fa-archive"></i>&nbsp;
@@ -183,7 +159,7 @@
         <div class="modal fade" id="trans-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    {!! Form::open(['url'=>'qlhoidap/trans','id' => 'frm_trans'])!!}
+                    {!! Form::open(['url'=>'qlquyetdinhkt/trans','id' => 'frm_trans'])!!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 class="modal-title">Đồng ý chuyển?</h4>
@@ -234,7 +210,7 @@
         <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    {!! Form::open(['url'=>'qlhoidap/delete','id' => 'frm_delete'])!!}
+                    {!! Form::open(['url'=>'qlquyetdinhkt/delete','id' => 'frm_delete'])!!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 class="modal-title">Đồng ý xóa?</h4>
@@ -254,7 +230,7 @@
     <div class="modal fade" id="get-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                {!! Form::open(['url'=>'qlhoidap/get','id' => 'frm_get'])!!}
+                {!! Form::open(['url'=>'qlquyetdinhkt/get','id' => 'frm_get'])!!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">Đồng ý nhận?</h4>
@@ -339,7 +315,7 @@
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             //alert(id);
             $.ajax({
-                url: 'qlhoidap/lydo',
+                url: 'qlquyetdinhkt/lydo',
                 type: 'GET',
                 data: {
                     _token: CSRF_TOKEN,

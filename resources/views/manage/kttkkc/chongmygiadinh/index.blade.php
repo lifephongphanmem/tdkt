@@ -78,7 +78,7 @@
                             <tr>
                                 <th style="text-align: center" width="2%">STT</th>
                                 <th style="text-align: center" width="12%">Loại khen thưởng</th>
-                                <th style="text-align: center" width="12%">Danh hiệu khen thưởng</th>
+                                <th style="text-align: center" width="12%">Hình thức khen thưởng</th>
                                 <th style="text-align: center" width="5%">Số quyết định/Số được duyệt</th>
                                 <th style="text-align: center" width="5%">Thời gian tham gia kháng chiến</th>
                                 <th style="text-align: center" width="8%">Loại hồ sơ kháng chiến</th>
@@ -89,7 +89,7 @@
                                 <tr>
                                     <td style="text-align: center">{{$key+1}}</td>
                                     <td>{{$model_lh->where('maloaihinhkt',$tt->loaikt)->first()->tenloaihinhkt}}</td>
-                                    <td>{{$model_dh->where('madanhhieutd',$tt->dhkt)->first()->tendanhhieutd}}</td>
+                                    <td>{{$model_ht->where('mahinhthuckt',$tt->hinhthuckt)->first()->tenhinhthuckt}}</td>
                                     <td class="active">Số hợp đồng: {{$tt->soqd}} <br> Số được duyệt: {{$tt->sodd}}</td>
                                     <td style="text-align: center">{{getDayVn($tt->tgiantgkc)}}</td>
                                     <td style="text-align: center">{{$tt->loaihskc}}</td>

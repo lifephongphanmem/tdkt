@@ -1,5 +1,5 @@
 <tr class="active" style="font-weight: bold">
-    <td style="color: #f5f5f5">F. Quản lý văn bản pháp lý, hướng dẫn, hỏi đáp</td>
+    <td style="color: #f5f5f5">G. Quản lý văn bản pháp lý, hướng dẫn, hỏi đáp</td>
     <td style="text-align: center">  <input type="checkbox" {{ (isset($setting->qlvbnn->index) && $setting->qlvbnn->index == 1) ? 'checked' : '' }} value="1" name="roles[qlvbnn][index]"/></td>
 </tr>
 

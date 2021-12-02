@@ -1,5 +1,5 @@
 <tr style="font-weight: bold; " class="active" >
-    <td style="color: #f5f5f5" >E. Quản lý quỹ TĐKT</td>
+    <td style="color: #f5f5f5" >F. Quản lý quỹ TĐKT</td>
     <td style="text-align: center"><input type="checkbox" {{ (isset($setting->qlquytdkt->index) && $setting->qlquytdkt->index == 1) ? 'checked' : '' }} value="1" name="roles[qlquytdkt][index]"/></td>
 </tr>
 <tr class="warning">

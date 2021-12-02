@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\manage\kttkkc\chongmygiadinh;
 
 use App\dmdanhhieutd;
+use App\dmhinhthuckt;
 use App\dmloaihinhkt;
 use App\Http\Requests\manage\ChongMyGiaDinhRequest;
 use App\Model\manage\kttkkc\chongmygiadinh\ChongMyGiaDinh;
@@ -17,6 +18,7 @@ class ChongMyGiaDinhController extends Controller
             $inputs = $request->all();
             $model_lh = dmloaihinhkt::select('maloaihinhkt','tenloaihinhkt')->get();
             $model_dh = dmdanhhieutd::select('madanhhieutd','tendanhhieutd')->get();
+            $model_ht = dmhinhthuckt::select('mahinhthuckt','tenhinhthuckt')->get();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
             $model = ChongMyGiaDinh::whereYear('ngaynhap',$inputs['nam'])
                 ->get();
@@ -25,6 +27,7 @@ class ChongMyGiaDinhController extends Controller
                 ->with('model',$model)
                 ->with('model_dh', $model_dh)
                 ->with('model_lh', $model_lh)
+                ->with('model_ht', $model_ht)
                 ->with('pageTitle','Danh sách khen thưởng kháng chiến chống Mỹ(gia đình)');
         }else
             return view('errors.notlogin');

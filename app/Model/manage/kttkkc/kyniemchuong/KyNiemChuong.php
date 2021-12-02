@@ -11,6 +11,7 @@ class KyNiemChuong extends Model
         'id',
         'loaikt',
         'dhkt',
+        'hinhthuckt',
         'soqd',
         'noitrkhen',
         'sodd',

@@ -17,6 +17,10 @@ class CreateQlquyetdinhTable extends Migration
             $table->increments('id');
             $table->string('maquyetdinh')->unique();
             $table->string('soquyetdinh')->nullable();
+            $table->string('mahinhthuckt')->nullable();
+            $table->string('doituong')->nullable();
+            $table->string('mapl')->nullable(); //phân loại đối tượng
+            $table->string('maplct')->nullable(); //phân loại đối tượng chi tiết
             $table->date('ngaythang')->nullable();
             $table->string('veviec')->nullable();
             $table->string('noikhenthuong')->nullable();
