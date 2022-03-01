@@ -42,7 +42,7 @@
 
 @section('content')
     <h3 class="page-title">
-        Danh sách<small>&nbsp;kỷ niệm chương (tỉnh Hà Bắc cũ)</small>
+        Danh sách<small>&nbsp;kỷ niệm chương</small>
     </h3>
     <div class="row">
         <div class="col-md-12">

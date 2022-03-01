@@ -122,7 +122,7 @@
 
 @section('content')
     <h3 class="page-title">
-        Danh sách <small>&nbsp;kỷ niệm chương (tỉnh Hà Bắc cũ) thêm mới</small>
+        Danh sách <small>&nbsp;kỷ niệm chương thêm mới</small>
     </h3>
     <hr>
     <!-- END PAGE HEADER-->

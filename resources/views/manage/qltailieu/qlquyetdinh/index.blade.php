@@ -118,29 +118,10 @@
                                     <td class="active">{{$tt->veviec}}</td>
                                     <td class="active">{{$hinhthuckt->where('mahinhthuckt',$tt->mahinhthuckt)->first()->tenhinhthuckt}}</td>
                                     <td style="text-align: center">
-                                        <a href="{{url('qlquyetdinh'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
-                                        @if($tt->trangthai == 'CC' || $tt->trangthai == 'BTL')
-                                            <a href="{{url('qlquyetdinhkt/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
-                                            <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
-                                                Chuyển</button>
-                                        @endif
-                                        @if($tt->trangthai == 'CD' && $tt->donvinhan == session('admin')->madonvi)
-                                            <button type="button" onclick="getIdGet('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#get-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;
-                                                Nhận</button>
-                                            <button type="button" onclick="getIdBack('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#back-modal" data-toggle="modal"><i class="fa fa-backward"></i>&nbsp;
-                                                Trả</button>
-                                        @endif
-                                        @if($tt->trangthai == 'DD')
-                                            <a href="{{url('qlquyetdinhkt/'.$tt->id).'/traloi'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Trả lời</a>
-                                        @endif
-                                        @if($tt->trangthai == 'BTL')
-                                            <button type="button" onclick="viewLiDo('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#lydo-show" data-toggle="modal"><i class="fa fa-archive"></i>&nbsp;
-                                                Lí do</button>
-                                        @endif
-                                        @if($tt->trangthai == 'CC')
-                                            <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
-                                                Xóa</button>
-                                        @endif
+                                        <!--a href="{{url('qlquyetdinhkt/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;In quyết định</a-->
+                                        <a href="{{url('qlquyetdinhkt/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                        <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
+                                            Xóa</button>
                                     </td>
                                 </tr>
                             @endforeach

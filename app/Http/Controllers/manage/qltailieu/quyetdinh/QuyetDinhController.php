@@ -84,10 +84,15 @@ class QuyetDinhController extends Controller
             $model = qlquyetdinh::find($id);
             $m_qdct = qlquyetdinhct::where('maquyetdinh',$model->maquyetdinh)->get();
             $modeldt = qldoituong::all();
-            return view('manage.vbpl.qlquyetdinhkt.edit')
+            $modelct = qlquyetdinhct::where('maquyetdinh',$model->maquyetdinh)
+                ->get();
+            $m_pl = dmphanloaict::all();
+            return view('manage.qltailieu.qlquyetdinh.edit')
                 ->with('model', $model)
                 ->with('m_qdct', $m_qdct)
                 ->with('modeldt', $modeldt)
+                ->with('modelct',$modelct)
+                ->with('m_pl',$m_pl)
                 ->with('pageTitle', 'Quyết định khen thưởng chỉnh sửa');
         } else
             return view('errors.notlogin');
@@ -108,7 +113,7 @@ class QuyetDinhController extends Controller
     public function show($id){
         if(Session::has('admin')) {
             $model = qlquyetdinh::findOrFail($id);
-            return view('manage.vbpl.qlquyetdinhkt.show')
+            return view('manage.qltailieu.qlquyetdinh.show')
                 ->with('model', $model)
                 ->with('pageTitle', 'Danh sách đăng ký thi đua');
         }else
@@ -201,7 +206,7 @@ class QuyetDinhController extends Controller
             $model = qlquyetdinh::find($id);
             $nhomql = dmdonvi::select('madonvi','tendv')
                 ->where('caphanhchinh','HUYEN')->orwhere('caphanhchinh','TINH')->get();
-            return view('manage.vbpl.qlquyetdinhkt.traloi')
+            return view('manage.qltailieu.qlquyetdinh.traloi')
                 ->with('model', $model)
                 ->with('nhomql', $nhomql)
                 ->with('pageTitle', 'Trả lời câu hỏi');

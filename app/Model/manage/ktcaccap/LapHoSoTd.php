@@ -46,5 +46,8 @@ class LapHoSoTd extends Model
         'madonvi',
         'macqcq',
         'plphongtrao',
+        'noidung',
+        'slcanhan',
+        'sltapthe',
     ];
 }

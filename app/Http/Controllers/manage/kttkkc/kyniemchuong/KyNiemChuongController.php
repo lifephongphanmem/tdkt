@@ -28,7 +28,7 @@ class KyNiemChuongController extends Controller
                 ->with('model_dh', $model_dh)
                 ->with('model_lh', $model_lh)
                 ->with('model_ht', $model_ht)
-                ->with('pageTitle','Danh sách kỷ niệm chương (tỉnh Hà Bắc cũ)');
+                ->with('pageTitle','Danh sách kỷ niệm chương');
         }else
             return view('errors.notlogin');
     }
@@ -39,7 +39,7 @@ class KyNiemChuongController extends Controller
             $inputs = $request->all();
             return view('manage.kttkkc.kyniemchuong.create')
                 ->with('inputs', $inputs)
-                ->with('pageTitle', 'Danh sách kỷ niệm chương (tỉnh Hà Bắc cũ) thêm mới');
+                ->with('pageTitle', 'Danh sách kỷ niệm chương thêm mới');
         } else
             return view('errors.notlogin');
     }
@@ -64,7 +64,7 @@ class KyNiemChuongController extends Controller
             $model = KyNiemChuong::find($id);
             return view('manage.kttkkc.kyniemchuong.edit')
                 ->with('model', $model)
-                ->with('pageTitle', 'Danh sách kỷ niệm chương (tỉnh Hà Bắc cũ) chỉnh sửa');
+                ->with('pageTitle', 'Danh sách kỷ niệm chương chỉnh sửa');
         } else
             return view('errors.notlogin');
     }
@@ -91,7 +91,7 @@ class KyNiemChuongController extends Controller
                 ->with('model', $model)
                 ->with('model_dh', $model_dh)
                 ->with('model_lh', $model_lh)
-                ->with('pageTitle', 'Danh sách kỷ niệm chương (tỉnh Hà Bắc cũ)');
+                ->with('pageTitle', 'Danh sách kỷ niệm chương');
         }else
             return view('errors.notlogin');
     }

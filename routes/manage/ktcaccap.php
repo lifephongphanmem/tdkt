@@ -1,10 +1,21 @@
 <?php
 //dangkytd
+Route::get('dangkytddf/themdoituong','manage\ktcaccap\DangKyTddfController@themdoituong');
+Route::get('dangkytddf/delete','manage\ktcaccap\DangKyTddfController@delete');
+Route::get('dangkytddf/suadoituong','manage\ktcaccap\DangKyTddfController@suadoituong');
+Route::get('dangkytddf/update','manage\ktcaccap\DangKyTddfController@updatedt');
+
+Route::get('dangkytdct/boxungdt','manage\ktcaccap\DangKyTdctController@boxungdt');
+Route::get('dangkytdct/delete','manage\ktcaccap\DangKyTdctController@delete');
+Route::get('dangkytdct/chinhsuadt','manage\ktcaccap\DangKyTdctController@chinhsuadt');
+Route::get('dangkytdct/update','manage\ktcaccap\DangKyTdctController@updatedt');
+
 Route::get('/dangkytd/lydo','manage\ktcaccap\DangKyTdController@lydo');
 Route::resource('dangkytd','manage\ktcaccap\DangKyTdController');
 Route::post('dangkytd/delete','manage\ktcaccap\DangKyTdController@delete');
 Route::post('dangkytd/trans','manage\ktcaccap\DangKyTdController@trans');
 Route::get('checkmatd','manage\ktcaccap\DangKyTdController@checkkihieu');
+
 
 //duyetdktd
 Route::get('/duyetdktd/lydo','manage\ktcaccap\DangKyTdXdController@lydo');
@@ -13,6 +24,16 @@ Route::post('duyetdktd/back','manage\ktcaccap\DangKyTdXdController@back');
 Route::resource('duyetdktd','manage\ktcaccap\DangKyTdXdController');
 
 //laphosotd
+Route::get('laphosotddf/themdoituong','manage\ktcaccap\LapHoSoTddfController@themdoituong');
+Route::get('laphosotddf/delete','manage\ktcaccap\LapHoSoTddfController@delete');
+Route::get('laphosotddf/suadoituong','manage\ktcaccap\LapHoSoTddfController@suadoituong');
+Route::get('laphosotddf/update','manage\ktcaccap\LapHoSoTddfController@updatedt');
+
+Route::get('laphosotdct/boxungdt','manage\ktcaccap\LapHoSoTdctController@boxungdt');
+Route::get('laphosotdct/delete','manage\ktcaccap\LapHoSoTdctController@delete');
+Route::get('laphosotdct/chinhsuadt','manage\ktcaccap\LapHoSoTdctController@chinhsuadt');
+Route::get('laphosotdct/update','manage\ktcaccap\LapHoSoTdctController@updatedt');
+
 Route::resource('laphosotd','manage\ktcaccap\LapHoSoTdController');
 Route::post('laphosotd/delete','manage\ktcaccap\LapHoSoTdController@delete');
 Route::post('laphosotd/trans','manage\ktcaccap\LapHoSoTdController@trans');

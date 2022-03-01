@@ -38,7 +38,14 @@
         $(function(){
             $('#nam').change(function() {
                 var nam = '&nam='+$('#nam').val();
-                var url = '/duyethosocapduoi?'+nam;
+                var phongtrao = '&phongtrao='+$('#phongtrao').val();
+                var url = '/duyethosocapduoi?'+nam+phongtrao;
+                window.location.href = url;
+            });
+            $('#phongtrao').change(function() {
+                var nam = '&nam='+$('#nam').val();
+                var phongtrao = '&phongtrao='+$('#phongtrao').val();
+                var url = '/duyethosocapduoi?'+nam+phongtrao;
                 window.location.href = url;
             });
         });
@@ -70,17 +77,28 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label style="font-weight: bold">Phong trào</label>
+                                <select class="form-control" name="phongtrao" id="phongtrao">
+                                    <option value="ALL">-- Chọn phong trào thi đua khen thưởng --</option>
+                                    @foreach($modelpt as $pt)
+                                        <option value="{{$pt->maphongtrao}}" {{$pt->maphongtrao == $inputs['phongtrao'] ? 'selected' : '' }}>{{$pt->noidung}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="portlet-body">
                         <table class="table table-striped table-bordered table-hover" id="sample_3">
                             <thead>
                             <tr>
                                 <th style="text-align: center" width="2%">STT</th>
-                                <th style="text-align: center" width="12%">Tên đối tượng được khen</th>
-                                <th style="text-align: center" width="12%">Chức danh lãnh đạo</th>
-                                <th style="text-align: center" width="5%">Số quyết định</th>
+                                <th style="text-align: center" width="12%">Nội dung hồ sơ</th>
+                                <th style="text-align: center" width="12%">Phong trào thi đua</th>
                                 <th style="text-align: center" width="5%">Ngày ký</th>
-                                <th style="text-align: center" width="8%">Thành tích khen</th>
+                                <th style="text-align: center" width="8%">Số lượng cá nhân</th>
+                                <th style="text-align: center" width="8%">Số lượng tập thể</th>
                                 <th style="text-align: center" width="8%">Trạng thái</th>
                                 <th style="text-align: center" width="22%">Thao tác</th>
                             </tr>
@@ -88,22 +106,22 @@
                             @foreach($model as $key => $tt)
                                 <tr>
                                     <td style="text-align: center">{{$key+1}}</td>
-                                    <td>{{$tt->tendtkt}}</td>
-                                    <td>{{$tt->chucdanhld}}</td>
-                                    <td class="active">{{$tt->soqd}}</td>
-                                    <td style="text-align: center">{{getDayVn($tt->ngayky)}}</td>
-                                    <td style="text-align: center">{{$tt->thanhtichkhen}}</td>
-                                    @if($tt->trangthaihuyen == "CC")
+                                    <td>{{$tt->noidung}}</td>
+                                    <td>{{$modelpt->where('maphongtrao',$tt->plphongtrao)->first()->noidung}}</td>
+                                    <td class="active">{{getDayVn($tt->ngayky)}}</td>
+                                    <td style="text-align: center">{{dinhdangso($tt->slcanhan)}}</td>
+                                    <td style="text-align: center">{{dinhdangso($tt->sltapthe)}}</td>
+                                    @if($tt->trangthai == "CC")
                                         <td align="center"><span class="badge badge-warning">Chờ chuyển</span></td>
-                                    @elseif($tt->trangthaihuyen == 'CD')
+                                    @elseif($tt->trangthai == 'CD')
                                         <td align="center"><span class="badge badge-blue">Chờ duyệt</span>
                                             <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
                                         </td>
-                                    @elseif($tt->trangthaihuyen == 'CN')
+                                    @elseif($tt->trangthai == 'CN')
                                         <td align="center"><span class="badge badge-warning">Chờ nhận</span>
                                             <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
                                         </td>
-                                    @elseif($tt->trangthaihuyen == 'BTL')
+                                    @elseif($tt->trangthai == 'BTL')
                                         <td align="center">
                                             <span class="badge badge-danger">Bị trả lại</span><br>&nbsp;
                                         </td>
@@ -115,12 +133,12 @@
                                     @endif
                                     <td style="text-align: center">
                                         <a href="{{url('duyethosocapduoi/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
-                                        @if($tt->trangthaihuyen == 'CD')
+                                        @if($tt->trangthai == 'CD')
                                             <button type="button" onclick="getIdGet('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#get-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;
                                                 Duyệt</button>
                                             <button type="button" onclick="getIdBack('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#back-modal" data-toggle="modal"><i class="fa fa-backward"></i>&nbsp;
                                                 Trả</button>
-                                        @elseif($tt->trangthaihuyen == 'BTL')
+                                        @elseif($tt->trangthai == 'BTL')
                                             <button type="button" onclick="viewLiDo('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#lydo-show" data-toggle="modal"><i class="fa fa-archive"></i>&nbsp;
                                                 Lí do</button>
                                         @endif

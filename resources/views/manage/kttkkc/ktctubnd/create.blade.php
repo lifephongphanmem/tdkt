@@ -122,7 +122,7 @@
 
 @section('content')
     <h3 class="page-title">
-        Danh sách <small>&nbsp;bằng khen chủ tịch UBND tỉnh (tỉnh Hà Bắc cũ) thêm mới</small>
+        Danh sách <small>&nbsp;bằng khen chủ tịch UBND tỉnh thêm mới</small>
     </h3>
     <hr>
     <!-- END PAGE HEADER-->

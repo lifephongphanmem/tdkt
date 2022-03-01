@@ -141,7 +141,7 @@
                                         <a href="{{url('chuyenhosocaptren/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
                                         {{--<button type="button" onclick="getIdGet('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#get-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;
                                             Nhận</button>--}}
-                                        @if($tt->trangthai == 'DD' && $tt->trangthaihuyen == '')
+                                        @if($tt->trangthai == 'DD' && $tt->trangthaihuyen == 'CC')
                                             <a href="{{url('chuyenhosocaptren/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                             <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
                                                 Trình hồ sơ</button>

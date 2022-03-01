@@ -16,6 +16,7 @@ include('manage/qltailieu.php');
 include('manage/hiepy.php');
 include('manage/quytdkt.php');
 include('manage/qlvbnn.php');
+include('manage/dangkytd.php');
 //End Manage
 
 //View

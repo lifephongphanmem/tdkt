@@ -122,7 +122,7 @@
 
 @section('content')
     <h3 class="page-title">
-        Danh sách <small>&nbsp;khen thưởng kháng chiến chống Pháp(cá nhân) chỉnh sửa</small>
+        Danh sách <small>&nbsp;khen thưởng kháng chiến chống Pháp (cá nhân) chỉnh sửa</small>
     </h3>
     <hr>
     <!-- END PAGE HEADER-->
@@ -201,7 +201,7 @@
                         </div>
                     </div>
                     </div>
-                    <div class="row">
+                    <div-- class="row">
 
                         <div class="col-md-6">
                             <div class="form-group">
@@ -226,8 +226,7 @@
                                     @endforeach
                                 </select>--}}
                             </div-->
-                        </div>
-                    </div>
+                        </div-->
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -282,7 +281,7 @@
                             {!!Form::file('bienban', null, array('id' => 'bienban','class' => 'form-control'))!!}
                         </div>
                     </div>
-                </div>
+                    </div>
             </div>
             <!-- END EXAMPLE TABLE PORTLET-->
             <div style="text-align: center">
@@ -297,8 +296,6 @@
     <!-- BEGIN DASHBOARD STATS -->
 
     <!-- END DASHBOARD STATS -->
-    <div class="clearfix">
-    </div>
 
     <!--Validate Form-->
     <script type="text/javascript">

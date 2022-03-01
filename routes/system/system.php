@@ -28,25 +28,11 @@ Route::get('users/{id}/copy','UsersController@copy');
 
 Route::get('users/print','UsersController@prints');
 
-Route::resource('xetduyettdttdn','TdTtDnController');
-Route::post('xetduyettdttdn/tralai','TdTtDnController@tralai');
-Route::get('xetduyettdttdn/{id}/duyet','TdTtDnController@duyet');
-
-Route::resource('thongtinngaynghile','NgayNghiLeController');
-Route::post('thongtinngaynghile/delete','NgayNghiLeController@destroy');
-
-Route::resource('userscompany','UsersCompanyController');
-Route::get('userscompany/{id}/permission','UsersCompanyController@permission');
-Route::post('userscompany/phan-quyen','UsersCompanyController@uppermission');
 //EndUsers
 //Danh mục đơn vị
 Route::resource('dmdonvi','DmDonViController');
 Route::post('dmdonvi/delete','DmDonViController@destroy');
 Route::get('checkmadonvi','DmDonViController@checkmadonvi');
-
-Route::get('thongtindonvi','ThongTinDonViController@index');
-Route::get('thongtindonvi/edit','ThongTinDonViController@edit');
-Route::post('thongtindonvi','ThongTinDonViController@update');
 
 Route::get('register','Auth\RegisterController@index');
 Route::get('register/{id}','Auth\RegisterController@show');

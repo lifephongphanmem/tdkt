@@ -7,6 +7,11 @@ use App\dmhinhthuckt;
 use App\dmloaihinhkt;
 use App\dmquoctich;
 use App\Model\manage\ktcaccap\LapHoSoTd;
+use App\model\manage\ktcaccap\laphosotdct;
+use App\model\manage\ktcaccap\laphosotddf;
+use App\model\manage\qldoituong\dmphanloaict;
+use App\Model\manage\qldoituong\qldoituong;
+use App\model\manage\qltailieu\qlphongtrao;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
@@ -22,9 +27,11 @@ class LapHoSoTdController extends Controller
             else
                 $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->where('madonvi',session('admin')->madonvi)
                     ->get();
+            $modelpt = qlphongtrao::all();
             return view('manage.ktcaccap.laphosotd.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)
+                ->with('modelpt',$modelpt)
                 ->with('pageTitle','Danh sách hồ sơ thi đua');
         }else
             return view('errors.notlogin');
@@ -38,12 +45,20 @@ class LapHoSoTdController extends Controller
             $nhomht = dmhinhthuckt::all();
             $nhomlh = dmloaihinhkt::all();
             $nhomqt = dmquoctich::all();
+            $modeldt = qldoituong::where('madonvi',session('admin')->madonvi)->get();
+            $m_phongtrao = qlphongtrao::all();
+            $inputs['kihieudhtd'] = getdate()[0];
+            $modelct = laphosotddf::where('kihieudhtd',$inputs['kihieudhtd'])
+                ->get();
             return view('manage.ktcaccap.laphosotd.create')
                 ->with('inputs', $inputs)
                 ->with('nhomdh', $nhomdh)
                 ->with('nhomht', $nhomht)
                 ->with('nhomlh', $nhomlh)
                 ->with('nhomqt', $nhomqt)
+                ->with('modeldt', $modeldt)
+                ->with('m_phongtrao', $m_phongtrao)
+                ->with('modelct', $modelct)
                 ->with('pageTitle', 'Danh sách hồ sơ thi đua thêm mới');
         } else
             return view('errors.notlogin');
@@ -52,8 +67,6 @@ class LapHoSoTdController extends Controller
     public function store(Request $request){
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $inputs['namsinh'] = getDateToDb($inputs['namsinh']);
-            $inputs['ngayky'] = date('Y-m-d');
             $inputs['trangthai'] = 'CC';
             $inputs['ttthaotac'] = session('admin')->username.'('.session('admin')->name.') thêm mới ';
             if(isset($inputs['totrinh'])){
@@ -78,6 +91,18 @@ class LapHoSoTdController extends Controller
             }
             $model = new LapHoSoTd();
             $model->create($inputs);
+            $m_dt = laphosotddf::where('kihieudhtd',$inputs['kihieudhtd'])->get();
+            if(isset($m_dt))
+            {
+                foreach($m_dt as $chitiet)
+                {
+                    $a_dt = $chitiet->toarray();
+                    unset($a_dt['id']);
+                    $modelct = new laphosotdct();
+                    $modelct->create($a_dt);
+                    $chitiet->delete();
+                }
+            }
             return redirect('laphosotd');
         }else
             return view('errors.notlogin');
@@ -90,12 +115,21 @@ class LapHoSoTdController extends Controller
             $nhomht = dmhinhthuckt::all();
             $nhomlh = dmloaihinhkt::all();
             $nhomqt = dmquoctich::all();
+            $m_phongtrao = qlphongtrao::all();
+            $modelct = laphosotdct::where('kihieudhtd',$model->kihieudhtd)
+                ->get();
+            $m_pl = dmphanloaict::all();
+            $modeldt = qldoituong::where('madonvi',session('admin')->madonvi)->get();
             return view('manage.ktcaccap.laphosotd.edit')
                 ->with('model', $model)
                 ->with('nhomdh', $nhomdh)
                 ->with('nhomht', $nhomht)
                 ->with('nhomlh', $nhomlh)
                 ->with('nhomqt', $nhomqt)
+                ->with('m_phongtrao', $m_phongtrao)
+                ->with('modelct', $modelct)
+                ->with('m_pl', $m_pl)
+                ->with('modeldt', $modeldt)
                 ->with('pageTitle', 'Danh sách hồ sơ thi đua chỉnh sửa');
         } else
             return view('errors.notlogin');
@@ -105,7 +139,6 @@ class LapHoSoTdController extends Controller
         if (Session::has('admin')) {
             $inputs = $request->all();
             $model = LapHoSoTd::findOrFail($id);
-            $inputs['namsinh'] = getDateToDb($inputs['namsinh']);
             $inputs['ttthaotac'] = session('admin')->username.'('.session('admin')->name.') chỉnh sửa ';
             if(isset($inputs['totrinh'])){
                 $filedk = $request->file('totrinh');

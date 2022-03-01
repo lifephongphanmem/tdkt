@@ -83,43 +83,22 @@
                             <thead>
                             <tr>
                                 <th style="text-align: center" width="2%">STT</th>
-                                <th style="text-align: center" width="12%">Tên đối tượng được khen</th>
-                                <th style="text-align: center" width="12%">Chức danh lãnh đạo</th>
-                                <th style="text-align: center" width="5%">Số quyết định</th>
+                                <th style="text-align: center" width="12%">Nội dung hồ sơ</th>
+                                <th style="text-align: center" width="12%">Phong trào thi đua</th>
                                 <th style="text-align: center" width="5%">Ngày ký</th>
-                                <th style="text-align: center" width="8%">Thành tích khen</th>
-                                <th style="text-align: center" width="8%">Trạng thái</th>
+                                <th style="text-align: center" width="8%">Số lượng cá nhân</th>
+                                <th style="text-align: center" width="8%">Số lượng tập thể</th>
                                 <th style="text-align: center" width="22%">Thao tác</th>
                             </tr>
                             </thead>
                             @foreach($model as $key => $tt)
                                 <tr>
                                     <td style="text-align: center">{{$key+1}}</td>
-                                    <td>{{$tt->tendtkt}}</td>
-                                    <td>{{$tt->chucdanhld}}</td>
-                                    <td class="active">{{$tt->soqd}}</td>
-                                    <td style="text-align: center">{{getDayVn($tt->ngayky)}}</td>
-                                    <td style="text-align: center">{{$tt->thanhtichkhen}}</td>
-                                    @if($tt->trangthai == "CC")
-                                        <td align="center"><span class="badge badge-warning">Chờ chuyển</span></td>
-                                    @elseif($tt->trangthai == 'CD')
-                                        <td align="center"><span class="badge badge-blue">Chờ duyệt</span>
-                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
-                                        </td>
-                                    @elseif($tt->trangthai == 'CN')
-                                        <td align="center"><span class="badge badge-warning">Chờ nhận</span>
-                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
-                                        </td>
-                                    @elseif($tt->trangthai == 'BTL')
-                                        <td align="center">
-                                            <span class="badge badge-danger">Bị trả lại</span><br>&nbsp;
-                                        </td>
-                                    @else
-                                        <td align="center">
-                                            <span class="badge badge-success">Đã duyệt</span>
-                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
-                                        </td>
-                                    @endif
+                                    <td>{{$tt->noidung}}</td>
+                                    <td>{{$modelpt->where('maphongtrao',$tt->plphongtrao)->first()->noidung}}</td>
+                                    <td class="active">{{getDayVn($tt->ngayky)}}</td>
+                                    <td style="text-align: center">{{dinhdangso($tt->slcanhan)}}</td>
+                                    <td style="text-align: center">{{dinhdangso($tt->sltapthe)}}</td>
                                     <td style="text-align: center">
                                         <a href="{{url('dangkytd/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
                                         @if($tt->trangthai == 'CC' || $tt->trangthai == 'BTL')

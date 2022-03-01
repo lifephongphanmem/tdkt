@@ -23,7 +23,7 @@ class QlphieuchiController extends Controller
             $inputs = $request->all();
             $inputs['maphieu'] = isset($inputs['maphieu']) ? $inputs['maphieu'] : '';
             $inputs['phanloai'] = isset($inputs['phanloai']) ? $inputs['phanloai'] : '';
-            $model = qlphieuthuchi::where('loaiphieu','PC')->get();
+            $model = qlphieuthuchi::where('loaiphieu','PC')->where('madonvi',session('admin')->madonvi)->get();
             if($inputs['maphieu'] != '')
                 $model=$model->where('maphieu',$inputs['maphieu']);
             if($inputs['phanloai'] != '')

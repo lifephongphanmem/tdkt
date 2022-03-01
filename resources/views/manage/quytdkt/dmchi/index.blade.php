@@ -101,7 +101,7 @@
                 <div class="portlet-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <label class="control-label">Mã phiếu thu</label>
+                            <label class="control-label">Mã danh mục chi</label>
                             {!! Form::text('madmchi', $inputs['madmchi'], ['id' => 'madmchi', 'class' => 'form-control']) !!}
                         </div>
                         <!--div class="col-md-6">

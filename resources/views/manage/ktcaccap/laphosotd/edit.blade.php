@@ -118,6 +118,110 @@
             //});
         }
     </script>
+    <script>
+        function createtdt(){
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                url: '/laphosotdct/boxungdt',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    madt: $('#madt').val(),
+                    tendanhhieutd: $('#tendanhhieutd').val(),
+                    kihieudhtd: $('#kihieudhtd').val()
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if(data.status == 'success') {
+                        toastr.success("Bổ xung thông tin thành công!");
+                        $('#dsdt').replaceWith(data.message);
+                        jQuery(document).ready(function() {
+                            TableManaged.init();
+                        });
+                        $('#modal-create').modal("hide");
+
+                    }
+                }
+            })
+        }
+        function getId(id){
+            document.getElementById("iddelete").value=id;
+        }
+        function deleteRow() {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: '/laphosotdct/delete',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: $('#iddelete').val(),
+                    kihieudhtd: $('#kihieudhtd').val()
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    //if(data.status == 'success') {
+                    toastr.success("Bạn đã xóa thông tin đối tượng thành công!", "Thành công!");
+                    $('#dsdt').replaceWith(data.message);
+                    jQuery(document).ready(function() {
+                        TableManaged.init();
+                    });
+
+                    $('#delete-modal').modal("hide");
+
+                    //}
+                }
+            })
+
+        }
+        function editTtPh(id) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            //alert(id);
+            $.ajax({
+                url: '/laphosotdct/chinhsuadt',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        $('#ttpedit').replaceWith(data.message);
+                    }
+                    else
+                        toastr.error("Không thể chỉnh sửa thông tin phòng nghỉ!", "Lỗi!");
+                }
+            })
+        }
+        function updatets() {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: '/laphosotdct/update',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: $('#idedit').val(),
+                    madt: $('#madtedit').val(),
+                    tendanhhieutd: $('#tendanhhieutdedit').val(),
+                    kihieudhtd: $('#kihieudhtd').val()
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success("Chỉnh sửa thông tin đối tượng", "Thành công!");
+                        $('#dsdt').replaceWith(data.message);
+                        jQuery(document).ready(function() {
+                            TableManaged.init();
+                        });
+                        $('#modal-edit').modal("hide");
+
+                    } else
+                        toastr.error("Bạn cần kiểm tra lại thông tin vừa nhập!", "Lỗi!");
+                }
+            })
+        }
+    </script>
 @stop
 
 @section('content')
@@ -135,100 +239,15 @@
                 <div class="portlet-body">
                     <h4 class="form-section" style="color: #0000ff">Thông tin hồ sơ</h4>
                     <div class="row">
+                        {!!Form::text('kihieudhtd',null, array('id' => 'kihieudhtd','class' => 'form-control hidden'))!!}
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="control-label">Kí hiệu danh hiệu thi đua<span class="require">*</span></label>
-                                {!!Form::text('kihieudhtd',null, array('id' => 'kihieudhtd','class' => 'form-control required', 'readonly'=>'readonly' ))!!}
-                                @if ($errors->has('kihieudhtd'))
-                                    <em class="invalid">{{$errors->first('kihieudhtd') }}</em>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Danh hiệu thi đua</label>
-                                <select id="tendanhhieutd" name="tendanhhieutd" class="form-control js-example-basic-single">
-                                    @foreach($nhomdh as $nhom)
-                                        <option value="{{$nhom->tendanhhieutd}}">{{$nhom->tendanhhieutd}}</option>
+                                <label class="control-label">Phân loại phong trào TĐ</label>
+                                <select id="tenqt" name="tenqt" class="form-control js-example-basic-single">
+                                    @foreach($m_phongtrao as $pt)
+                                        <option value="{{$pt->maphongtrao}}">{{$pt->veviec}}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Hình thức khen thưởng</label>
-                                <select id="tenhinhthuckt" name="tenhinhthuckt" class="form-control js-example-basic-single">
-                                    @foreach($nhomht as $nhom)
-                                        <option value="{{$nhom->tenhinhthuckt}}">{{$nhom->tenhinhthuckt}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Tên đối tượng được khen<span class="require">*</span></label>
-                                {!!Form::text('tendtkt',null, array('id' => 'tendtkt','class' => 'form-control required'))!!}
-                                @if ($errors->has('tendtkt'))
-                                    <em class="invalid">{{$errors->first('tendtkt')}}</em>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Phụ cấp lãnh đạo</label>
-                                <div class="md-radio-inline">
-                                    <div class="col-md-4">
-                                        <div class="md-radio">
-                                            <input type="radio" id="radio6" name="phucapld" class="md-radiobtn" {{(isset($model) ? ($model->phucapld == 'Có' ? 'checked' : '') : 'checked')}} value="Có">
-                                            <label for="radio6">
-                                                <span class="inc"></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span>
-                                                Có</label>
-                                        </div>
-                                        <div class="md-radio">
-                                            <input type="radio" id="radio7" name="phucapld" class="md-radiobtn" {{(isset($model) ? ($model->phucapld == 'Không' ? 'checked' : '') : '')}} value="Không">
-                                            <label for="radio7">
-                                                <span class="inc"></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span>
-                                                Không</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Chức danh lãnh đạo<span class="require">*</span></label>
-                                {!!Form::text('chucdanhld',null, array('id' => 'chucdanhld','class' => 'form-control required'))!!}
-                                @if ($errors->has('chucdanhld'))
-                                    <em class="invalid">{{$errors->first('chucdanhld') }}</em>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Chức vụ<span class="require">*</span></label>
-                                {!!Form::text('chucvu',null, array('id' => 'chucvu','class' => 'form-control required'))!!}
-                                @if ($errors->has('chucvu'))
-                                    <em class="invalid">{{$errors->first('chucvu') }}</em>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Đơn vị công tác hoặc Địa chỉ<span class="require">*</span></label>
-                                {!!Form::text('dvdcct',null, array('id' => 'dvdcct','class' => 'form-control required'))!!}
-                                @if ($errors->has('dvdcct'))
-                                    <em class="invalid">{{$errors->first('dvdcct') }}</em>
-                                @endif
                             </div>
                         </div>
                     </div>
@@ -236,7 +255,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="control-label">Số quyết định<span class="require">*</span></label>
-                                {!!Form::text('soqd',null, array('id' => 'soqd','class' => 'form-control required'))!!}
+                                {!!Form::text('soqd',null, array('id' => 'soqd','class' => 'form-control '))!!}
                                 @if ($errors->has('soqd'))
                                     <em class="invalid">{{$errors->first('soqd') }}</em>
                                 @endif
@@ -254,7 +273,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Ngày ký<span class="require">*</span></label>
-                                {!! Form::input('date', 'ngayky', null, array('id' => 'ngayky', 'class' => 'form-control', 'required'))!!}
+                                {!! Form::input('date', 'ngayky', null, array('id' => 'ngayky', 'class' => 'form-control' ))!!}
                                 @if ($errors->has('ngayky'))
                                     <em class="invalid">{{ $errors->first('ngayky') }}</em>
                                 @endif
@@ -262,89 +281,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">Người ký<span class="require">*</span></label>
-                                {!!Form::text('nguoiky',null, array('id' => 'nguoiky','class' => 'form-control required'))!!}
-                                @if ($errors->has('nguoiky'))
-                                    <em class="invalid">{{$errors->first('nguoiky') }}</em>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Loại hình khen thưởng<span class="require">*</span></label>
-                                <select id="tenloaihinhkt" name="tenloaihinhkt" class="form-control js-example-basic-single">
-                                    @foreach($nhomlh as $nhom)
-                                        <option value="{{$nhom->tenloaihinhkt}}">{{$nhom->tenloaihinhkt}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Thành tích khen<span class="require">*</span></label>
-                                {!!Form::text('thanhtichkhen',null, array('id' => 'thanhtichkhen','class' => 'form-control required'))!!}
-                                @if ($errors->has('thanhtichkhen'))
-                                    <em class="invalid">{{$errors->first('thanhtichkhen') }}</em>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Ngày tháng năm sinh<span class="require">*</span></label>
-                                {!! Form::input('date', 'namsinh', null, array('id' => 'namsinh', 'class' => 'form-control', 'required'))!!}
-                                @if ($errors->has('namsinh'))
-                                    <em class="invalid">{{ $errors->first('namsinh') }}</em>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="control-label">Chính quán (Nguyên quán)<span class="require">*</span></label>
-                                {!!Form::text('chinhquan',null, array('id' => 'chinhquan','class' => 'form-control required'))!!}
-                                @if ($errors->has('chinhquan'))
-                                    <em class="invalid">{{$errors->first('chinhquan') }}</em>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="control-label">Trú quán<span class="require">*</span></label>
-                                {!!Form::text('truquan',null, array('id' => 'truquan','class' => 'form-control required'))!!}
-                                @if ($errors->has('truquan'))
-                                    <em class="invalid">{{$errors->first('truquan') }}</em>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="control-label">Tính chất tặng</label>
-                                {!! Form::select(
-                                'tctang',
-                                array(
-                                'Điều chỉnh' => 'Điều chỉnh',
-                                'Thu hồi' => 'Thu hồi',
-                                'Tặng' => 'Tặng',
-                                'Truy tặng' => 'Truy tặng',
-                                ),
-                                null,
-                                array('id' => 'tctang', 'class' => 'form-control'))
-                                !!}
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="control-label">Quốc tịch<span class="require">*</span></label>
-                                <select id="tenqt" name="tenqt" class="form-control js-example-basic-single">
-                                    @foreach($nhomqt as $nhom)
-                                        <option value="{{$nhom->tenqt}}">{{$nhom->tenqt}}</option>
-                                    @endforeach
-                                </select>
+                                <label class="control-label">Nội dung<span class="require">*</span></label>
+                                {!! Form::textarea('noidung', null, ['id' => 'noidung', 'rows' => 2, 'cols' => 10, 'class' => 'form-control required']) !!}
                             </div>
                         </div>
                     </div>
@@ -402,6 +342,47 @@
                             </div>
                         </div>
                     </div>
+                    <h4 class="form-section" style="color: #0000ff">Danh sách đối tượng thi đua</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="button" data-target="#modal-create" data-toggle="modal" class="btn btn-success btn-xs" ><i class="fa fa-plus"></i>&nbsp;Thêm đối tượng</button>
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="dsdt">
+                        <div class="col-md-12">
+                            <table class="table table-striped table-bordered table-hover" >
+                                <thead>
+                                <tr>
+                                    <th style="text-align: center" width="2%">STT</th>
+                                    <th style="text-align: center">Tên đối tượng</th>
+                                    <th style="text-align: center" width="10%">Phân loại</th>
+                                    <th style="text-align: center" width="25%">Địa chỉ</th>
+                                    <th style="text-align: center" width="10%">Danh hiệu thi đua</th>
+                                    <th style="text-align: center" width="10%">Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($modelct as $key=>$tt)
+                                    <tr class="odd gradeX">
+                                        <td style="text-align: center">{{$key + 1}}</td>
+                                        <td>{{$modeldt->where('madt',$tt->madt)->first()->tendt}}</td>
+                                        <td >{{$m_pl->where('maplct',$modeldt->where('madt',$tt->madt)->first()->phanloaict)->first()->tenplct}}</td>
+                                        <td style="text-align: center">{{$modeldt->where('madt',$tt->madt)->first()->diachi}}</td>
+                                        <td style="text-align: center">{{$tt->tendanhhieutd}}</td>
+                                        <td>
+                                            <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
+                                                Xóa</button>
+                                            <button type="button" data-target="#modal-edit" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="editTtPh({{$tt->id}});"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa thông tin</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
             <input type="hidden" name="madonvi" id="madonvi" value="{{session('admin')->madonvi}}">
@@ -421,7 +402,83 @@
     <!-- END DASHBOARD STATS -->
     <div class="clearfix">
     </div>
+    <div class="modal fade bs-modal-lg" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Thêm mới thông tin đối tượng</h4>
+                </div>
+                <div class="modal-body" id="ttpthemmoi">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group"><label for="selGender" class="control-label">Đối tượng:<span class="require">*</span></label>
+                                <select id="madt" name="madt" class="form-control js-example-basic-single">
+                                    @foreach($modeldt as $dt)
+                                        <option value="{{$dt->madt}}">{{$dt->tendt}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Danh hiệu thi đua</label>
+                                <select id="tendanhhieutd" name="tendanhhieutd" class="form-control js-example-basic-single">
+                                    @foreach($nhomdh as $nhom)
+                                        <option value="{{$nhom->tendanhhieutd}}">{{$nhom->tendanhhieutd}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
+                        <button type="button" class="btn btn-primary" onclick="createtdt()">Cập nhật</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+    <div class="modal fade bs-modal-lg" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Chỉnh sửa thông tin đối tượng</h4>
+                </div>
+                <div class="modal-body" id="ttpedit">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
+                    <button type="button" class="btn btn-primary" onclick="updatets()">Cập nhật</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Đồng ý xóa thông tin đối tượng?</h4>
+                </div>
+                <input type="hidden" id="iddelete" name="iddelete">
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
+                    <button type="button" class="btn btn-primary" onclick="deleteRow()">Đồng ý</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <!--Validate Form-->
     <script type="text/javascript">
         function validateForm(){

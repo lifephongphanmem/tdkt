@@ -83,23 +83,23 @@
                             <thead>
                             <tr>
                                 <th style="text-align: center" width="2%">STT</th>
-                                <th style="text-align: center" width="12%">Tên đối tượng được khen</th>
-                                <th style="text-align: center" width="12%">Chức danh lãnh đạo</th>
-                                <th style="text-align: center" width="5%">Số quyết định</th>
+                                <th style="text-align: center" width="12%">Nội dung hồ sơ</th>
+                                <th style="text-align: center" width="12%">Phong trào thi đua</th>
                                 <th style="text-align: center" width="5%">Ngày ký</th>
-                                <th style="text-align: center" width="8%">Thành tích khen</th>
+                                <th style="text-align: center" width="8%">Số lượng cá nhân</th>
+                                <th style="text-align: center" width="8%">Số lượng tập thể</th>
                                 <th style="text-align: center" width="8%">Trạng thái</th>
-                                <th style="text-align: center" width="15%">Thao tác</th>
+                                <th style="text-align: center" width="22%">Thao tác</th>
                             </tr>
                             </thead>
                             @foreach($model as $key => $tt)
                                 <tr>
                                     <td style="text-align: center">{{$key+1}}</td>
-                                    <td>{{$tt->tendtkt}}</td>
-                                    <td>{{$tt->chucdanhld}}</td>
-                                    <td class="active">{{$tt->soqd}}</td>
-                                    <td style="text-align: center">{{getDayVn($tt->ngayky)}}</td>
-                                    <td style="text-align: center">{{$tt->thanhtichkhen}}</td>
+                                    <td>{{$tt->noidung}}</td>
+                                    <td>{{$modelpt->where('maphongtrao',$tt->plphongtrao)->first()->noidung}}</td>
+                                    <td class="active">{{getDayVn($tt->ngayky)}}</td>
+                                    <td style="text-align: center">{{dinhdangso($tt->slcanhan)}}</td>
+                                    <td style="text-align: center">{{dinhdangso($tt->sltapthe)}}</td>
                                     @if($tt->trangthai == "CC")
                                         <td align="center"><span class="badge badge-warning">Chờ chuyển</span></td>
                                     @elseif($tt->trangthai == 'CD')
@@ -129,13 +129,17 @@
                                         @endif
                                         @if($tt->trangthai == 'CC' || $tt->trangthai == 'BTL')
                                             <!--a href="{{url('laphosotd/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a-->
+                                            <!--button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
+                                                Chuyển</button-->
                                             <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
-                                                Chuyển</button>
+                                                Trình hồ sơ</button>
                                             <a href="{{url('laphosotd/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                         @endif
                                         @if($tt->trangthai == 'BTL')
                                             <button type="button" onclick="viewLiDo('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#lydo-show" data-toggle="modal"><i class="fa fa-archive"></i>&nbsp;
                                                 Lí do</button>
+                                            <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
+                                                Trình hồ sơ</button>
                                         @endif
 
                                     </td>
@@ -156,7 +160,7 @@
         <div class="modal fade" id="trans-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    {!! Form::open(['url'=>'laphosotd/trans','id' => 'frm_trans'])!!}
+                    {!! Form::open(['url'=>'chuyenhosocaptren/trans','id' => 'frm_trans'])!!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 class="modal-title">Đồng ý chuyển?</h4>

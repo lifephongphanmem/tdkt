@@ -42,7 +42,7 @@
 
 @section('content')
     <h3 class="page-title">
-        Danh sách<small>&nbsp;bằng khen thủ tướng (tỉnh Hà Bắc cũ)</small>
+        Danh sách<small>&nbsp;bằng khen thủ tướng</small>
     </h3>
     <div class="row">
         <div class="col-md-12">

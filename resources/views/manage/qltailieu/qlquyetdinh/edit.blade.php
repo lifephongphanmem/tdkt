@@ -213,9 +213,9 @@
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet box blue">
                 <div class="portlet-body">
-                    <h4 class="form-section" style="color: #0000ff">Thông quyết định khen thưởng</h4>
+                    <h4 class="form-section" style="color: #0000ff">Thông tin quyết định khen thưởng</h4>
                     <div class="row">
-                        <input hidden id="maquyetdinh" name="maquyetdinh" value="{{$inputs['maquyetdinh']}}">
+                        {!! Form::input('text', 'maquyetdinh', null, array('id' => 'maquyetdinh', 'class' => 'form-control hidden'))!!}
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Số quyết định<span class="require">*</span></label>
@@ -322,8 +322,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Phân loại phong trào<span class="require">*</span></label>
-                                {!! Form::select('phongtrao',getphongtrao(),null, array('id'=>'phanloai','class'=>'form-control required'))!!}
-                                @if ($errors->has('phanloai'))
+                                {!! Form::select('phongtrao',getphongtrao(),null, array('id'=>'phongtrao','class'=>'form-control required'))!!}
+                                @if ($errors->has('phongtrao'))
                                     <em class="invalid">{{ $errors->first('phanloai') }}</em>
                                 @endif
                             </div>

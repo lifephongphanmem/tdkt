@@ -99,6 +99,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="{{url('assets/admin/layout/scripts/demo.js')}}" type="text/javascript"></script>
     <script src="{{url('assets/admin/pages/scripts/index.js')}}" type="text/javascript"></script>
     <script src="{{url('assets/admin/pages/scripts/tasks.js')}}" type="text/javascript"></script>
+    <script src="{{url('assets/admin/pages/scripts/components-dropdowns.js')}}"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
     <script type="text/javascript">
         function time() {

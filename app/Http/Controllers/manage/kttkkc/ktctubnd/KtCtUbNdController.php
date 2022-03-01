@@ -29,7 +29,7 @@ class KtCtUbNdController extends Controller
                 ->with('model_dh', $model_dh)
                 ->with('model_lh', $model_lh)
                 ->with('model_ht', $model_ht)
-                ->with('pageTitle','Danh sách bằng khen chủ tịch UBND tỉnh (tỉnh Hà Bắc cũ)');
+                ->with('pageTitle','Danh sách bằng khen chủ tịch UBND tỉnh');
         }else
             return view('errors.notlogin');
     }
@@ -40,7 +40,7 @@ class KtCtUbNdController extends Controller
             $inputs = $request->all();
             return view('manage.kttkkc.ktctubnd.create')
                 ->with('inputs', $inputs)
-                ->with('pageTitle', 'Danh sách bằng khen chủ tịch UBND tỉnh (tỉnh Hà Bắc cũ) thêm mới');
+                ->with('pageTitle', 'Danh sách bằng khen chủ tịch UBND tỉnh thêm mới');
         } else
             return view('errors.notlogin');
     }
@@ -66,7 +66,7 @@ class KtCtUbNdController extends Controller
             $model = KtCtUbNd::find($id);
             return view('manage.kttkkc.ktctubnd.edit')
                 ->with('model', $model)
-                ->with('pageTitle', 'Danh sách bằng khen chủ tịch UBND tỉnh (tỉnh Hà Bắc cũ) chỉnh sửa');
+                ->with('pageTitle', 'Danh sách bằng khen chủ tịch UBND tỉnh chỉnh sửa');
         } else
             return view('errors.notlogin');
     }
@@ -93,7 +93,7 @@ class KtCtUbNdController extends Controller
                 ->with('model', $model)
                 ->with('model_dh', $model_dh)
                 ->with('model_lh', $model_lh)
-                ->with('pageTitle', 'Danh sách bằng khen chủ tịch UBND tỉnh (tỉnh Hà Bắc cũ)');
+                ->with('pageTitle', 'Danh sách bằng khen chủ tịch UBND tỉnh');
         }else
             return view('errors.notlogin');
     }

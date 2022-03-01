@@ -44,5 +44,8 @@ class DangKyTd extends Model
         'ttthaotac',
         'madonvi',
         'plphongtrao',
+        'noidung',
+        'slcanhan',
+        'sltapthe',
     ];
 }

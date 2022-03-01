@@ -18,7 +18,7 @@ class ChuyenHoSoCapTrenController extends Controller
             $inputs = $request->all();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
             if(session('admin')->sadmin == 'ssa')
-                $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->get();
+                $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->where('trangthai','DD')->get();
             else
                 $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])
                     ->where('trangthai','<>','CC')
@@ -97,12 +97,14 @@ class ChuyenHoSoCapTrenController extends Controller
             $inputs = $request->all();
             $id = $request->all()['idtrans'];
             $model = LapHoSoTd::findorFail($id);
-            $inputs['trangthaihuyen'] = 'CD';
+            //$inputs['trangthaihuyen'] = 'CD';
+            $inputs['trangthai'] = 'CD';
             $inputs['ttthaotac'] = session('admin')->username.'('.session('admin')->name.') chuyển hồ sơ ';
             $inputs['ngaychuyen'] = date('Y-m-d H:i:s');
             $model->nguoichuyen = $inputs['nguoichuyen'];
             $model->update($inputs);
-            return redirect('chuyenhosocaptren');
+            //return redirect('chuyenhosocaptren');
+            return redirect('laphosotd');
         }else
             return view('errors.notlogin');
     }

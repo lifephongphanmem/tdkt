@@ -13,8 +13,9 @@
                         <a href="{{url('qlquyetdinhkt')}}">Quản lý quyết định khen thưởng</a>
                     </li>
                 @endif
+
                 @if(can('qltotrinhkt','index'))
-                    <li>
+                    <!--li>
                         <a href="{{url('qltotrinhkt')}}">Quản lý tờ trình khen thưởng</a>
                     </li>
                 @endif
@@ -26,7 +27,7 @@
                 @if(can('qlfile','index'))
                     <li>
                         <a href="{{url('qlfile')}}">Quản lý tài liệu file đính kèm</a>
-                    </li>
+                    </li-->
                 @endif
                 @if(can('qlphontraotd','index'))
                     <li>

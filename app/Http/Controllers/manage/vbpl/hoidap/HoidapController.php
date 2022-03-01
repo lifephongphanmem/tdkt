@@ -21,9 +21,8 @@ class HoidapController extends Controller
             $model = qlhoidap::where('madonvi',session('admin')->madonvi)
                 ->orwhere('donvinhan',session('admin')->madonvi)
                 ->where('trangthai','<>','CC')
-                ->where('trangthai','<>','BTL');
-            $model = $model->where('phanloai',$inputs['phanloai'])
-                ->whereYear('ngaythang',$inputs['nam'])->get();
+                ->where('trangthai','<>','BTL')->whereYear('ngaythang',$inputs['nam'])->get();
+            $model = $model->where('phanloai',$inputs['phanloai']);
             return view('manage.vbpl.qlhoidap.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)

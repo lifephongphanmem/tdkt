@@ -38,116 +38,76 @@
 </head>
 
 <div class="in" style="margin-left: 20px;">
-    <input type="submit" onclick=" window.print()" value="In kê khai"  />
+    <input type="submit" onclick=" window.print()" value="In báo cáo"  />
 </div>
 
 <body style="font:normal 14px Times, serif;">
 
-<div class="row">
-    <div class="col-md-12">
-        <table cellspacing="0" cellpadding="0" border="0" style="  border-collapse: collapse;font:normal 16px Times, serif;" >
+    <table cellspacing="0" cellpadding="0" border="0" style="  border-collapse: collapse;font:normal 16px Times, serif;" >
+        <tr>
+            <th width="50%"></td>
+            <th width="" style="text-align: center">Cộng hòa xã hội chủ nghĩa Việt Nam </td>
+        </tr>
+        <tr>
+            <th style="padding-top: 1px">Số:</td>
+            <th style="padding-top: 1px">Độc lập - Tự do - Hạnh phúc</td>
+        </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0" border="0" style="margin: 10px auto; border-collapse: collapse;font:normal 16px Times, serif;" >
+        <tr>
+            <th style="text-transform: uppercase">DANH SÁCH HỒ SƠ THI ĐUA</td>
+        </tr>
+    </table>
+    <table class="header" width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 25px; text-align: left;">
+        <tr >
+            <th  width=""> Thông tin đăng ký thi đua </td>
+        </tr>
+        <tr >
+            <td style="text-align: left">
+                Đơn vị: {{$m_donvi->tendv}}
+            </td >
+        </tr>
+        <tr >
+            <td style="text-align: left">
+                Phong trào: {{$m_phongtrao->where('maphongtrao',$model->plphongtrao)->first()->noidung}}
+            </td >
+        </tr>
+        <tr>
+            <td style="text-align: left">
+                Nội dung thi đua: {{$model->noidung}}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left">
+                Danh sách cá nhân, tập thể tham gia thi đua khen thưởng:
+            </td>
+        </tr>
+    </table>
+    <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Đối tượng</th>
+            <th>Phân loại</th>
+            <th>Địa chỉ</th>
+            <th>Danh hiệu thi đua</th>
+            <th>Ghi chú</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php $i = 0;;?>
+        @foreach($modelct as $ct)
+            <?php $i++;?>
             <tr>
-                <th width="50%"></td>
-                <th width="" style="text-align: center">Cộng hòa xã hội chủ nghĩa Việt Nam </td>
+                <tr class="odd gradeX">
+                    <td style="text-align: center">{{$i}}</td>
+                    <td>{{$modeldt->where('madt',$ct->madt)->first()->tendt}}</td>
+                    <td >{{$m_pl->where('maplct',$modeldt->where('madt',$ct->madt)->first()->phanloaict)->first()->tenplct}}</td>
+                    <td style="text-align: center">{{$modeldt->where('madt',$ct->madt)->first()->diachi}}</td>
+                    <td style="text-align: center">{{$ct->tendanhhieutd}}</td>
+                    <td style="text-align: center"></td>
+                </tr>
             </tr>
-            <tr>
-                <th style="padding-top: 1px">Số:</td>
-                <th style="padding-top: 1px">Độc lập - Tự do - Hạnh phúc</td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <table cellspacing="0" cellpadding="0" border="0" style="margin: 10px auto; border-collapse: collapse;font:normal 16px Times, serif;" >
-            <tr>
-                <th style="text-transform: uppercase">DANH SÁCH HỒ SƠ THI ĐUA</td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <table cellspacing="0" cellpadding="0" border="0" style="margin: 10px auto;padding-left: 10px; border-collapse: collapse;font:normal 16px Times, serif; text-align: left" >
-            <tr>
-                <th  width=""> Thông tin đăng ký thi đua </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Kí hiệu danh hiệu thi đua: </td>
-                <td style="padding-left: 100px;"> {{$model->kihieudhtd}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Danh hiệu thi đua: </td>
-                <td style="padding-left: 100px;"> {{$model->tendanhhieutd}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Hình thức khen thưởng: </td>
-                <td style="padding-left: 100px;"> {{$model->tenhinhthuckt}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Tên đối tượng được khen: </td>
-                <td style="padding-left: 100px;"> {{$model->tendtkt}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Phụ cấp lãnh đạo: </td>
-                <td style="padding-left: 100px;"> {{$model->phucapld}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Chức danh lãnh đạo: </td>
-                <td style="padding-left: 100px;"> {{$model->chucdanhld}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Chức vụ: </td>
-                <td style="padding-left: 100px;"> {{$model->chucvu}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Đơn vị công tác hoặc Địa chỉ: </td>
-                <td style="padding-left: 100px;"> {{$model->dvdcct}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Số quyết định: </td>
-                <td style="padding-left: 100px;"> {{$model->soqd}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Năm: </td>
-                <td style="padding-left: 100px;"> {{$model->nam}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Ngày ký: </td>
-                <td style="padding-left: 100px;"> {{getDayVn($model->ngayky)}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Người ký: </td>
-                <td style="padding-left: 100px;"> {{$model->nguoiky}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Loại hình khen thưởng: </td>
-                <td style="padding-left: 100px;"> {{$model->tenloaihinhkt}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Ngày tháng năm sinh: </td>
-                <td style="padding-left: 100px;"> {{getDayVn($model->namsinh)}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Chính quán (Nguyên quán): </td>
-                <td style="padding-left: 100px;"> {{$model->chinhquan}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Trú quán: </td>
-                <td style="padding-left: 100px;"> {{$model->truquan}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Tính chất tặng: </td>
-                <td style="padding-left: 100px;"> {{$model->tctang}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Quốc tịch: </td>
-                <td style="padding-left: 100px;"> {{$model->tenqt}} </td>
-            </tr>
-            <tr>
-                <th width="30%" style="padding-left: 50px;">Ghi chú: </td>
-                <td style="padding-left: 100px;"> {{$model->ghichu}} </td>
-            </tr>
-        </table>
-    </div>
-</div>
+        @endforeach
+        </tbody>
+    </table>

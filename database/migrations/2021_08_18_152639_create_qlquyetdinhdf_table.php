@@ -32,6 +32,7 @@ class CreateQlquyetdinhdfTable extends Migration
         });
     }
 
+
     /**
      * Reverse the migrations.
      *

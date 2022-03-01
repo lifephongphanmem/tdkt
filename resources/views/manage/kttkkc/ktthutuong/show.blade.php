@@ -61,7 +61,7 @@
     <div class="col-md-12">
         <table cellspacing="0" cellpadding="0" border="0" style="margin: 10px auto; border-collapse: collapse;font:normal 16px Times, serif;" >
             <tr>
-                <th style="text-transform: uppercase">Danh sách bằng khen thủ tướng (tỉnh Hà Bắc cũ)</td>
+                <th style="text-transform: uppercase">Danh sách bằng khen thủ tướng</td>
             </tr>
         </table>
     </div>
