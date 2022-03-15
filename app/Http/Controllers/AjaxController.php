@@ -9,7 +9,7 @@ use App\Model\system\company\Company;
 use App\Register;
 use App\Town;
 use App\TtNgayNghiLe;
-use App\Users;
+use App\DSTaiKhoan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -95,7 +95,7 @@ class AjaxController extends Controller
 
         if (isset($inputs['username'])) {
             if($inputs['username'] != 'minhtran') {
-                $model = Users::where('username', $inputs['username'])->count();
+                $model = DSTaiKhoan::where('username', $inputs['username'])->count();
                 if ($model == 0) {
                     $result['status'] = 'success';
                     $result['message'] = 'ok';

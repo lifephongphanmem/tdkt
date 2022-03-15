@@ -2,18 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
-use App\District;
-use App\dmdonvi;
-use App\DmDvQl;
-use App\DnDvGs;
-use App\DnDvLt;
-use App\DnDvLtReg;
-use App\DnTaCn;
-use App\DonViDvVt;
-use App\DonViDvVtReg;
-use App\Register;
-use App\Users;
+use App\DSDiaBan;
+use App\DSTaiKhoan;
+use App\HeThongChung;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
@@ -35,6 +26,86 @@ class UsersController extends Controller
     public function signin(Request $request)
     {
         $input = $request->all();
+        $ttuser = DSTaiKhoan::where('username', $input['username'])->first();
+        //Tài khoản không tồn tại
+        if ($ttuser == null) {
+            return view('errors.403')
+                ->with('message', 'Sai tên tài khoản hoặc sai mật khẩu đăng nhập.');
+        }
+
+        //Tài khoản đang bị khóa
+        if ($ttuser->trangthai == "0") {
+            return view('errors.lockuser');
+        }
+        $a_HeThongChung = getHeThongChung();
+        $solandn = chkDbl($a_HeThongChung->solandn);
+        //Sai mật khẩu
+        if (md5($input['password']) != $ttuser->password) {
+            $ttuser->solandn = $ttuser->solandn + 1;
+            if ($ttuser->solandn >= $solandn) {
+                $ttuser->status = 'Vô hiệu';
+                $ttuser->save();
+                return view('errors.lockuser');
+            }
+            $ttuser->save();
+            return view('errors.403')
+                ->with('message', 'Sai tên tài khoản hoặc sai mật khẩu đăng nhập.<br>Số lần đăng nhập: ' . $ttuser->solandn . '/' . $solandn . ' lần
+                    .<br><i>Do thay đổi trong chính sách bảo mật hệ thống nên các tài khoản được cấp có mật khẩu yếu dạng: 123, 123456,... sẽ bị thay đổi lại</i>');
+        }
+
+        $ttuser->solandn = 0;
+        $ttuser->save();
+
+        //kiểm tra tài khoản
+        //1. level = SSA ->
+        if ($ttuser->sadmin != "SSA") {
+            //dd($ttuser);
+            //2. level != SSA -> lấy thông tin đơn vị, hệ thống để thiết lập lại
+
+            $m_donvi = DSTaiKhoan::where('madonvi', $ttuser->madonvi)->first();
+
+            //dd($ttuser);
+            $ttuser->madiaban = $m_donvi->madiaban;
+            $ttuser->maqhns = $m_donvi->maqhns;
+            $ttuser->tendv = $m_donvi->tendv;
+            $ttuser->emailql = $m_donvi->emailql;
+            $ttuser->emailqt = $m_donvi->emailqt;
+            $ttuser->songaylv = $m_donvi->songaylv;
+            $ttuser->tendvhienthi = $m_donvi->tendvhienthi;
+            $ttuser->tendvcqhienthi = $m_donvi->tendvcqhienthi;
+            $ttuser->chucvuky = $m_donvi->chucvuky;
+            $ttuser->chucvukythay = $m_donvi->chucvukythay;
+            $ttuser->nguoiky = $m_donvi->nguoiky;
+            $ttuser->diadanh = $m_donvi->diadanh;
+            $ttuser->chucnang = explode(';', $m_donvi->chucnang);
+
+            //Lấy thông tin địa bàn
+            $m_diaban = DSDiaBan::where('madiaban', $ttuser->madiaban)->first();
+
+            $ttuser->tendiaban = $m_diaban->tendiaban;
+            $ttuser->level = $m_diaban->level;
+        } else {
+            $ttuser->chucnang = array('SSA');
+        }
+
+        //Lấy setting gán luôn vào phiên đăng nhập
+        $ttuser->setting = json_decode($a_HeThongChung->setting, true);
+        $ttuser->permission = json_decode($a_HeThongChung->permission, true);
+        $ttuser->ipf1 = $a_HeThongChung->ipf1;
+        $ttuser->ipf2 = $a_HeThongChung->ipf2;
+        $ttuser->ipf3 = $a_HeThongChung->ipf3;
+        $ttuser->ipf4 = $a_HeThongChung->ipf4;
+        $ttuser->ipf5 = $a_HeThongChung->ipf5;
+        //dd($ttuser);
+        Session::put('admin', $ttuser);
+        //dd(session('admin'));
+        return redirect('')
+            ->with('pageTitle', 'Tổng quan');
+    }
+
+    public function signin_cu(Request $request)
+    {
+        $input = $request->all();
         if($input['username'] == getsadmin()->username) {
             if(md5($input['password']) == getsadmin()->password) {
                 Session::put('admin', getsadmin());
@@ -44,12 +115,12 @@ class UsersController extends Controller
                 return view('errors.invalid-pass');
 
         }else {
-            $check = Users::where('username', $input['username'])
+            $check = DSTaiKhoan::where('username', $input['username'])
                 ->count();
             if ($check == 0)
                 return view('errors.invalid-user');
             else {
-                $ttuser = Users::where('username', $input['username'])->first();
+                $ttuser = DSTaiKhoan::where('username', $input['username'])->first();
             }
             if (md5($input['password']) == $ttuser->password) {
                 if ($ttuser->status == "Kích hoạt") {
@@ -94,7 +165,7 @@ class UsersController extends Controller
         $currentPassword = $update['current-password'];
 
         if (md5($currentPassword) == $password) {
-            $ttuser = Users::where('username', $username)->first();
+            $ttuser = DSTaiKhoan::where('username', $username)->first();
             $ttuser->password = md5($newpass2);
             if ($ttuser->save()) {
                 Session::flush();
@@ -137,7 +208,7 @@ class UsersController extends Controller
                     /*
                     $model = Users::where('level', $inputs['level'])
                         ->orderBy('id', 'desc');*/
-                    $model = Users::all();
+                    $model = DSTaiKhoan::all();
                     $m_dv = dmdonvi::all();
                     if($inputs['level'] != '')
                         $model = $model->where('level',$inputs['level']);
@@ -196,7 +267,7 @@ class UsersController extends Controller
             //quyền sa, ssa tạo tài khoản cấp tỉnh
             if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
                 $inputs = $request->all();
-                $model = new Users();
+                $model = new DSTaiKhoan();
                 $inputs['ttnguoitao'] = session('admin')->name.'('.session('admin')->username.')'. getDateTime(Carbon::now()->toDateTimeString());
                 $inputs['password'] = md5($inputs['password']);
                 $model->create($inputs);
@@ -232,7 +303,7 @@ class UsersController extends Controller
     {
         if (Session::has('admin')) {
 
-            $model = Users::findOrFail($id);
+            $model = DSTaiKhoan::findOrFail($id);
             $modeldvql = dmdonvi::all();
             return view('system.users.edit')
                 ->with('model', $model)
@@ -253,7 +324,7 @@ class UsersController extends Controller
     {
         if (Session::has('admin')) {
             $input = $request->all();
-            $model = Users::findOrFail($id);
+            $model = DSTaiKhoan::findOrFail($id);
             if (session('admin')->level == 'T' || session('admin')->level == 'H' || session('admin')->level == 'X') {
                 if ($input['newpass'] != '')
                     $input['password'] = md5($input['newpass']);
@@ -272,7 +343,7 @@ class UsersController extends Controller
     {
         if (Session::has('admin')) {
             $id = $request->all()['iddelete'];
-            $model = Users::findorFail($id);
+            $model = DSTaiKhoan::findorFail($id);
             $model->delete();
 
             return redirect('users');
@@ -285,7 +356,7 @@ class UsersController extends Controller
     {
         if (Session::has('admin')) {
 
-            $model = Users::findorFail($id);
+            $model = DSTaiKhoan::findorFail($id);
             $setting = '';
             //dd( $model->permission );
             $permission = !empty($model->permission) || $model->permission != '' ? $model->permission : getPermissionDefault($model->level);
@@ -305,7 +376,7 @@ class UsersController extends Controller
             $update = $request->all();
             $id = $update['id'];
 
-            $model = Users::findOrFail($id);
+            $model = DSTaiKhoan::findOrFail($id);
             //dd($model);
             if (isset($model)) {
                 $update['roles'] = isset($update['roles']) ? $update['roles'] : null;
@@ -326,7 +397,7 @@ class UsersController extends Controller
 
         $arrayid = explode('-', $id);
         foreach ($arrayid as $ids) {
-            $model = Users::findOrFail($ids);
+            $model = DSTaiKhoan::findOrFail($ids);
             if ($model->status != "Chưa kích hoạt") {
                 $model->status = "Vô hiệu";
                 $model->save();
@@ -340,7 +411,7 @@ class UsersController extends Controller
     {
         $arrayid = explode('-', $id);
         foreach ($arrayid as $ids) {
-            $model = Users::findOrFail($ids);
+            $model = DSTaiKhoan::findOrFail($ids);
 
             if ($model->status != "Chưa kích hoạt") {
 
@@ -374,7 +445,7 @@ class UsersController extends Controller
         $currentPassword = $update['current-password'];
 
         if (md5($currentPassword) == $password) {
-            $ttuser = Users::where('username', $username)->first();
+            $ttuser = DSTaiKhoan::where('username', $username)->first();
             $ttuser->email = $update['emailxt'];
             $ttuser->save();
             Session::flush();

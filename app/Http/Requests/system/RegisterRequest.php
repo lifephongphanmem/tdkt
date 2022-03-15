@@ -3,7 +3,7 @@
 namespace App\Http\Requests\system;
 
 use App\Model\system\company\Company;
-use App\Users;
+use App\DSTaiKhoan;
 use Illuminate\Foundation\Http\FormRequest;
 use Validator;
 

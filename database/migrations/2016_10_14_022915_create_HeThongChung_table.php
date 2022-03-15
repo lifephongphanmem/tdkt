@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGeneralConfigsTable extends Migration
+class CreateHeThongChungTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,26 +13,28 @@ class CreateGeneralConfigsTable extends Migration
      */
     public function up()
     {
-        Schema::create('general-configs', function (Blueprint $table) {
+        Schema::create('HeThongChung', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('phanloai')->nullable();
             $table->string('tendonvi')->nullable();
             $table->string('maqhns')->nullable();
             $table->string('diachi')->nullable();
-            $table->string('tel')->nullable();
+            $table->string('dienthoai')->nullable();
             $table->string('thutruong')->nullable();
             $table->string('ketoan')->nullable();
             $table->string('nguoilapbieu')->nullable();
             $table->string('diadanh')->nullable();
             $table->text('setting')->nullable();
             $table->text('thongtinhd')->nullable();
-            $table->double('thoihanlt')->default(0);
-            $table->double('thoihanvt')->default(0);
-            $table->double('thoihangs')->default(0);
-            $table->double('thoihantacn')->default(0);
-            $table->double('sodvvt')->default(0); //không để vào bảng kê khai như DVLT dc do có 4 loại hình vận tải
             $table->string('emailql')->nullable();
             $table->string('tendvhienthi')->nullable();
             $table->string('tendvcqhienthi')->nullable();
+            $table->string('ipf1')->nullable();
+            $table->string('ipf2')->nullable();
+            $table->string('ipf3')->nullable();
+            $table->string('ipf4')->nullable();
+            $table->string('ipf5')->nullable();
+            $table->integer('solandn')->default(6);
             $table->timestamps();
         });
     }
@@ -44,6 +46,6 @@ class CreateGeneralConfigsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('general-configs');
+        Schema::dropIfExists('HeThongChung');
     }
 }

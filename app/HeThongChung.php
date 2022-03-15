@@ -4,27 +4,30 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GeneralConfigs extends Model
+class HeThongChung extends Model
 {
-    protected $table = 'general-configs';
+    protected $table = 'HeThongChung';
     protected $fillable = [
         'id',
-        'maqhns',
+        'phanloai',
         'tendonvi',
+        'maqhns',
         'diachi',
-        'tel',
+        'dienthoai',
         'thutruong',
         'ketoan',
         'nguoilapbieu',
         'diadanh',
         'setting',
         'thongtinhd',
-        'thoihanlt',
-        'thoihanvt',
-        'thoihangs',
-        'thoihantacn',
         'emailql',
         'tendvhienthi',
-        'tendvcqhienthi'
+        'tendvcqhienthi',
+        'ipf1',
+        'ipf2',
+        'ipf3',
+        'ipf4',
+        'ipf5',
+        'solandn',
     ];
 }

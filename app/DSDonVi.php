@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class dmdonvi extends Model
+class DSDonVi extends Model
 {
-    protected $table = 'dmdonvi';
+    protected $table = 'DSDonVi';
     protected $fillable = [
         'id',
+        'madiaban',
         'madonvi',
         'maqhns',
         'tendv',
@@ -22,26 +23,19 @@ class dmdonvi extends Model
         'macqcq',
         'diadanh',
         'nguoilapbieu',
-        'makhoipb',
-        'maphanloai',
-        'phanloaitaikhoan', //phân loại đơn vị tổng hợp; đơn vị sử dụng
-        'phamvitonghop',
         'madvbc',
-        'capdonvi',
+        'capdonvi',//cấp dư toán 1,2,3,4
+        'caphanhchinh',
+        'maphanloai',
         'phanloaixa',
         'phanloainguon',
         'linhvuchoatdong',
-        'phucaploaitru',
-        'songaycong',
-        'ptdaingay',
-        'lamtron',
         'ngaydung',
+        'chuyendoi',
         'trangthai',
-        'caphanhchinh',
-        'chuyendoi',//biến lưu chuyển đổi tài khoản
-        'dinhmucnguon',
         'sotk',
         'tennganhang',
         'madinhdanh',
+        'chucnang',
     ];
 }

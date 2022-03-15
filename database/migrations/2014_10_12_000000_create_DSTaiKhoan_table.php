@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateDSTaiKhoanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,26 +13,19 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('DSTaiKhoan', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->nullable();
+            $table->string('tentaikhoan')->nullable();
             $table->string('username')->unique();
             $table->string('password')->nullable();
             $table->string('madonvi')->nullable();
             $table->string('email')->nullable();
-            $table->string('status')->nullable();
-            $table->string('maxa')->nullable();
-            $table->string('mahuyen')->nullable();
-            $table->string('town')->nullable();
-            $table->string('district')->nullable();
-            $table->string('level')->nullable();
+            $table->integer('trangthai')->default(0);
             $table->string('sadmin')->nullable();
             $table->text('permission')->nullable();
-            $table->string('emailxt')->nullable();
-            $table->string('question')->nullable();
-            $table->string('answer')->nullable();
             $table->string('ttnguoitao')->nullable();
             $table->text('lydo')->nullable();
+            $table->integer('solandn')->default(1);
             $table->timestamps();
         });
     }
@@ -44,6 +37,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::drop('DSTaiKhoan');
     }
 }

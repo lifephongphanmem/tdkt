@@ -865,7 +865,6 @@ function canCbKkGiaGr($manganh){
 
 }
 
-
 function canCbKkGiaCt($manganh = null, $manghe = null){
     $modelnghe = \App\Model\system\dmnganhnghekd\DmNgheKd::where('manganh',$manganh)
         ->where('manghe',$manghe)
@@ -912,7 +911,7 @@ function canApprove($trangthai){
 
 function canGeneral($module = null, $action =null)
 {
-    $model = \App\GeneralConfigs::first();
+    $model = \App\HeThongChung::first();
     if(isset($model) && $model->setting != '')
         $setting = json_decode($model->setting, true);
     else {
@@ -954,7 +953,7 @@ function canDV($perm=null,$module = null, $action = null){
 }
 
 function getGeneralConfigs() {
-    $kq = \App\GeneralConfigs::all()->first();
+    $kq = \App\HeThongChung::all()->first();
     $kq = isset($kq) ? $kq->toArray(): array();
     return $kq;
 
@@ -1110,6 +1109,7 @@ function getDecimalToDb($value){
     }
     return $kq;
 }
+
 function getRandomPassword(){
     $bytes = random_bytes(3); // length in bytes
     $kq = (bin2hex($bytes));
@@ -1318,7 +1318,7 @@ function toAlpha($data){
     elseif($data > 25){
         $dividend = ($data + 1);
         $alpha = '';
-        $modulo;
+        $modulo='';
         while ($dividend > 0){
             $modulo = ($dividend - 1) % 26;
             $alpha = $alphabet[$modulo] . $alpha;

@@ -7,7 +7,7 @@ use App\District;
 use App\DmMhBinhOnGia;
 use App\Register;
 use App\Town;
-use App\Users;
+use App\DSTaiKhoan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -159,7 +159,7 @@ class RegisterController extends Controller
                 return view('system.register.view.register-tralai')
                     ->with('lydo',$check1->lydo);
         }else{
-            $check2 = Users::where('maxa',$input['maxa'])
+            $check2 = DSTaiKhoan::where('maxa',$input['maxa'])
                 ->first();
             if(isset($check2)){
                 return view('system.register.view.register-usersuccess');
@@ -221,7 +221,7 @@ class RegisterController extends Controller
         if (count($check) > 0) {
             return view('errors.register-errors');
         } else {
-            $checkuser = Users::where('username', $inputs['username'])->first();
+            $checkuser = DSTaiKhoan::where('username', $inputs['username'])->first();
             if (count($checkuser) > 0) {
                 return view('errors.register-errors');
             } else {
@@ -283,7 +283,7 @@ class RegisterController extends Controller
 
     public function dangkytaikhoanupdate(Request $request,$id){
         $inputs = $request->all();
-        $checkuser = Users::where('username', $inputs['username'])->first();
+        $checkuser = DSTaiKhoan::where('username', $inputs['username'])->first();
         if (count($checkuser) > 0) {
             return view('errors.register-errors');
         } else {
@@ -358,7 +358,7 @@ class RegisterController extends Controller
 
     public function checkuser(Request $request){
         $inputs = $request->all();
-        $model = Users::where('username', $inputs['user'])
+        $model = DSTaiKhoan::where('username', $inputs['user'])
             ->first();
         $modelrg = Register::where('username', $inputs['user'])
             ->first();
@@ -391,7 +391,7 @@ class RegisterController extends Controller
                 }else {
                     $modeldn = new Company();
                     if($modeldn->create($inputs)){
-                        $modeluser = new Users();
+                        $modeluser = new DSTaiKhoan();
                         $modeluser->name = $model->tendn;
                         $modeluser->username = $model->username;
                         $modeluser->password = $model->password;

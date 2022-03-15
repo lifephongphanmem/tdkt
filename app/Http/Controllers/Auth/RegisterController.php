@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 
-use App\GeneralConfigs;
+use App\HeThongChung;
 use App\Http\Requests\system\RegisterRequest;
 use App\Jobs\SendMail;
 use App\Model\system\company\Company;
 use App\Model\system\company\CompanyLvCc;
 use App\User;
-use App\Users;
+use App\DSTaiKhoan;
 use App\Model\system\dmnganhnghekd\DmNganhKd;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -104,7 +104,7 @@ class RegisterController extends Controller
             $inputs['tailieu']= $inputs['ipt1'];
         }
         if($model->create($inputs)){
-            $modeluser = new Users();
+            $modeluser = new DSTaiKhoan();
             $modeluser->username = $inputs['username'];
             $modeluser->password = md5($inputs['rpassword']);
             $modeluser->name = $inputs['tendn'];
@@ -118,7 +118,7 @@ class RegisterController extends Controller
         }
         $modeldn = Company::where('maxa',$inputs['maxa'])
             ->first();
-        $modeldv = GeneralConfigs::first();
+        $modeldv = HeThongChung::first();
         $tg = getDateTime(Carbon::now()->toDateTimeString());
         $contentdn = 'Vào lúc: '.$tg.', hệ thống CSDL giá đã nhận yêu cầu đăng ký thông tin doanh nghiệp . Mã số đăng ký: '.$inputs['mahs'].'!!!';
         $contentht = 'Vào lúc: '.$tg.', hệ thống CSDL giá đã nhận yêu cầu thay đổi thông tin doanh nghiệp '.$modeldn->tendn.' - mã số thuế '.$modeldn->maxa.' Mã số đăng ký: '.$inputs['mahs'].' !!!';
@@ -142,10 +142,10 @@ class RegisterController extends Controller
         $model->update($inputs);
         $modeldn = Company::where('maxa',$inputs['maxa'])
             ->first();
-        $modeluserup = Users::where('maxa',$inputs['maxa'])
+        $modeluserup = DSTaiKhoan::where('maxa',$inputs['maxa'])
             ->where('level','DN')
             ->update(['status' => 'Chờ xét duyệt']);
-        $modeldv = GeneralConfigs::first();
+        $modeldv = HeThongChung::first();
         $tg = getDateTime(Carbon::now()->toDateTimeString());
         $contentdn = 'Vào lúc: '.$tg.', hệ thống CSDL giá đã nhận yêu cầu đăng ký thông tin doanh nghiệp . Mã số đăng ký: '.$model->mahs.'!!!';
         $contentht = 'Vào lúc: '.$tg.', hệ thống CSDL giá đã nhận yêu cầu thay đổi thông tin doanh nghiệp '.$modeldn->tendn.' - mã số thuế '.$modeldn->maxa.' Mã số đăng ký: '.$model->mahs.' !!!';
@@ -167,7 +167,7 @@ class RegisterController extends Controller
         $inputs = $request->all();
         $modelcompany = Company::where('maxa',$inputs['maxa'])
             ->first();
-        $modeluser = Users::where('maxa',$inputs['maxa'])
+        $modeluser = DSTaiKhoan::where('maxa',$inputs['maxa'])
             ->where('level','DN')
             ->first();
         if(isset($modeluser)) {
@@ -200,7 +200,7 @@ class RegisterController extends Controller
             $model = Company::where('maxa',$inputs['maxa'])
                 ->where('mahs',$inputs['mahs'])
                 ->first();
-            $modeluser = Users::where('maxa',$inputs['maxa'])
+            $modeluser = DSTaiKhoan::where('maxa',$inputs['maxa'])
                 ->first();
             $modellvcc = CompanyLvCc::join('town', 'town.maxa', '=', 'companylvcc.mahuyen')
                 ->join('dmnganhkd', 'dmnganhkd.manganh', '=', 'companylvcc.manganh')
@@ -223,7 +223,7 @@ class RegisterController extends Controller
     public function index(){
         if (Session::has('admin')) {
             if (session('admin')->level == 'T') {
-                $model = Users::where('status','Chờ xét duyệt')
+                $model = DSTaiKhoan::where('status','Chờ xét duyệt')
                     ->Orwhere('status','Bị trả lại')
                     ->where('level','DN')
                     ->get();
@@ -239,7 +239,7 @@ class RegisterController extends Controller
     public function show($id){
         if (Session::has('admin')) {
             if (session('admin')->level == 'T') {
-                $model = Users::findOrFail($id);
+                $model = DSTaiKhoan::findOrFail($id);
                 $modelcompany = Company::where('maxa',$model->maxa)
                     ->first();
                 $modellvcc = CompanyLvCc::join('town', 'town.maxa', '=', 'companylvcc.mahuyen')
@@ -263,13 +263,13 @@ class RegisterController extends Controller
         if (Session::has('admin')) {
             if (session('admin')->level == 'T') {
                 $inputs = $request->all();
-                $model = Users::where('id',$inputs['tralai_id'])
+                $model = DSTaiKhoan::where('id',$inputs['tralai_id'])
                    ->first();
                 $model->lydo = $inputs['lydo'];
                 $model->status = 'Bị trả lại';
                 $model->save();
                 $modeldn = Company::where('maxa',$model->maxa)->first();
-                $modeldv = GeneralConfigs::first();
+                $modeldv = HeThongChung::first();
                 $tg = getDateTime(Carbon::now()->toDateTimeString());
                 $contentdn = 'Vào lúc: '.$tg.', hệ thống CSDL giá đã trả lại yêu cầu đăng ký thông tin doanh nghiệp!!!';
                 $contentht = 'Vào lúc: '.$tg.', hệ thống CSDL giá đã trả lại yêu cầu thay đổi thông tin doanh nghiệp '.$modeldn->tendn.' - mã số thuế '.$modeldn->maxa.' Mã số đăng ký: '
@@ -288,7 +288,7 @@ class RegisterController extends Controller
         if (Session::has('admin')) {
             if (session('admin')->level == 'T') {
                 $inputs = $request->all();
-                $model = Users::where('id',$inputs['kichhoat_id'])
+                $model = DSTaiKhoan::where('id',$inputs['kichhoat_id'])
                     ->first();
                 $model->status = 'Kích hoạt';
                 if($model->save()) {
@@ -298,7 +298,7 @@ class RegisterController extends Controller
                     $modelcompany->save();
                 }
                 $modeldn = Company::where('maxa',$model->maxa)->first();
-                $modeldv = GeneralConfigs::first();
+                $modeldv = HeThongChung::first();
                 $tg = getDateTime(Carbon::now()->toDateTimeString());
                 $contentdn = 'Vào lúc: '.$tg.', hệ thống CSDL giá đã duyệt yêu cầu đăng ký thông tin doanh nghiệp!!!';
                 $contentht = 'Vào lúc: '.$tg.', hệ thống CSDL giá đã nhận yêu cầu thay đổi thông tin doanh nghiệp '.$modeldn->tendn.' - mã số thuế '.$modeldn->maxa.' Mã số đăng ký: '.$model->mahs.' !!!';

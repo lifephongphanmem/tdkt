@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQlphieuthuchiTable extends Migration
+class CreateQlphieuthuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateQlphieuthuchiTable extends Migration
      */
     public function up()
     {
-        Schema::create('qlphieuthuchi', function (Blueprint $table) {
+        Schema::create('qlphieuthu', function (Blueprint $table) {
             $table->increments('id');
             $table->string('maphieu')->unique();
             $table->date('ngaythang')->nullable();
@@ -38,6 +38,6 @@ class CreateQlphieuthuchiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('qlphieuthuchi');
+        Schema::dropIfExists('qlphieuthu');
     }
 }

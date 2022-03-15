@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\system\company;
 
-use App\GeneralConfigs;
+use App\HeThongChung;
 use App\Http\Requests\system\CompanyRequest;
 use App\Jobs\SendMail;
 use App\Mail\MailDoanhNghiep;
@@ -12,7 +12,7 @@ use App\Model\system\company\CompanyLvCc;
 use App\Model\system\dmnganhnghekd\DmNganhKd;
 use App\TtDnTd;
 use App\TtDnTdCt;
-use App\Users;
+use App\DSTaiKhoan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -77,7 +77,7 @@ class CompanyController extends Controller
                 $inputs['tailieu']= $inputs['ipt1'];
             }
             if($model->create($inputs)){
-                $modeluser = new Users();
+                $modeluser = new DSTaiKhoan();
                 $modeluser->username = $inputs['username'];
                 $modeluser->password = md5($inputs['password']);
                 $modeluser->maxa = $inputs['maxa'];
@@ -274,7 +274,7 @@ class CompanyController extends Controller
             if($model->save()) {
                 $modeldn = Company::where('maxa',$model->maxa)
                     ->first();
-                $modeldv = GeneralConfigs::first();
+                $modeldv = HeThongChung::first();
                 $tg = getDateTime(Carbon::now()->toDateTimeString());
                 $contentdn = 'Vào lúc: '.$tg.', hệ thống CSDL giá đã nhận yêu cầu thay đổi thông tin doanh nghiệp !!!';
                 $contentht = 'Vào lúc: '.$tg.', hệ thống CSDL giá đã nhận yêu cầu thay đổi thông tin doanh nghiệp '.$modeldn->tendn.' - mã số thuế '.$modeldn->maxa.' !!!';

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\manage\vbpl\hoidap;
 
 use App\dmdonvi;
 use App\Model\manage\vbpl\qlhoidap;
-use App\Users;
+use App\DSTaiKhoan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;

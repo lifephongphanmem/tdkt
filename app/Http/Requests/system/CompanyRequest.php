@@ -3,7 +3,7 @@
 namespace App\Http\Requests\system;
 
 use App\Model\system\company\Company;
-use App\Users;
+use App\DSTaiKhoan;
 use Illuminate\Foundation\Http\FormRequest;
 use Validator;
 
@@ -29,7 +29,7 @@ class CompanyRequest extends FormRequest
             case 'PATCH':
             {
                 $company = Company::where('maxa',$this->maxa)->first();
-                $user = Users::where('username',$this->username)->first();
+                $user = DSTaiKhoan::where('username',$this->username)->first();
                 return [
                     //thong tin hop dong
                     'tendn'=>'required',
