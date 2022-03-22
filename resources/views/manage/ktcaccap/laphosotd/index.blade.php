@@ -56,8 +56,8 @@
             <div class="portlet box">
                 <div class="portlet-title">
                     <div class="actions">
-                        <a href="{{url('laphosotd/create')}}" class="btn btn-default btn-sm">
-                            <i class="fa fa-plus"></i> Thêm mới </a>
+{{--                        <a href="{{url('laphosotd/create')}}" class="btn btn-default btn-sm">--}}
+{{--                            <i class="fa fa-plus"></i> Thêm mới </a>--}}
                     </div>
                 </div>
                 <hr>
@@ -77,69 +77,72 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label style="font-weight: bold">Đơn vị</label>
+                                <select class="form-control select2me" name="madonvi" id="madonvi">
+                                    @foreach($m_diaban as $diaban)
+                                        <optgroup label="{{$diaban->tendiaban}}">
+                                            <?php $donvi = $m_donvi->where('madiaban',$diaban->madiaban); ?>
+                                            @foreach($donvi as $ct)
+                                                <option {{$ct->madonvi == $inputs['madonvi'] ? "selected":""}} value="{{$ct->madonvi}}">{{$ct->tendonvi}}</option>
+                                            @endforeach
+                                        </optgroup>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="portlet-body">
-                        <table class="table table-striped table-bordered table-hover" id="sample_3">
+                        <table class="table table-striped table-bordered table-hover" id="sample_4">
                             <thead>
-                            <tr>
-                                <th style="text-align: center" width="2%">STT</th>
-                                <th style="text-align: center" width="12%">Nội dung hồ sơ</th>
-                                <th style="text-align: center" width="12%">Phong trào thi đua</th>
-                                <th style="text-align: center" width="5%">Ngày ký</th>
-                                <th style="text-align: center" width="8%">Số lượng cá nhân</th>
-                                <th style="text-align: center" width="8%">Số lượng tập thể</th>
-                                <th style="text-align: center" width="8%">Trạng thái</th>
-                                <th style="text-align: center" width="22%">Thao tác</th>
+                            <tr class="text-center">
+                                <th width="2%">STT</th>
+                                <th>Đơn vị phát động</th>
+                                <th>Nội dung hồ sơ</th>
+                                <th width="8%">Ngày<br>bắt đầu</th>
+                                <th width="8%">Ngày<br>kết thúc</th>
+                                <th width="8%">Trạng thái</th>
+                                <th style="text-align: center" width="8%">Tổng số<br>hồ sơ</th>
+                                <th style="text-align: center" width="8%">Hồ sơ của<br>đơn vị</th>
+                                <th style="text-align: center" width="10%">Thao tác</th>
                             </tr>
                             </thead>
                             @foreach($model as $key => $tt)
-                                <tr>
+                                <tr class="{{$tt->nhanhoso == 'DANGNHAN' ? 'success' : ''}}">
                                     <td style="text-align: center">{{$key+1}}</td>
+                                    <td>{{$tt->tendonvi}}</td>
                                     <td>{{$tt->noidung}}</td>
-                                    <td>{{$modelpt->where('maphongtrao',$tt->plphongtrao)->first()->noidung}}</td>
-                                    <td class="active">{{getDayVn($tt->ngayky)}}</td>
-                                    <td style="text-align: center">{{dinhdangso($tt->slcanhan)}}</td>
-                                    <td style="text-align: center">{{dinhdangso($tt->sltapthe)}}</td>
-                                    @if($tt->trangthai == "CC")
-                                        <td align="center"><span class="badge badge-warning">Chờ chuyển</span></td>
-                                    @elseif($tt->trangthai == 'CD')
-                                        <td align="center"><span class="badge badge-blue">Chờ duyệt</span>
-                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
-                                        </td>
-                                    @elseif($tt->trangthai == 'CN')
-                                        <td align="center"><span class="badge badge-warning">Chờ nhận</span>
-                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
-                                        </td>
-                                    @elseif($tt->trangthai == 'BTL')
-                                        <td align="center">
-                                            <span class="badge badge-danger">Bị trả lại</span><br>&nbsp;
-                                        </td>
-                                    @else
-                                        <td align="center">
-                                            <span class="badge badge-success">Đã duyệt</span>
-                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
-                                        </td>
-                                    @endif
+                                    <td>{{getDayVn($tt->tungay)}}</td>
+                                    <td>{{getDayVn($tt->denngay)}}</td>
+                                    <td style="text-align: center">{{$a_trangthaihoso[$tt->nhanhoso]}}</td>
+                                    <td style="text-align: center">{{chkDbl($tt->sohoso)}}</td>
+                                    <td style="text-align: center">{{chkDbl($tt->hosodonvi)}}</td>
+
                                     <td style="text-align: center">
                                         <a href="{{url('laphosotd/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
 
-                                        @if($tt->trangthai == 'CC')
-                                            <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
-                                                Xóa</button>
-                                        @endif
                                         @if($tt->trangthai == 'CC' || $tt->trangthai == 'BTL')
                                             <!--a href="{{url('laphosotd/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a-->
                                             <!--button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
                                                 Chuyển</button-->
-                                            <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
-                                                Trình hồ sơ</button>
-                                            <a href="{{url('laphosotd/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                            <a title="Hồ sơ đăng ký phong trào" href="{{url('/HoSoThiDua/Them?kihieudhtd='.$tt->kihieudhtd.'&madonvi='.$inputs['madonvi'])}}" class="btn btn-default btn-xs mbs">
+                                                <i class="fa fa-check-square-o"></i></a>
+
+                                            <button title="Trình hồ sơ đăng ký" type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal">
+                                                <i class="fa fa-send"></i></button>
                                         @endif
+
                                         @if($tt->trangthai == 'BTL')
                                             <button type="button" onclick="viewLiDo('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#lydo-show" data-toggle="modal"><i class="fa fa-archive"></i>&nbsp;
                                                 Lí do</button>
                                             <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
                                                 Trình hồ sơ</button>
+                                        @endif
+
+                                        @if($tt->trangthai == 'CC')
+                                            <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal">
+                                                <i class="fa fa-trash-o"></i></button>
                                         @endif
 
                                     </td>

@@ -56,13 +56,29 @@
             <div class="portlet box">
                 <div class="portlet-title">
                     <div class="actions">
-                        <a href="{{url('dangkytd/create')}}" class="btn btn-default btn-sm">
+                        <a href="{{url('DanhKyThiDua/Them?madonvi='.$inputs['madonvi'])}}" class="btn btn-default btn-sm">
                             <i class="fa fa-plus"></i> Thêm mới </a>
                     </div>
                 </div>
                 <hr>
                 <div class="portlet-body">
                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label style="font-weight: bold">Đơn vị</label>
+                                <select class="form-control select2me" name="madonvi" id="madonvi">
+                                    @foreach($m_diaban as $diaban)
+                                        <optgroup label="{{$diaban->tendiaban}}">
+                                            <?php $donvi = $m_donvi->where('madiaban',$diaban->madiaban); ?>
+                                            @foreach($donvi as $ct)
+                                                <option {{$ct->madonvi == $inputs['madonvi'] ? "selected":""}} value="{{$ct->madonvi}}">{{$ct->tendonvi}}</option>
+                                            @endforeach
+                                        </optgroup>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label style="font-weight: bold">Năm</label>
@@ -86,8 +102,8 @@
                                 <th style="text-align: center" width="12%">Nội dung hồ sơ</th>
                                 <th style="text-align: center" width="12%">Phong trào thi đua</th>
                                 <th style="text-align: center" width="5%">Ngày ký</th>
-                                <th style="text-align: center" width="8%">Số lượng cá nhân</th>
-                                <th style="text-align: center" width="8%">Số lượng tập thể</th>
+                                <th style="text-align: center" width="8%">Từ ngày</th>
+                                <th style="text-align: center" width="8%">Đến ngày</th>
                                 <th style="text-align: center" width="22%">Thao tác</th>
                             </tr>
                             </thead>
@@ -97,12 +113,12 @@
                                     <td>{{$tt->noidung}}</td>
                                     <td>{{$modelpt->where('maphongtrao',$tt->plphongtrao)->first()->noidung}}</td>
                                     <td class="active">{{getDayVn($tt->ngayky)}}</td>
-                                    <td style="text-align: center">{{dinhdangso($tt->slcanhan)}}</td>
-                                    <td style="text-align: center">{{dinhdangso($tt->sltapthe)}}</td>
+                                    <td style="text-align: center">{{getDayVn($tt->tungay)}}</td>
+                                    <td style="text-align: center">{{getDayVn($tt->denngay)}}</td>
                                     <td style="text-align: center">
                                         <a href="{{url('dangkytd/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
                                         @if($tt->trangthai == 'CC' || $tt->trangthai == 'BTL')
-                                            <a href="{{url('dangkytd/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
+                                            <a href="{{url('/DanhKyThiDua/Sua?kihieudhtd='.$tt->kihieudhtd)}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
                                             <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
                                                 Chuyển</button>
                                         @endif

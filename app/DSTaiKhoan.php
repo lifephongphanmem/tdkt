@@ -20,5 +20,10 @@ class DSTaiKhoan extends Model
         'ttnguoitao',
         'lydo',
         'solandn',
+        //tách nhóm chức năng
+        'nhaplieu',
+        'tonghop',
+        'hethong',
+        'chucnangkhac'
     ];
 }

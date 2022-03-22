@@ -4,7 +4,7 @@
             data-original-title="Quản lý thi đua khen thưởng thời kỳ kháng chiến">
             <a href="javascript:;">
                 <i class="icon-folder"></i>
-                <span class="title">Thi đua khen thưởng thời kỳ kháng chiến</span>
+                <span class="title">Quản lý khen thưởng thời kỳ kháng chiến</span>
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">

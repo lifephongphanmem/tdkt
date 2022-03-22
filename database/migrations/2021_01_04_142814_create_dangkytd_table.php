@@ -47,11 +47,14 @@ class CreateDangkytdTable extends Migration
             $table->string('totrinh')->nullable();// Tờ trình
             $table->string('qdkt')->nullable();// Quyết định
             $table->string('bienban')->nullable();// Biên bản
+            $table->string('phamviapdung')->nullable();//
             $table->string('tailieukhac')->nullable();// Tài liệu khác
             $table->string('madonvi')->nullable();// Mã đơn vị
             $table->string('ttthaotac')->nullable();// Thông tin thao tác
             // Bổ sung theo Quảng Bình
 
+            $table->date('tungay')->nullable();// Ngày bắt đầu nhận hồ so
+            $table->date('denngay')->nullable();// Ngày kết thúc nhận hồ sơ
             $table->string('noidung')->nullable();
             $table->double('slcanhan')->default(0);
             $table->double('sltapthe')->default(0);

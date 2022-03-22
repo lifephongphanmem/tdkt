@@ -15,9 +15,10 @@ class CreateDSDonViTable extends Migration
     {
         Schema::create('DSDonVi', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('madiaban', 50)->nullable();
             $table->string('madonvi', 50)->unique();
             $table->string('maqhns', 50)->nullable();
-            $table->string('tendv',100)->nullable();
+            $table->string('tendonvi',100)->nullable();
             $table->string('diachi',100)->nullable();
             $table->string('sodt',50)->nullable();
             $table->string('cdlanhdao',50)->nullable();
@@ -41,7 +42,7 @@ class CreateDSDonViTable extends Migration
             $table->string('sotk')->nullable();
             $table->string('tennganhang')->nullable();
             $table->string('madinhdanh')->nullable();
-            $table->string('chucnang')->nullable();
+
             $table->timestamps();
         });
     }

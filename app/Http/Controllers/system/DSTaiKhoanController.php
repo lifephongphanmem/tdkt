@@ -1,35 +1,36 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\system;
 
-use App\dmdonvi;
+use App\DSDiaBan;
+use App\DSDonVi;
+use App\DSTaiKhoan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
-class DmDonViController extends Controller
+class DSTaiKhoanController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function ThongTin(Request $request)
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $inputs['madonvi'] = isset($inputs['madonvi']) ? $inputs['madonvi'] : '';
-            $inputs['phanloai'] = isset($inputs['phanloai']) ? $inputs['phanloai'] : '';
-            $modeldvql = dmdonvi::where('phanloaitaikhoan','TH')->get();
-            $model = dmdonvi::all();
-            if($inputs['madonvi'] != '')
-                $model=$model->where('madonvi',$inputs['madonvi']);
-            if($inputs['phanloai'] != '')
-                $model = $model->where('phanloai',$inputs['phanloai']);
-            return view('system.dmdonvi.index')
+            $m_donvi = DSDonVi::all();
+            $m_diaban = DSDiaBan::all();
+            //dd($m_donvi);
+            $inputs['madonvi'] = $inputs['madonvi'] ?? $m_donvi->first()->madonvi;
+            $model = DSTaiKhoan::where('madonvi', $inputs['madonvi'])->get();
+            return view('system.TaiKhoan.ThongTin')
                 ->with('model', $model)
-                ->with('modeldvql', $modeldvql)
+                ->with('m_donvi', $m_donvi)
+                ->with('m_diaban', $m_diaban)
+                ->with('a_nhomtk', [])
                 ->with('inputs', $inputs)
                 ->with('pageTitle', 'Danh sách đơn vị');
 
@@ -37,20 +38,16 @@ class DmDonViController extends Controller
             return view('errors.notlogin');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
         if (Session::has('admin')) {
-            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
-                $modeldvql = dmdonvi::where('phanloaitaikhoan','TH')->get();
-                return view('system.dmdonvi.create')
-                    ->with('modeldvql', $modeldvql)
-                    ->with('pageTitle', 'Tạo mới thông tin đơn vị');
-            }
+            $inputs = $request->all();
+            $m_donvi = DSDonVi::all();
+            return view('system.TaiKhoan.Them')
+                ->with('inputs', $inputs)
+                ->with('a_donvi', array_column($m_donvi->toArray(),'tendonvi','madonvi'))
+                ->with('pageTitle', 'Tạo mới thông tin tài khoản');
+
         }
     }
 
@@ -64,27 +61,20 @@ class DmDonViController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $model = new dmdonvi();
-            $inputs['ttnguoitao'] = session('admin')->name.'('.session('admin')->username.')'. getDateTime(Carbon::now()->toDateTimeString());
-            $inputs['madonvi'] = getdate()[0];
-            $model->create($inputs);
-            return redirect('dmdonvi');
+            //dd($inputs);
+            $inputs['nhaplieu'] = isset($inputs['nhaplieu']) ? 1 : 0;
+            $inputs['tonghop'] = isset($inputs['tonghop']) ? 1 : 0;
+            $inputs['quantri'] = isset($inputs['quantri']) ? 1 : 0;
+            $inputs['username'] = chuanhoachuoi($inputs['username']);
+            $inputs['password'] = md5($inputs['password']);
+            DSTaiKhoan::create($inputs);
+            return redirect('/TaiKhoan/ThongTin?madonvi='.$inputs['madonvi']);
 
         } else {
             return view('errors.notlogin');
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -92,15 +82,13 @@ class DmDonViController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
         if (Session::has('admin')) {
-
-            $model = dmdonvi::findOrFail($id);
-            $modeldvql = dmdonvi::where('phanloaitaikhoan','TH')->get();
+            $inputs = $request->all();
+            $model = DSDonVi::where('madonvi',$inputs['madonvi'])->first();
             return view('system.dmdonvi.edit')
                 ->with('model', $model)
-                ->with('modeldvql', $modeldvql)
                 ->with('pageTitle', 'Chỉnh sửa thông tin đơn vị');
         } else
             return view('errors.notlogin');
@@ -117,7 +105,7 @@ class DmDonViController extends Controller
     {
         if (Session::has('admin')) {
             $input = $request->all();
-            $model = dmdonvi::findOrFail($id);
+            $model = DSDonVi::findOrFail($id);
             $model->update($input);
             return redirect('dmdonvi');
 
@@ -136,7 +124,7 @@ class DmDonViController extends Controller
     {
         if (Session::has('admin')) {
             $id = $request->all()['iddelete'];
-            $model = dmdonvi::findorFail($id);
+            $model = DSDonVi::findorFail($id);
             $model->delete();
 
             return redirect('dmdonvi');
@@ -153,7 +141,7 @@ class DmDonViController extends Controller
         $inputs = $request->all();
 
         if (isset($inputs['madonvi'])) {
-            $model = dmdonvi::where('madonvi', $inputs['madonvi'])->count();
+            $model = DSDonVi::where('madonvi', $inputs['madonvi'])->count();
             if ($model == 0) {
                 $result['status'] = 'success';
                 $result['message'] = 'ok';

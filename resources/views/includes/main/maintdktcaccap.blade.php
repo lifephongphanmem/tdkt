@@ -4,13 +4,13 @@
             data-original-title="Quản lý thi đua khen thưởng thời kỳ kháng chiến">
             <a href="javascript:;">
                 <i class="icon-folder"></i>
-                <span class="title">Thi đua khen thưởng Các cấp</span>
+                <span class="title">Quản lý thi đua, khen thưởng các cấp</span>
                 <span class="arrow"></span>
             </a>
             <ul class="sub-menu">
                 @if(can('dangkytd','index'))
                     <li>
-                        <a href="{{url('dangkytd')}}">Đăng ký thi đua</a>
+                        <a href="{{url('/DanhKyThiDua/ThongTin')}}">Phong trào thi đua</a>
                     </li>
                 @endif
                 <!--
@@ -22,7 +22,7 @@
                         -->
                 @if(can('laphosotd','index'))
                     <li>
-                        <a href="{{url('laphosotd')}}">Tạo lập hồ sơ đăng ký thi đua khen thưởng</a>
+                        <a href="{{url('/HoSoThiDua/ThongTin')}}">Tạo lập hồ sơ đăng ký thi đua khen thưởng</a>
                     </li>
                 @endif
                 <!--

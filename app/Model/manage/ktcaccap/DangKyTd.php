@@ -28,13 +28,12 @@ class DangKyTd extends Model
         'ghichu',
         'tenqt',
         'macanbo',
-        'maxa',
-        'mahuyen',
+
         'tctang',
         'nam',
         'trangthai',
         'ngaychuyen',
-        'ngươichuyen',
+        'nguoichuyen',
         'ngaynhan',
         'lido',
         'totrinh',
@@ -47,5 +46,8 @@ class DangKyTd extends Model
         'noidung',
         'slcanhan',
         'sltapthe',
+        'tungay',
+        'denngay',
+        'phamviapdung'
     ];
 }

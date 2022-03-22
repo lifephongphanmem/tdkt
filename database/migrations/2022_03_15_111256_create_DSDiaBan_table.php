@@ -17,7 +17,7 @@ class CreateDSDiaBanTable extends Migration
             $table->increments('id');
             $table->string('madiaban')->unique();
             $table->string('tendiaban')->nullable();
-            $table->string('level')->nullable();//ADMIN; T; H; X
+            $table->string('capdo')->nullable();//ADMIN; T; H; X
             $table->text('ghichu')->nullable();
             $table->string('madonviQL')->nullable();
             $table->string('madiabanQL')->nullable();

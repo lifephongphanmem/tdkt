@@ -15,10 +15,11 @@ class CreateDmtieuchuandhtdTable extends Migration
     {
         Schema::create('dmtieuchuandhtd', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('stt')->default(1);
+            $table->string('madanhhieutd')->nullable();
             $table->string('matieuchuandhtd')->unique();
             $table->string('tentieuchuandhtd')->nullable();
-            $table->string('maxa')->nullable();
-            $table->string('mahuyen')->nullable();
+            $table->string('cancu')->nullable();
             $table->string('ghichu')->nullable();
             $table->string('ttnguoitao')->nullable();
             $table->timestamps();

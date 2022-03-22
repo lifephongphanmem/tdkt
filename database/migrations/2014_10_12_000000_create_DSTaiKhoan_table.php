@@ -26,6 +26,11 @@ class CreateDSTaiKhoanTable extends Migration
             $table->string('ttnguoitao')->nullable();
             $table->text('lydo')->nullable();
             $table->integer('solandn')->default(1);
+            //chia nhóm chức năng
+            $table->boolean('nhaplieu')->default(0);
+            $table->boolean('tonghop')->default(0);
+            $table->boolean('hethong')->default(0);
+            $table->boolean('chucnangkhac')->default(0);
             $table->timestamps();
         });
     }

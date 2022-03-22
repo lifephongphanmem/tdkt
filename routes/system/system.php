@@ -1,5 +1,33 @@
 <?php
-Route::resource('general','GeneralConfigsController');
+Route::group(['prefix'=>'HeThongChung'], function(){
+    Route::get('ThongTin','GeneralConfigsController@index');
+    Route::get('ThayDoi','GeneralConfigsController@edit');
+    Route::post('ThayDoi','GeneralConfigsController@update');
+});
+Route::group(['prefix'=>'DiaBan'], function(){
+    Route::get('ThongTin','system\DSDiaBanController@index');
+    Route::post('Sua','system\dsdiabanController@modify');
+    Route::post('delete','system\dsdiabanController@delete');
+});
+
+Route::group(['prefix'=>'DonVi'], function(){
+    Route::get('ThongTin','system\DSDonViController@ThongTin');
+    Route::get('DanhSach','system\DSDonViController@DanhSach');
+    Route::get('Them','system\DSDonViController@create');
+    Route::post('Them','system\DSDonViController@store');
+    Route::get('Sua','system\DSDonViController@edit');
+
+});
+
+Route::group(['prefix'=>'TaiKhoan'], function(){
+    Route::get('ThongTin','system\DSTaiKhoanController@ThongTin');
+    Route::get('Them','system\DSTaiKhoanController@create');
+    Route::post('Them','system\DSTaiKhoanController@store');
+    Route::get('Sua','system\DSTaiKhoanController@edit');
+
+});
+
+
 Route::get('setting','GeneralConfigsController@setting');
 Route::post('setting','GeneralConfigsController@updatesetting');
 
@@ -40,9 +68,18 @@ Route::post('register/tralai','Auth\RegisterController@tralai');
 Route::post('register/kichhoat','Auth\RegisterController@kichhoat');
 
 //Danh mục danh hiệu thi đua
-Route::resource('dmdanhhieutd','DmdanhhieutdController');
-Route::post('dmdanhhieutd/delete','DmdanhhieutdController@destroy');
-Route::get('checkmadanhhieutd','DmdanhhieutdController@checkmadanhhieutd');
+//Route::resource('dmdanhhieutd','DmdanhhieutdController');
+//Route::post('dmdanhhieutd/delete','DmdanhhieutdController@destroy');
+//Route::get('checkmadanhhieutd','DmdanhhieutdController@checkmadanhhieutd');
+//17/03/2022
+Route::group(['prefix'=>'DanhHieuThiDua'], function(){
+    Route::get('ThongTin','DanhMuc\DmdanhhieutdController@ThongTin');
+    Route::post('Them','DanhMuc\DmdanhhieutdController@store');
+    Route::get('TieuChuan','DanhMuc\DmdanhhieutdController@TieuChuan');
+    Route::post('TieuChuan','DanhMuc\DmdanhhieutdController@ThemTieuChuan');
+    //Route::get('Sua','system\DSTaiKhoanController@edit');
+});
+
 
 //Danh mục tiêu chuẩn danh hiệu thi đua
 Route::resource('dmtieuchuandhtd','DmtieuchuandhtdController');

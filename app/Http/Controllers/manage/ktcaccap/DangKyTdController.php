@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\manage\ktcaccap;
 
-use App\dmdanhhieutd;
+use App\DanhMuc\dmdanhhieutd;
 use App\dmhinhthuckt;
 use App\dmloaihinhkt;
 use App\dmquoctich;
+use App\dmtieuchuandhtd;
+use App\DSDiaBan;
+use App\DSDonVi;
 use App\Model\manage\ktcaccap\DangKyTd;
+use App\Model\manage\ktcaccap\DangKyTd_KhenThuong;
+use App\Model\manage\ktcaccap\DangKyTd_TieuChuan;
 use App\Model\manage\ktcaccap\dangkytdct;
 use App\model\manage\ktcaccap\dangkytddf;
 use App\model\manage\qldoituong\dmphanloaict;
@@ -18,26 +23,28 @@ use Illuminate\Support\Facades\Session;
 
 class DangKyTdController extends Controller
 {
-    public function index(Request $request){
+    public function ThongTin(Request $request){
         if(Session::has('admin')){
             $inputs = $request->all();
+            //dd($inputs);
+            $m_donvi = DSDonVi::all();
+            $m_diaban = DSDiaBan::all();
+            $inputs['madonvi'] = $inputs['madonvi'] ?? $m_donvi->first()->madonvi;
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
-            if(session('admin')->sadmin == 'ssa')
-                $model = DangKyTd::whereYear('ngayky',$inputs['nam'])->get();
-            else
-                $model = DangKyTd::whereYear('ngayky',$inputs['nam'])->where('madonvi',session('admin')->madonvi)
-                ->get();
+            $model = DangKyTd::whereYear('ngayky',$inputs['nam'])->where('madonvi',$inputs['madonvi'])->get();
             $modelpt = qlphongtrao::all();
             return view('manage.ktcaccap.dangkytd.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)
                 ->with('modelpt',$modelpt)
+                ->with('m_donvi',$m_donvi)
+                ->with('m_diaban',$m_diaban)
                 ->with('pageTitle','Danh sách đăng ký thi đua');
         }else
             return view('errors.notlogin');
     }
 
-    public function create(Request $request)
+    public function Them(Request $request)
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
@@ -45,28 +52,37 @@ class DangKyTdController extends Controller
             $nhomht = dmhinhthuckt::all();
             $nhomlh = dmloaihinhkt::all();
             $nhomqt = dmquoctich::all();
-            $modeldt = qldoituong::where('madonvi',session('admin')->madonvi)->get();
+            //$modeldt = qldoituong::where('madonvi',session('admin')->madonvi)->get();
             $m_phongtrao = qlphongtrao::all();
             $inputs['kihieudhtd'] = getdate()[0];
-            $modelct = dangkytddf::where('kihieudhtd',$inputs['kihieudhtd'])
-                ->get();
+            $model = new DangKyTd();
+            $model->kihieudhtd = (string)getdate()[0];
+            $model->madonvi = $inputs['madonvi'];
+            $model_khenthuong = DangKyTd_KhenThuong::where('kihieudhtd',(string)$model->kihieudhtd)->get();
+            $model_tieuchuan = DangKyTd_TieuChuan::where('kihieudhtd',(string)$model->kihieudhtd)->get();
             return view('manage.ktcaccap.dangkytd.create')
                 ->with('inputs', $inputs)
                 ->with('nhomdh', $nhomdh)
                 ->with('nhomht', $nhomht)
                 ->with('nhomlh', $nhomlh)
                 ->with('nhomqt', $nhomqt)
+                ->with('a_danhhieu', array_column(dmdanhhieutd::all()->toArray(),'tendanhhieutd','madanhhieutd'))
+                ->with('a_tieuchuan', array_column(dmtieuchuandhtd::all()->toArray(),'tentieuchuandhtd','matieuchuandhtd'))
                 ->with('m_phongtrao',$m_phongtrao)
-                ->with('modelct',$modelct)
-                ->with('modeldt',$modeldt)
+                ->with('model',$model)
+                ->with('model_khenthuong',$model_khenthuong)
+                ->with('model_tieuchuan',$model_tieuchuan)
+                //->with('modeldt',$modeldt)
                 ->with('pageTitle', 'Danh sách đăng ký thi đua thêm mới');
         } else
             return view('errors.notlogin');
     }
 
+
     public function store(Request $request){
         if (Session::has('admin')) {
             $inputs = $request->all();
+            //dd($inputs);
             $inputs['trangthai'] = 'CC';
             $inputs['ttthaotac'] = session('admin')->username.'('.session('admin')->name.') thêm mới ';
             if(isset($inputs['totrinh'])){
@@ -89,47 +105,44 @@ class DangKyTdController extends Controller
                 $inputs['tailieukhac'] = $filedk->getClientOriginalExtension();
                 $filedk->move(public_path() . '/data/tailieukhac/', $inputs['tailieukhac']);
             }
-            $model = new DangKyTd();
-            $model->create($inputs);
-            $m_dt = dangkytddf::where('kihieudhtd',$inputs['kihieudhtd'])->get();
-            if(isset($m_dt))
-            {
-                foreach($m_dt as $chitiet)
-                {
-                    $a_dt = $chitiet->toarray();
-                    unset($a_dt['id']);
-                    $modelct = new dangkytdct();
-                    $modelct->create($a_dt);
-                    $chitiet->delete();
-                }
+            $model = DangKyTd::where('kihieudhtd',$inputs['kihieudhtd'])->first();
+            if($model == null){
+                DangKyTd::create($inputs);
+            }else{
+                $model->update($inputs);
             }
-            return redirect('dangkytd');
+
+
+            return redirect('/DanhKyThiDua/ThongTin');
         }else
             return view('errors.notlogin');
     }
 
-    public function edit($id){
+    public function Sua(Request $request)
+    {
         if (Session::has('admin')) {
-            $model = DangKyTd::find($id);
+            $inputs = $request->all();
+            $model = DangKyTd::where('kihieudhtd', $inputs['kihieudhtd'])->first();
             $nhomdh = dmdanhhieutd::all();
             $nhomht = dmhinhthuckt::all();
             $nhomlh = dmloaihinhkt::all();
             $nhomqt = dmquoctich::all();
             $m_phongtrao = qlphongtrao::all();
-            $modelct = dangkytdct::where('kihieudhtd',$model->kihieudhtd)
-                ->get();
-            $m_pl = dmphanloaict::all();
-            $modeldt = qldoituong::where('madonvi',session('admin')->madonvi)->get();
-            return view('manage.ktcaccap.dangkytd.edit')
+            $model_khenthuong = DangKyTd_KhenThuong::where('kihieudhtd', $inputs['kihieudhtd'])->get();
+            $model_tieuchuan = DangKyTd_TieuChuan::where('kihieudhtd', $inputs['kihieudhtd'])->get();
+
+            return view('manage.ktcaccap.dangkytd.create')
                 ->with('model', $model)
                 ->with('nhomdh', $nhomdh)
                 ->with('nhomht', $nhomht)
                 ->with('nhomlh', $nhomlh)
                 ->with('nhomqt', $nhomqt)
                 ->with('m_phongtrao', $m_phongtrao)
-                ->with('modelct', $modelct)
-                ->with('m_pl', $m_pl)
-                ->with('modeldt', $modeldt)
+                ->with('a_danhhieu', array_column(dmdanhhieutd::all()->toArray(), 'tendanhhieutd', 'madanhhieutd'))
+                ->with('a_tieuchuan', array_column(dmtieuchuandhtd::all()->toArray(), 'tentieuchuandhtd', 'matieuchuandhtd'))
+                ->with('model', $model)
+                ->with('model_khenthuong', $model_khenthuong)
+                ->with('model_tieuchuan', $model_tieuchuan)
                 ->with('pageTitle', 'Danh sách đăng ký thi đua chỉnh sửa');
         } else
             return view('errors.notlogin');
@@ -239,6 +252,157 @@ class DangKyTdController extends Controller
                 $result['status'] = 'success';
                 $result['message'] = 'ok';
             }
+        }
+        die(json_encode($result));
+    }
+
+    public function ThemKhenThuong(Request $request)
+    {
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if (!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+        //dd($request);
+        $inputs = $request->all();
+        $m_danhhieu = dmdanhhieutd::where('madanhhieutd', $inputs['madanhhieutd'])->first();
+        $model = DangKyTd_KhenThuong::where('madanhhieutd', $inputs['madanhhieutd'])
+            ->where('kihieudhtd', $inputs['kihieudhtd'])->first();
+        if ($model == null) {
+            $model = new DangKyTd_KhenThuong();
+            $model->madanhhieutd = $m_danhhieu->madanhhieutd;
+            $model->kihieudhtd = $inputs['kihieudhtd'];
+            $model->soluong = $inputs['soluong'];
+            $model->tendanhhieutd = $m_danhhieu->tendanhhieutd;
+            $model->phanloai = $m_danhhieu->phanloai;
+            $model->save();
+        } else {
+            $model->soluong = $inputs['soluong'];
+            $model->tendanhhieutd = $m_danhhieu->tendanhhieutd;
+            $model->phanloai = $m_danhhieu->phanloai;
+            $model->save();
+        }
+
+        $modelct = DangKyTd_KhenThuong::where('kihieudhtd', $inputs['kihieudhtd'])->get();
+        if (isset($modelct)) {
+
+            $result['message'] = '<div class="row" id="dskhenthuong">';
+
+            $result['message'] .= '<div class="col-md-12">';
+            $result['message'] .= '<table id="sample_3" class="table table-striped table-bordered table-hover" >';
+            $result['message'] .= '<thead>';
+            $result['message'] .= '<tr>';
+            $result['message'] .= '<th width="2%" style="text-align: center">STT</th>';
+            $result['message'] .= '<th style="text-align: center" width="25%">Phân loại</th>';
+            $result['message'] .= '<th style="text-align: center">Danh hiệu thi đua</th>';
+            $result['message'] .= '<th style="text-align: center" width="8%">Số lượng</th>';
+            $result['message'] .= '<th style="text-align: center" width="10%">Thao tác</th>';
+            $result['message'] .= '</tr>';
+            $result['message'] .= '</thead>';
+
+            $result['message'] .= '<tbody>';
+            $key = 1;
+            foreach ($modelct as $ct) {
+
+                $result['message'] .= '<tr>';
+                $result['message'] .= '<td style="text-align: center">' . $key++ . '</td>';
+                $result['message'] .= '<td>' . $ct->phanloai . '</td>';
+                $result['message'] .= '<td class="active">' . $ct->tendanhhieutd . '</td>';
+                $result['message'] .= '<td style="text-align: center">' . $ct->soluong . '</td>';
+                $result['message'] .= '<td>' .
+                    '<button type="button" data-target="#modal-delete" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="getId(' . $ct->id . ')" ><i class="fa fa-trash-o"></i></button>' .
+                    '<button type="button" data-target="#modal-edit" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="editTtPh(' . $ct->id . ')"><i class="fa fa-edit"></i></button>'
+                    . '</td>';
+
+                $result['message'] .= '</tr>';
+            }
+            $result['message'] .= '</tbody>';
+            $result['message'] .= '</table>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['status'] = 'success';
+
+        }
+        die(json_encode($result));
+    }
+
+    public function ThemTieuChuan(Request $request)
+    {
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if (!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+        //dd($request);
+        $inputs = $request->all();
+        $m_tieuchuan = dmtieuchuandhtd::where('matieuchuandhtd', $inputs['matieuchuandhtd'])->first();
+        $model = DangKyTd_TieuChuan::where('matieuchuandhtd', $inputs['matieuchuandhtd'])
+            ->where('kihieudhtd', $inputs['kihieudhtd'])->first();
+        if ($model == null) {
+            $model = new DangKyTd_TieuChuan();
+            $model->kihieudhtd = $inputs['kihieudhtd'];
+            $model->madanhhieutd = $m_tieuchuan->madanhhieutd;
+            $model->tentieuchuandhtd = $m_tieuchuan->tentieuchuandhtd;
+            $model->matieuchuandhtd = $m_tieuchuan->matieuchuandhtd;
+            $model->batbuoc = $inputs['batbuoc'];
+            $model->save();
+        } else {
+            $model->batbuoc = $inputs['batbuoc'];
+            $model->tentieuchuandhtd = $m_tieuchuan->tentieuchuandhtd;
+            $model->save();
+        }
+
+        $modelct = DangKyTd_TieuChuan::where('kihieudhtd', $inputs['kihieudhtd'])->get();
+        if (isset($modelct)) {
+
+            $result['message'] = '<div class="row" id="dstieuchuan">';
+
+            $result['message'] .= '<div class="col-md-12">';
+            $result['message'] .= '<table id="sample_4" class="table table-striped table-bordered table-hover" >';
+            $result['message'] .= '<thead>';
+            $result['message'] .= '<tr>';
+            $result['message'] .= '<th width="2%" style="text-align: center">STT</th>';
+            $result['message'] .= '<th style="text-align: center">Tên danh hiệu</th>';
+            $result['message'] .= '<th style="text-align: center">Tên tiêu chuẩn</th>';
+            $result['message'] .= '<th style="text-align: center" width="8%">Bắt buộc</th>';
+            $result['message'] .= '<th style="text-align: center" width="10%">Thao tác</th>';
+            $result['message'] .= '</tr>';
+            $result['message'] .= '</thead>';
+
+            $result['message'] .= '<tbody>';
+            $key = 1;
+            foreach ($modelct as $ct) {
+
+                $result['message'] .= '<tr>';
+                $result['message'] .= '<td style="text-align: center">' . $key++ . '</td>';
+                $result['message'] .= '<td>' . $ct->madanhhieutd . '</td>';
+                $result['message'] .= '<td class="active">' . $ct->tentieuchuandhtd . '</td>';
+                $result['message'] .= '<td style="text-align: center">' . $ct->batbuoc . '</td>';
+                $result['message'] .= '<td>' .
+                    '<button type="button" data-target="#modal-delete" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="getId(' . $ct->id . ')" ><i class="fa fa-trash-o"></i></button>' .
+                    '<button type="button" data-target="#modal-edit" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="editTtPh(' . $ct->id . ')"><i class="fa fa-edit"></i></button>'
+                    . '</td>';
+
+                $result['message'] .= '</tr>';
+            }
+            $result['message'] .= '</tbody>';
+            $result['message'] .= '</table>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['status'] = 'success';
+
         }
         die(json_encode($result));
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDmdanhhieutdTable extends Migration
+class CreateDangkytdTieuchuanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateDmdanhhieutdTable extends Migration
      */
     public function up()
     {
-        Schema::create('dmdanhhieutd', function (Blueprint $table) {
+        Schema::create('dangkytd_tieuchuan', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('stt')->default(1);
-            $table->string('madanhhieutd')->unique();
-            $table->string('tendanhhieutd')->nullable();
-            $table->string('phanloai')->nullable();
-//            $table->string('maxa')->nullable();
-//            $table->string('mahuyen')->nullable();
+            $table->string('kihieudhtd')->nullable();// ký hiệu
+            $table->string('madanhhieutd')->nullable();
+            $table->string('matieuchuandhtd')->nullable();
+            $table->string('tentieuchuandhtd')->nullable();
+            $table->string('cancu')->nullable();
             $table->string('ghichu')->nullable();
+            $table->boolean('batbuoc')->default(0);
             $table->string('ttnguoitao')->nullable();
-            $table->string('apdung')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +35,6 @@ class CreateDmdanhhieutdTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dmdanhhieutd');
+        Schema::dropIfExists('dangkytd_tieuchuan');
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\DanhMuc;
 
-use App\dmdanhhieutd;
+use App\DanhMuc\dmdanhhieutd;
+use App\dmtieuchuandhtd;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,20 +16,16 @@ class DmdanhhieutdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function ThongTin(Request $request)
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $inputs['madanhhieutd'] = isset($inputs['madanhhieutd']) ? $inputs['madanhhieutd'] : '';
-            $inputs['phanloai'] = isset($inputs['phanloai']) ? $inputs['phanloai'] : '';
+            //dd($inputs);
             $model = dmdanhhieutd::all();
-            if($inputs['madanhhieutd'] != '')
-                $model=$model->where('madanhhieutd',$inputs['madanhhieutd']);
-            if($inputs['phanloai'] != '')
-                $model = $model->where('phanloai',$inputs['phanloai']);
-            return view('system.dmdanhhieutd.index')
+            return view('system.DanhHieuThiDua.ThongTin')
                 ->with('model', $model)
                 ->with('inputs', $inputs)
+                ->with('a_phanloai', getPhanLoaiTDKT())
                 ->with('pageTitle', 'Danh sách danh mục danh hiệu thi đua');
 
         } else
@@ -60,16 +57,56 @@ class DmdanhhieutdController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $model = new dmdanhhieutd();
-            $inputs['ttnguoitao'] = session('admin')->name.'('.session('admin')->username.')'. getDateTime(Carbon::now()->toDateTimeString());
-            $model->create($inputs);
-            return redirect('dmdanhhieutd');
+            $model = dmdanhhieutd::where('madanhhieutd', $inputs['madanhhieutd'])->first();
+
+            if ($model == null) {
+                $inputs['madanhhieutd'] = getdate()[0];
+                dmdanhhieutd::create($inputs);
+            } else {
+                $model->update($inputs);
+            }
+            return redirect('/DanhHieuThiDua/ThongTin');
 
         } else {
             return view('errors.notlogin');
         }
     }
 
+    public function TieuChuan(Request $request)
+    {
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+//            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+            $m_danhhieu = dmdanhhieutd::all();
+            $inputs['tendanhhieutd'] = $m_danhhieu->where('madanhhieutd', $inputs['madanhhieutd'])->first()->tendanhhieutd ?? '';
+            $model = dmtieuchuandhtd::where('madanhhieutd', $inputs['madanhhieutd'])->get();
+            return view('system.DanhHieuThiDua.TieuChuan')
+                ->with('model', $model)
+                ->with('inputs', $inputs)
+                ->with('a_danhhieu', array_column($m_danhhieu->toArray(),'tendanhhieutd','madanhhieutd' ))
+                ->with('pageTitle', 'Thông tin tiêu chuẩn danh hiệu thi đua');
+//            }
+        }
+    }
+
+    public function ThemTieuChuan(Request $request)
+    {
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $model = dmtieuchuandhtd::where('matieuchuandhtd', $inputs['matieuchuandhtd'])->first();
+
+            if ($model == null) {
+                $inputs['matieuchuandhtd'] = getdate()[0];
+                dmtieuchuandhtd::create($inputs);
+            } else {
+                $model->update($inputs);
+            }
+            return redirect('DanhHieuThiDua/TieuChuan?madanhhieutd='.$inputs['madanhhieutd']);
+
+        } else {
+            return view('errors.notlogin');
+        }
+    }
     /**
      * Display the specified resource.
      *

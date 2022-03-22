@@ -73,13 +73,6 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <script type="text/javascript" src="{{url('assets/global/plugins/jquery-validation/js/jquery.validate.min.js')}}"></script>
     <script type="text/javascript" src="{{url('assets/global/plugins/jquery-validation/js/additional-methods.min.js')}}"></script>
-    <script src="{{url('assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js')}}" type="text/javascript"></script>
-    <script src="{{url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js')}}" type="text/javascript"></script>
-    <script src="{{url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js')}}" type="text/javascript"></script>
-    <script src="{{url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js')}}" type="text/javascript"></script>
-    <script src="{{url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js')}}" type="text/javascript"></script>
-    <script src="{{url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js')}}" type="text/javascript"></script>
-    <script src="{{url('assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js')}}" type="text/javascript"></script>
     <script src="{{url('assets/global/plugins/flot/jquery.flot.min.js')}}" type="text/javascript"></script>
     <script src="{{url('assets/global/plugins/flot/jquery.flot.resize.min.js')}}" type="text/javascript"></script>
     <script src="{{url('assets/global/plugins/flot/jquery.flot.categories.min.js')}}" type="text/javascript"></script>
@@ -271,126 +264,169 @@ License: You must have a valid license purchased only from themeforest(the above
                     <!-- END SIDEBAR TOGGLER BUTTON -->
                 </li>
                 <!--Manager-->
-                @if(canGeneral('tdktkhangchien','index'))
-                    @if(can('tdktkhangchien','index'))
-                    <li class="heading">
-                        <h3 class="uppercase">Quản lý khen thưởng thời kỳ kháng chiến</h3>
-                    </li>
-                    @include('includes.main.maintdktkhangchien')
-                    @endif
-                @endif
-                @if(canGeneral('qldoituong','index'))
-                    @if(can('qldoituong','index'))
-                        <li class="heading">
-                            <h3 class="uppercase">Quản lý danh sách đối tượng</h3>
-                        </li>
-                        @include('includes.main.mainqldoituong')
-                    @endif
-                @endif
+                <li class="heading">
+                    <h3 class="uppercase">Quản lý phong trào thi đua khen thưởng</h3>
+                </li>
                 @if(canGeneral('tdktcaccap','index'))
                     @if(can('tdktcaccap','index'))
-                    <li class="heading">
-                        <h3 class="uppercase">Quản lý khen thưởng các cấp</h3>
-                    </li>
-                    @include('includes.main.maintdktcaccap')
+                        @include('includes.main.maintdktcaccap')
                     @endif
                 @endif
 
-                @if(canGeneral('qltailieu','index'))
-                    @if(can('qltailieu','index'))
-                    <li class="heading">
-                        <h3 class="uppercase">Quản lý tài liệu liên quan</h3>
-                    </li>
-                    @include('includes.main.mainqltailieu')
+                @if(canGeneral('qldoituong','index'))
+                    @if(can('qldoituong','index'))
+                        @include('includes.main.mainqldoituong')
                     @endif
                 @endif
 
                 @if(canGeneral('hiepykhenthuong','index'))
                     @if(can('hiepykhenthuong','index'))
-                        <li class="heading">
-                            <h3 class="uppercase">Quản lý Hiệp y khen thưởng</h3>
-                        </li>
                         @include('includes.main.mainhiepykhenthuong')
+                    @endif
+                @endif
+
+                @if(canGeneral('tdktkhangchien','index'))
+                    @if(can('tdktkhangchien','index'))
+                        @include('includes.main.maintdktkhangchien')
+                    @endif
+                @endif
+
+                <li class="heading">
+                    <h3 class="uppercase">Quản lý Văn bản pháp lý, tài liệu</h3>
+                </li>
+
+                @if(canGeneral('qltailieu','index'))
+                    @if(can('qltailieu','index'))
+                        @include('includes.main.mainqltailieu')
                     @endif
                 @endif
 
                 @if(canGeneral('qlvbnn','index'))
                     @if(can('qlvbnn','index'))
-                        <li class="heading">
-                            <h3 class="uppercase">Quản lý Văn bản pháp lý, hướng dẫn, hỏi đáp</h3>
-                        </li>
+
                         @include('includes.main.mainqlvbnn')
                     @endif
                 @endif
 
                 @if(canGeneral('qlquytdkt','index'))
                     @if(can('qlquytdkt','index'))
-                        <li class="heading">
-                            <h3 class="uppercase">Quản lý quỹ TĐKT</h3>
-                        </li>
+
                         @include('includes.main.mainqlquytdkt')
                     @endif
                 @endif
+
                 <li class="heading">
                     <h3 class="uppercase">Thống kê báo cáo</h3>
                 </li>
                 @include('includes.main.mainbaocao')
-                @if(session('admin')->level == 'T')
-                @if(can('system','index'))
-                    <li class="heading">
-                        <h3 class="uppercase">Hệ thống</h3>
-                    </li>
-                    <li>
-                        <a href="javascript:;">
-                            <i class="icon-settings"></i>
-                            <span class="title">Quản trị hệ thống</span>
-                            <span class="arrow "></span>
-                        </a>
-                        <ul class="sub-menu">
-                            @if(session('admin')->sadmin == 'ssa')
-                                <li><a href="{{url('general')}}">Cấu hình hệ thống</a></li>
-                            @endif
-                            @if(session('admin')->level == 'T' || session('admin')->level == 'H')
-                                <li><a href="{{url('dmdonvi')}}">Danh mục đơn vị</a></li>
-                                <li><a href="{{url('users')}}">Tài khoản đơn vị</a></li>
-                            @endif
+
+                @if(session('admin')->level == 'T' || session('admin')->level == 'SSA')
+                    @if(can('system','index'))
+                        <li class="heading">
+                            <h3 class="uppercase">Hệ thống</h3>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                <i class="icon-settings"></i>
+                                <span class="title">Quản trị hệ thống</span>
+                                <span class="arrow "></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="tooltips" data-container="body" data-placement="right" data-html="true">
+                                    <a href="javascript:;">
+                                        <i class="icon-folder"></i>
+                                        <span class="title">Hệ thống danh mục</span>
+                                        <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="{{url('/DanhHieuThiDua/ThongTin')}}">Danh hiệu thi đua</a></li>
+{{--                                        <li><a href="{{url('dmtieuchuandhtd')}}">Quản lý tiêu chuẩn cho các danh hiệu TĐKT</a></li>--}}
+
+                                        <li><a href="{{url('dmhinhthuckt')}}">Quản lý hình thức TĐKT</a></li>
+                                        <li><a href="{{url('dmloaihinhkt')}}">Quản lý danh mục các loại hình TĐKT</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="tooltips" data-container="body" data-placement="right" data-html="true">
+                                    <a href="javascript:;">
+                                        <i class="icon-folder"></i>
+                                        <span class="title">Hệ thống người dùng</span>
+                                        <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="{{url('/DiaBan/ThongTin')}}">Danh sách địa bàn</a></li>
+                                        <li><a href="{{url('/DonVi/ThongTin')}}">Danh sách đơn vị</a></li>
+                                        <li><a href="{{url('/TaiKhoan/ThongTin')}}">Danh sách tài khoản</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="{{url('/HeThongChung/ThongTin')}}">Cấu hình hệ thống</a></li>
+
                                 {{--
                             @if(session('admin')->level == 'T' || session('admin')->level == 'H')
                                 <li><a href="{{url('users')}}">Nhật ký thao tác</a></li>
                             @endif --}}
-                        </ul>
-                    </li>
-                        <li>
-                            <a href="javascript:;">
-                                <i class="icon-settings"></i>
-                                <span class="title">Quản lý danh mục</span>
-                                <span class="arrow "></span>
-                            </a>
-                            <ul class="sub-menu">
-                                @if(session('admin')->level == 'T' || session('admin')->level == 'H')
-                                    <li><a href="{{url('dmdanhhieutd')}}">Quản lý danh hiệu thi đua khen thưởng</a></li>
-                                @endif
-                                @if(session('admin')->level == 'T' || session('admin')->level == 'H')
-                                    <li><a href="{{url('dmtieuchuandhtd')}}">Quản lý tiêu chuẩn cho các danh hiệu TĐKT</a></li>
-                                @endif
-
-                                @if(session('admin')->level == 'T' || session('admin')->level == 'H')
-                                    <li><a href="{{url('dmhinhthuckt')}}">Quản lý hình thức TĐKT</a></li>
-                                @endif
-                                @if(session('admin')->level == 'T' || session('admin')->level == 'H')
-                                    <li><a href="{{url('dmloaihinhkt')}}">Quản lý danh mục các loại hình TĐKT</a></li>
-                                @endif
-                                    {{--
-                                @if(session('admin')->level == 'T' || session('admin')->level == 'H')
-                                    <li><a href="{{url('users')}}">Quản lý danh mục hình thức tổ chức TĐKT</a></li>
-                                @endif
-                                @if(session('admin')->level == 'T' || session('admin')->level == 'H')
-                                    <li><a href="{{url('dmquoctich')}}">Quản lý danh mục quốc tịch</a></li>
-                                @endif --}}
                             </ul>
                         </li>
+
+                    @endif
                 @endif
-                @endif
+{{--                Hê thống cũ--}}
+{{--                @if(session('admin')->level == 'T' || session('admin')->level == 'SSA')--}}
+{{--                    @if(can('system','index'))--}}
+{{--                        <li class="heading">--}}
+{{--                            <h3 class="uppercase">Hệ thống</h3>--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            <a href="javascript:;">--}}
+{{--                                <i class="icon-settings"></i>--}}
+{{--                                <span class="title">Quản trị hệ thống</span>--}}
+{{--                                <span class="arrow "></span>--}}
+{{--                            </a>--}}
+{{--                            <ul class="sub-menu">--}}
+{{--                                @if(session('admin')->sadmin == 'SSA')--}}
+{{--                                    <li><a href="{{url('general')}}">Cấu hình hệ thống</a></li>--}}
+{{--                                @endif--}}
+{{--                                @if(session('admin')->level == 'T' || session('admin')->level == 'H'|| session('admin')->level == 'SSA')--}}
+{{--                                    <li><a href="{{url('dmdonvi')}}">Danh mục đơn vị</a></li>--}}
+{{--                                    <li><a href="{{url('users')}}">Tài khoản đơn vị</a></li>--}}
+{{--                                @endif--}}
+{{--                                    --}}{{----}}
+{{--                                @if(session('admin')->level == 'T' || session('admin')->level == 'H')--}}
+{{--                                    <li><a href="{{url('users')}}">Nhật ký thao tác</a></li>--}}
+{{--                                @endif --}}
+{{--                            </ul>--}}
+{{--                        </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="javascript:;">--}}
+{{--                                    <i class="icon-settings"></i>--}}
+{{--                                    <span class="title">Quản lý danh mục</span>--}}
+{{--                                    <span class="arrow "></span>--}}
+{{--                                </a>--}}
+{{--                                <ul class="sub-menu">--}}
+{{--                                    @if(session('admin')->level == 'T' || session('admin')->level == 'H'|| session('admin')->level == 'SSA')--}}
+{{--                                        <li><a href="{{url('dmdanhhieutd')}}">Quản lý danh hiệu thi đua khen thưởng</a></li>--}}
+{{--                                    @endif--}}
+{{--                                    @if(session('admin')->level == 'T' || session('admin')->level == 'H'|| session('admin')->level == 'SSA')--}}
+{{--                                        <li><a href="{{url('dmtieuchuandhtd')}}">Quản lý tiêu chuẩn cho các danh hiệu TĐKT</a></li>--}}
+{{--                                    @endif--}}
+
+{{--                                    @if(session('admin')->level == 'T' || session('admin')->level == 'H'|| session('admin')->level == 'SSA')--}}
+{{--                                        <li><a href="{{url('dmhinhthuckt')}}">Quản lý hình thức TĐKT</a></li>--}}
+{{--                                    @endif--}}
+{{--                                    @if(session('admin')->level == 'T' || session('admin')->level == 'H'|| session('admin')->level == 'SSA')--}}
+{{--                                        <li><a href="{{url('dmloaihinhkt')}}">Quản lý danh mục các loại hình TĐKT</a></li>--}}
+{{--                                    @endif--}}
+{{--                                        --}}{{----}}
+{{--                                    @if(session('admin')->level == 'T' || session('admin')->level == 'H')--}}
+{{--                                        <li><a href="{{url('users')}}">Quản lý danh mục hình thức tổ chức TĐKT</a></li>--}}
+{{--                                    @endif--}}
+{{--                                    @if(session('admin')->level == 'T' || session('admin')->level == 'H')--}}
+{{--                                        <li><a href="{{url('dmquoctich')}}">Quản lý danh mục quốc tịch</a></li>--}}
+{{--                                    @endif --}}
+{{--                                </ul>--}}
+{{--                            </li>--}}
+{{--                    @endif--}}
+{{--                @endif--}}
             </ul>
 
             <!-- END SIDEBAR MENU -->

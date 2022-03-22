@@ -768,6 +768,9 @@ function getDbl($obj) {
 
 function can($module = null, $action = null)
 {
+    //tạm thời
+    if(session('admin')->level == 'SSA') return true;
+
     $permission = !empty(session('admin')->permission) ? session('admin')->permission : getPermissionDefault(session('admin')->level);
     $permission = json_decode($permission, true);
     //dd($permission);
@@ -911,6 +914,9 @@ function canApprove($trangthai){
 
 function canGeneral($module = null, $action =null)
 {
+    //tạm thời
+    if(session('admin')->level == 'SSA') return true;
+
     $model = \App\HeThongChung::first();
     if(isset($model) && $model->setting != '')
         $setting = json_decode($model->setting, true);
@@ -1577,5 +1583,7 @@ function emailValid($email)
     else
         return false;
 }
+
+
 
 ?>

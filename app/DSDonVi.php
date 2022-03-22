@@ -12,7 +12,7 @@ class DSDonVi extends Model
         'madiaban',
         'madonvi',
         'maqhns',
-        'tendv',
+        'tendonvi',
         'diachi',
         'sodt',
         'cdlanhdao',
@@ -36,6 +36,6 @@ class DSDonVi extends Model
         'sotk',
         'tennganhang',
         'madinhdanh',
-        'chucnang',
+
     ];
 }

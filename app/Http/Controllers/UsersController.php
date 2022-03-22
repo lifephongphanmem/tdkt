@@ -86,6 +86,7 @@ class UsersController extends Controller
             $ttuser->level = $m_diaban->level;
         } else {
             $ttuser->chucnang = array('SSA');
+            $ttuser->level = "SSA";
         }
 
         //Lấy setting gán luôn vào phiên đăng nhập

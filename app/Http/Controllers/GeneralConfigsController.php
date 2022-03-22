@@ -14,9 +14,9 @@ class GeneralConfigsController extends Controller
     public function index()
     {
         if (Session::has('admin')) {
-            if(session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa'){
+            if(chkPhanQuyen()){
                 $model = HeThongChung::first();
-                return view('system.general.index')
+                return view('system.HeThongChung.ThongTin')
                     ->with('model',$model)
                     ->with('pageTitle', 'Cấu hình hệ thống');
             }else{
@@ -29,8 +29,8 @@ class GeneralConfigsController extends Controller
 
     public function create(){
         if (Session::has('admin')) {
-            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
-                return view('system.general.create')
+            if(chkPhanQuyen()){
+                return view('system.HeThongChung.create')
                     ->with('pageTitle', 'Thêm mới thông tin đơn vị được cấp bản quyền');
             }else{
                 return view('errors.perm');
@@ -41,11 +41,11 @@ class GeneralConfigsController extends Controller
 
     public function store(Request $request){
         if (Session::has('admin')) {
-            if(session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+            if(chkPhanQuyen()){
                 $inputs = $request->all();
                 $model = new HeThongChung();
                 $model->create($inputs);
-                return redirect('general');
+                return redirect('/HeThongChung/ThongTin');
             }else{
                 return view('errors.noperm');
             }
@@ -53,12 +53,12 @@ class GeneralConfigsController extends Controller
             return view('errors.notlogin');
     }
 
-    public function edit($id)
+    public function edit()
     {
         if (Session::has('admin')) {
-            if(session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+            if(chkPhanQuyen()){
                 $model = HeThongChung::first();
-                return view('system.general.edit')
+                return view('system.HeThongChung.Sua')
                     ->with('model', $model)
                     ->with('pageTitle', 'Chỉnh sửa cấu hình hệ thống');
             }else{
@@ -68,15 +68,13 @@ class GeneralConfigsController extends Controller
         }else
             return view('errors.notlogin');
     }
-    public function update(Request $request,$id)
+    public function update(Request $request)
     {
         if (Session::has('admin')) {
-            dd($request);
-            if(session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+            if(chkPhanQuyen()){
                 $inputs = $request->all();
-                $model = HeThongChung::findOrFail($id);
-                $model->update($inputs);
-                return redirect('general');
+                HeThongChung::first()->update($inputs);
+                return redirect('/HeThongChung/ThongTin');
             }else{
                 return view('errors.noperm');
             }

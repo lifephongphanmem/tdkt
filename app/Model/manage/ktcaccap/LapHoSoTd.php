@@ -35,7 +35,7 @@ class LapHoSoTd extends Model
         'trangthai',
         'trangthaihuyen',
         'ngaychuyen',
-        'ngươichuyen',
+        'nguoichuyen',
         'ngaynhan',
         'lido',
         'totrinh',
