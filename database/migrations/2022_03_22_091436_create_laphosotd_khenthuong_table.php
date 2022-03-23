@@ -19,6 +19,7 @@ class CreateLaphosotdKhenthuongTable extends Migration
             $table->string('kihieudhtd')->nullable();
             $table->string('madanhhieutd')->nullable();
             $table->string('phanloai')->nullable();
+            $table->string('madonvi')->nullable();
             //Thông tin cá nhân
             $table->string('madt')->nullable();
             $table->string('maccvc')->nullable();
@@ -28,9 +29,12 @@ class CreateLaphosotdKhenthuongTable extends Migration
             $table->string('chucvu')->nullable();
             $table->boolean('lanhdao')->nullable();
             //Thông tin tập thể
-            $table->string('madonvi')->nullable();
+            $table->string('madonvi_kt')->nullable();
             $table->string('tendonvi')->nullable();
             $table->string('ghichu')->nullable();//
+            //Kết quả đánh giá
+            $table->boolean('ketqua')->default(0);//
+            $table->string('lydo')->nullable();
             $table->timestamps();
         });
     }

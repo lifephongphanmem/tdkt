@@ -15,7 +15,7 @@ class CreateQldoituongTable extends Migration
     {
         Schema::create('qldoituong', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('madt')->unique();
+            $table->string('madt')->nullable();
             $table->string('tendt')->nullable();
             $table->date('ngaysinh')->nullable();
             $table->string('gioitinh')->nullable();
@@ -26,6 +26,12 @@ class CreateQldoituongTable extends Migration
             $table->string('phanloaict')->nullable();
             $table->string('madinhdanh')->nullable();
             $table->string('madonvi')->nullable();
+            $table->string('tendonvi')->nullable();
+            $table->string('maccvc')->nullable();
+            $table->string('chucvu')->nullable();
+            $table->string('lanhdao')->nullable();
+            $table->string('kihieudhtd')->nullable();
+            $table->string('madanhhieutd')->nullable();
             $table->string('ttnguoitao')->nullable();
             $table->timestamps();
         });

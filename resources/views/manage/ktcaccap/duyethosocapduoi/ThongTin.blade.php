@@ -77,71 +77,54 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label style="font-weight: bold">Phong trào</label>
-                                <select class="form-control" name="phongtrao" id="phongtrao">
-                                    <option value="ALL">-- Chọn phong trào thi đua khen thưởng --</option>
-                                    @foreach($modelpt as $pt)
-                                        <option value="{{$pt->maphongtrao}}" {{$pt->maphongtrao == $inputs['phongtrao'] ? 'selected' : '' }}>{{$pt->noidung}}</option>
+                                <label style="font-weight: bold">Đơn vị</label>
+                                <select class="form-control select2me" name="madonvi" id="madonvi">
+                                    @foreach($m_diaban as $diaban)
+                                        <optgroup label="{{$diaban->tendiaban}}">
+                                            <?php $donvi = $m_donvi->where('madiaban',$diaban->madiaban); ?>
+                                            @foreach($donvi as $ct)
+                                                <option {{$ct->madonvi == $inputs['madonvi'] ? "selected":""}} value="{{$ct->madonvi}}">{{$ct->tendonvi}}</option>
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="portlet-body">
-                        <table class="table table-striped table-bordered table-hover" id="sample_3">
+
+                    <div class="row">
+                        <table class="table table-striped table-bordered table-hover" id="sample_4">
                             <thead>
-                            <tr>
-                                <th style="text-align: center" width="2%">STT</th>
-                                <th style="text-align: center" width="12%">Nội dung hồ sơ</th>
-                                <th style="text-align: center" width="12%">Phong trào thi đua</th>
-                                <th style="text-align: center" width="5%">Ngày ký</th>
-                                <th style="text-align: center" width="8%">Số lượng cá nhân</th>
-                                <th style="text-align: center" width="8%">Số lượng tập thể</th>
-                                <th style="text-align: center" width="8%">Trạng thái</th>
-                                <th style="text-align: center" width="22%">Thao tác</th>
-                            </tr>
+                                <tr class="text-center">
+                                    <th width="5%">STT</th>
+                                    <th>Đơn vị phát động</th>
+                                    <th>Nội dung hồ sơ</th>
+                                    <th width="8%">Ngày<br>bắt đầu</th>
+                                    <th width="8%">Ngày<br>kết thúc</th>
+                                    <th width="8%">Trạng thái</th>
+                                    <th style="text-align: center" width="8%">Tổng số<br>hồ sơ</th>
+                                    <th style="text-align: center" width="10%">Thao tác</th>
+                                </tr>
                             </thead>
                             @foreach($model as $key => $tt)
                                 <tr>
                                     <td style="text-align: center">{{$key+1}}</td>
+                                    <td>{{$tt->tendonvi}}</td>
                                     <td>{{$tt->noidung}}</td>
-                                    <td>{{$modelpt->where('maphongtrao',$tt->plphongtrao)->first()->noidung}}</td>
-                                    <td class="active">{{getDayVn($tt->ngayky)}}</td>
-                                    <td style="text-align: center">{{dinhdangso($tt->slcanhan)}}</td>
-                                    <td style="text-align: center">{{dinhdangso($tt->sltapthe)}}</td>
-                                    @if($tt->trangthai == "CC")
-                                        <td align="center"><span class="badge badge-warning">Chờ chuyển</span></td>
-                                    @elseif($tt->trangthai == 'CD')
-                                        <td align="center"><span class="badge badge-blue">Chờ duyệt</span>
-                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
-                                        </td>
-                                    @elseif($tt->trangthai == 'CN')
-                                        <td align="center"><span class="badge badge-warning">Chờ nhận</span>
-                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
-                                        </td>
-                                    @elseif($tt->trangthai == 'BTL')
-                                        <td align="center">
-                                            <span class="badge badge-danger">Bị trả lại</span><br>&nbsp;
-                                        </td>
-                                    @else
-                                        <td align="center">
-                                            <span class="badge badge-success">Đã duyệt</span>
-                                            <br>Thời gian chuyển:<br><b>{{getDateTime($tt->ngaychuyen)}}</b>
-                                        </td>
-                                    @endif
+                                    <td>{{getDayVn($tt->tungay)}}</td>
+                                    <td>{{getDayVn($tt->denngay)}}</td>
+                                    <td style="text-align: center">{{$a_trangthaihoso[$tt->nhanhoso]}}</td>
+                                    <td style="text-align: center">{{chkDbl($tt->sohoso)}}</td>
+
                                     <td style="text-align: center">
-                                        <a href="{{url('duyethosocapduoi/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
-                                        @if($tt->trangthai == 'CD')
-                                            <button type="button" onclick="getIdGet('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#get-modal" data-toggle="modal"><i class="fa fa-check"></i>&nbsp;
-                                                Duyệt</button>
-                                            <button type="button" onclick="getIdBack('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#back-modal" data-toggle="modal"><i class="fa fa-backward"></i>&nbsp;
-                                                Trả</button>
-                                        @elseif($tt->trangthai == 'BTL')
-                                            <button type="button" onclick="viewLiDo('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#lydo-show" data-toggle="modal"><i class="fa fa-archive"></i>&nbsp;
-                                                Lí do</button>
-                                        @endif
+                                        <a title="Xem chi tiết" href="{{url('XetDuyetHoSoThiDua/DanhSach?kihieudhtd='.$tt->kihieudhtd)}}" class="btn btn-default btn-xs mbs">
+                                            <i class="fa fa-eye"></i></a>
+                                        <a title="Đánh giá kết quả" href="{{url('XetDuyetHoSoThiDua/KetQua?kihieudhtd='.$tt->kihieudhtd)}}" class="btn btn-default btn-xs mbs">
+                                            <i class="fa fa-list"></i></a>
+                                        <button title="Chuyển đối tượng sang danh mục quản lý" type="button" onclick="setKetQua('{{$tt->kihieudhtd}}')" class="btn btn-default btn-xs mbs" data-target="#modal-ChuyenDoiTuong" data-toggle="modal">
+                                            <i class="fa fa-check"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -186,25 +169,24 @@
             <!-- /.modal-dialog -->
         </div>
 
-        <div class="modal fade" id="back-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modal-ChuyenDoiTuong" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    {!! Form::open(['url'=>'duyethosocapduoi/back','method'=>'post' , 'files'=>true,'id' => 'frm_back','class'=>'form-horizontal','enctype'=>'multipart/form-data'])!!}
+                    {!! Form::open(['url'=>'/XetDuyetHoSoThiDua/ChuyenDoiTuong','method'=>'post' , 'files'=>true,'id' => 'frm_back','class'=>'form-horizontal','enctype'=>'multipart/form-data'])!!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">Đồng ý trả?</h4>
+                        <h4 class="modal-title">Đồng ý chuyển đối tượng?</h4>
                     </div>
-                    <input type="hidden" name="idback" id="idback">
+                    <input type="hidden" name="kihieudhtd_chuyen" id="kihieudhtd_chuyen">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <label class=" control-label">Lí do trả lại<span class="require">*</span></label>
-                                {!! Form::textarea('lido', null, ['id' => 'lido', 'rows' => 4, 'cols' => 10, 'class' => 'form-control']) !!}
+                                Bạn đồng ý cập nhật các đối tượng đạt tiêu chuẩn khen thưởng trong phong trào thi đua sang danh sách đối tượng để quản lý.
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn blue" onclick="ClickBack()">Đồng ý</button>
+                        <button type="submit" class="btn blue">Đồng ý</button>
                         <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
                     </div>
                     {!! Form::close() !!}
@@ -238,6 +220,9 @@
         </div>
     </div>
     <script>
+        function setKetQua(kihieudhtd){
+            $('#kihieudhtd_chuyen').val(kihieudhtd);
+        }
         function ClickGet(){
             var str = '',strb1='';
             var ok = true;

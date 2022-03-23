@@ -20,25 +20,27 @@
         jQuery(document).ready(function() {
             TableManaged.init();
         });
-        $(document).ready(function() {
-            $('.js-example-basic-single').select2();
-        });
-        function getId(id){
-            document.getElementById("iddelete").value=id;
+
+        function getId(kihieudhtd,madonvi){
+            var form = $('#frm_XoaHS');
+            form.find("[name='kihieudhtd']").val(kihieudhtd);
+            form.find("[name='madonvi']").val(madonvi);
         }
         function ClickDelete(){
             $('#frm_delete').submit();
         }
-        function getIdTr(id){
-            document.getElementById("idtrans").value=id;
+        function getIdTr(kihieudhtd,madonvi){
+            var form = $('#frm_ChuyenHS');
+            form.find("[name='kihieudhtd']").val(kihieudhtd);
+            form.find("[name='madonvi']").val(madonvi);
         }
+
         function ClickTrans(){
             $('#frm_trans').submit();
         }
         $(function(){
-            $('#nam').change(function() {
-                var nam = '&nam='+$('#nam').val();
-                var url = '/laphosotd?'+nam;
+            $('#madonvi').change(function() {
+                var url = '/HoSoThiDua/ThongTin?madonvi='+$('#madonvi').val();
                 window.location.href = url;
             });
         });
@@ -93,20 +95,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="portlet-body">
+                    <div class="row">
                         <table class="table table-striped table-bordered table-hover" id="sample_4">
                             <thead>
-                            <tr class="text-center">
-                                <th width="2%">STT</th>
-                                <th>Đơn vị phát động</th>
-                                <th>Nội dung hồ sơ</th>
-                                <th width="8%">Ngày<br>bắt đầu</th>
-                                <th width="8%">Ngày<br>kết thúc</th>
-                                <th width="8%">Trạng thái</th>
-                                <th style="text-align: center" width="8%">Tổng số<br>hồ sơ</th>
-                                <th style="text-align: center" width="8%">Hồ sơ của<br>đơn vị</th>
-                                <th style="text-align: center" width="10%">Thao tác</th>
-                            </tr>
+                                <tr class="text-center">
+                                    <th rowspan="2" width="2%">STT</th>
+                                    <th rowspan="2">Đơn vị phát động</th>
+                                    <th rowspan="2">Nội dung hồ sơ</th>
+                                    <th colspan="4">Phong trào</th>
+                                    <th colspan="2">Hồ sơ của đơn vị</th>
+                                    <th rowspan="2" style="text-align: center" width="10%">Thao tác</th>
+                                </tr>
+                                <tr>
+
+                                    <th width="8%">Ngày<br>bắt đầu</th>
+                                    <th width="8%">Ngày<br>kết thúc</th>
+                                    <th width="8%">Trạng thái</th>
+                                    <th style="text-align: center" width="8%">Tổng số<br>hồ sơ</th>
+
+                                    <th width="8%">Trạng thái</th>
+                                    <th style="text-align: center" width="8%">Số lượng</th>
+                                </tr>
                             </thead>
                             @foreach($model as $key => $tt)
                                 <tr class="{{$tt->nhanhoso == 'DANGNHAN' ? 'success' : ''}}">
@@ -117,31 +126,33 @@
                                     <td>{{getDayVn($tt->denngay)}}</td>
                                     <td style="text-align: center">{{$a_trangthaihoso[$tt->nhanhoso]}}</td>
                                     <td style="text-align: center">{{chkDbl($tt->sohoso)}}</td>
+                                    @include('includes.crumbs.td_trangthai_hoso')
                                     <td style="text-align: center">{{chkDbl($tt->hosodonvi)}}</td>
 
                                     <td style="text-align: center">
-                                        <a href="{{url('laphosotd/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank"><i class="fa fa-eye"></i>&nbsp;Xem chi tiết</a>
-
-                                        @if($tt->trangthai == 'CC' || $tt->trangthai == 'BTL')
-                                            <!--a href="{{url('laphosotd/'.$tt->id).'/edit'}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a-->
-                                            <!--button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
-                                                Chuyển</button-->
-                                            <a title="Hồ sơ đăng ký phong trào" href="{{url('/HoSoThiDua/Them?kihieudhtd='.$tt->kihieudhtd.'&madonvi='.$inputs['madonvi'])}}" class="btn btn-default btn-xs mbs">
-                                                <i class="fa fa-check-square-o"></i></a>
-
-                                            <button title="Trình hồ sơ đăng ký" type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal">
-                                                <i class="fa fa-send"></i></button>
+                                        <a title="Thông tin phong trào" href="{{url('/dangkytd/'.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank">
+                                            <i class="fa fa-eye"></i></a>
+                                        @if($tt->nhanhoso == 'DANGNHAN')
+                                            @if(in_array($tt->trangthai, ['CC','BTL']))
+                                                <a title="Hồ sơ đăng ký phong trào" href="{{url('/HoSoThiDua/Them?kihieudhtd='.$tt->kihieudhtd.'&madonvi='.$inputs['madonvi'].'&trangthai=true')}}" class="btn btn-default btn-xs mbs">
+                                                    <i class="fa fa-check-square-o"></i></a>
+                                            @else
+                                                <a title="Hồ sơ đăng ký phong trào" href="{{url('/HoSoThiDua/Them?kihieudhtd='.$tt->kihieudhtd.'&madonvi='.$inputs['madonvi'].'&trangthai=false')}}" class="btn btn-default btn-xs mbs">
+                                                    <i class="fa fa-check-square-o"></i></a>
+                                            @endif
+                                            @if($tt->hosodonvi > 0 && in_array($tt->trangthai, ['CC','BTL']))
+                                                <button title="Trình hồ sơ đăng ký" type="button" onclick="getIdTr('{{$tt->kihieudhtd}}','{{$inputs['madonvi']}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal">
+                                                    <i class="fa fa-send"></i></button>
+                                            @endif
                                         @endif
 
                                         @if($tt->trangthai == 'BTL')
-                                            <button type="button" onclick="viewLiDo('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#lydo-show" data-toggle="modal"><i class="fa fa-archive"></i>&nbsp;
-                                                Lí do</button>
-                                            <button type="button" onclick="getIdTr('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#trans-modal" data-toggle="modal"><i class="fa fa-forward"></i>&nbsp;
-                                                Trình hồ sơ</button>
+                                            <button title="Lý do hồ sơ bị trả lại" type="button" onclick="viewLiDo('{{$tt->kihieudhtd}}','{{$inputs['madonvi']}}')" class="btn btn-default btn-xs mbs" data-target="#lydo-show" data-toggle="modal">
+                                                <i class="fa fa-archive"></i></button>
                                         @endif
 
-                                        @if($tt->trangthai == 'CC')
-                                            <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal">
+                                        @if($tt->trangthai == 'CC' && $tt->hosodonvi > 0)
+                                            <button type="button" onclick="getId('{{$tt->kihieudhtd}}','{{$inputs['madonvi']}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal">
                                                 <i class="fa fa-trash-o"></i></button>
                                         @endif
 
@@ -163,7 +174,7 @@
         <div class="modal fade" id="trans-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    {!! Form::open(['url'=>'chuyenhosocaptren/trans','id' => 'frm_trans'])!!}
+                    {!! Form::open(['url'=>'/HoSoThiDua/ChuyenHoSo','id' => 'frm_ChuyenHS'])!!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 class="modal-title">Đồng ý chuyển?</h4>
@@ -176,7 +187,8 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="idtrans" id="idtrans">
+                    <input type="hidden" name="kihieudhtd" />
+                    <input type="hidden" name="madonvi" />
                     <div class="modal-footer">
                         <button type="submit" class="btn blue" onclick="ClickTrans()">Đồng ý</button>
                         <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
@@ -214,12 +226,13 @@
         <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    {!! Form::open(['url'=>'laphosotd/delete','id' => 'frm_delete'])!!}
+                    {!! Form::open(['url'=>'/HoSoThiDua/delete','id' => 'frm_XoaHS'])!!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h4 class="modal-title">Đồng ý xóa?</h4>
                     </div>
-                    <input type="hidden" name="iddelete" id="iddelete">
+                    <input type="hidden" name="kihieudhtd" />
+                    <input type="hidden" name="madonvi" />
                     <div class="modal-footer">
                         <button type="submit" class="btn blue" onclick="ClickDelete()">Đồng ý</button>
                         <button type="button" class="btn default" data-dismiss="modal">Hủy</button>
@@ -253,15 +266,17 @@
             }
         }
 
-        function viewLiDo(id) {
+        function viewLiDo(kihieudhtd,madonvi) {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             //alert(id);
+
             $.ajax({
-                url: '/dangkytd/lydo',
+                url: '/HoSoThiDua/LayLyDo',
                 type: 'GET',
                 data: {
                     _token: CSRF_TOKEN,
-                    id: id
+                    madonvi: madonvi,
+                    kihieudhtd: kihieudhtd
                 },
                 dataType: 'JSON',
                 success: function (data) {

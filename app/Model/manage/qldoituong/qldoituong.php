@@ -21,5 +21,11 @@ class qldoituong extends Model
         'madinhdanh',
         'madonvi',
         'ttnguoitao',
+        'tendonvi',
+        'maccvc',
+        'chucvu',
+        'lanhdao',
+        'kihieudhtd',
+        'madanhhieutd',
     ];
 }

@@ -25,21 +25,10 @@
                         <a href="{{url('/HoSoThiDua/ThongTin')}}">Tạo lập hồ sơ đăng ký thi đua khen thưởng</a>
                     </li>
                 @endif
-                <!--
-                @if(can('trinhhoso','index'))
-                    <li>
-                        <a href="{{url('trinhhoso')}}">Trình hồ sơ đăng ký thi đua tại đơn vị</a>
-                    </li>
-                @endif
-                @if(can('duyethoso','index'))
-                        <li>
-                            <a href="{{url('duyethoso')}}">Duyệt hồ sơ đăng ký thi đua tại đơn vị</a>
-                        </li>
-                @endif
-                        -->
+
                 @if(can('duyethosocapduoi','index'))
                     <li>
-                        <a href="{{url('duyethosocapduoi')}}">Duyệt hồ sơ đăng ký thi đua cấp dưới</a>
+                        <a href="{{url('/XetDuyetHoSoThiDua/ThongTin')}}">Duyệt hồ sơ đăng ký thi đua cấp dưới</a>
                     </li>
                 @endif
                     <!--

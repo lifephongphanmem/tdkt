@@ -282,6 +282,17 @@ class DangKyTdController extends Controller
             $model->tendanhhieutd = $m_danhhieu->tendanhhieutd;
             $model->phanloai = $m_danhhieu->phanloai;
             $model->save();
+            $m_tieuchuan = dmtieuchuandhtd::where('madanhhieutd', $inputs['madanhhieutd'])->get();
+            foreach ($m_tieuchuan as $tieuchuan) {
+                $model = new DangKyTd_TieuChuan();
+                $model->kihieudhtd = $inputs['kihieudhtd'];
+                $model->madanhhieutd = $tieuchuan->madanhhieutd;
+                $model->matieuchuandhtd = $tieuchuan->matieuchuandhtd;
+                $model->tentieuchuandhtd = $tieuchuan->tentieuchuandhtd;
+                $model->cancu = $tieuchuan->cancu;
+                $model->batbuoc = 1;
+                $model->save();
+            }
         } else {
             $model->soluong = $inputs['soluong'];
             $model->tendanhhieutd = $m_danhhieu->tendanhhieutd;
@@ -393,6 +404,65 @@ class DangKyTdController extends Controller
                 $result['message'] .= '<td>' .
                     '<button type="button" data-target="#modal-delete" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="getId(' . $ct->id . ')" ><i class="fa fa-trash-o"></i></button>' .
                     '<button type="button" data-target="#modal-edit" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="editTtPh(' . $ct->id . ')"><i class="fa fa-edit"></i></button>'
+                    . '</td>';
+
+                $result['message'] .= '</tr>';
+            }
+            $result['message'] .= '</tbody>';
+            $result['message'] .= '</table>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['status'] = 'success';
+
+        }
+        die(json_encode($result));
+    }
+
+    public function LayTieuChuan(Request $request)
+    {
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if (!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+        //dd($request);
+        $inputs = $request->all();
+        $m_danhhieu = dmdanhhieutd::where('madanhhieutd', $inputs['madanhhieutd'])->first();
+        //Chưa tối ưu và tìm kiếm trùng đối tượng
+        $model = DangKyTd_TieuChuan::where('madanhhieutd', $inputs['madanhhieutd'])
+            ->where('kihieudhtd', $inputs['kihieudhtd'])->get();
+
+        if (isset($model)) {
+
+            $result['message'] = '<div class="row" id="dstieuchuan">';
+
+            $result['message'] .= '<div class="col-md-12">';
+            $result['message'] .= '<table id="sample_4" class="table table-striped table-bordered table-hover" >';
+            $result['message'] .= '<thead>';
+            $result['message'] .= '<tr>';
+            $result['message'] .= '<th width="2%" style="text-align: center">STT</th>';
+            $result['message'] .= '<th style="text-align: center">Tên tiêu chuẩn</th>';
+            $result['message'] .= '<th style="text-align: center" width="15%">Bắt buộc</th>';
+            $result['message'] .= '<th style="text-align: center" width="10%">Thao tác</th>';
+            $result['message'] .= '</tr>';
+            $result['message'] .= '</thead>';
+
+            $result['message'] .= '<tbody>';
+            $key = 1;
+            foreach ($model as $ct) {
+
+                $result['message'] .= '<tr>';
+                $result['message'] .= '<td style="text-align: center">' . $key++ . '</td>';
+                $result['message'] .= '<td>' . $ct->tentieuchuandhtd . '</td>';
+                $result['message'] .= '<td style="text-align: center">' . $ct->batbuoc . '</td>';
+                $result['message'] .= '<td>' .
+                    '<button type="button" data-target="#modal-luutieuchuan" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="ThayDoiTieuChuan(' .chr(39). $ct->matieuchuandhtd . chr(39) .','. chr(39).$ct->tentieuchuandhtd.chr(39).')"><i class="fa fa-edit"></i></button>'
                     . '</td>';
 
                 $result['message'] .= '</tr>';

@@ -37,6 +37,7 @@ Route::group(['prefix'=>'DanhKyThiDua'], function(){
 
     Route::get('ThemKhenThuong','manage\ktcaccap\DangKyTdController@ThemKhenThuong');
     Route::get('ThemTieuChuan','manage\ktcaccap\DangKyTdController@ThemTieuChuan');
+    Route::get('LayTieuChuan','manage\ktcaccap\DangKyTdController@LayTieuChuan');
 
     //Route::get('Sua','system\DSTaiKhoanController@edit');
 });

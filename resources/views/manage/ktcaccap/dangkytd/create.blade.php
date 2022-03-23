@@ -177,6 +177,27 @@
             })
         }
 
+        function getTieuChuan(madanhhieutd){
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $('#madanhhieutd_tc').val(madanhhieutd).trigger('change');
+
+            $.ajax({
+                url: '/DanhKyThiDua/LayTieuChuan',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    madanhhieutd: madanhhieutd,
+                    kihieudhtd: $('#kihieudhtd').val()
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if(data.status == 'success') {
+                        $('#dstieuchuan').replaceWith(data.message);
+                    }
+                }
+            })
+        }
+
         function getId(id){
             document.getElementById("iddelete").value=id;
         }
@@ -417,8 +438,10 @@
                                         <td >{{$tt->tendanhhieutd}}</td>
                                         <td style="text-align: center">{{$tt->soluong}}</td>
                                         <td>
-                                            <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
-                                                Xóa</button>
+                                            <button title="Tiêu chuẩn" type="button" onclick="getTieuChuan('{{$tt->madanhhieutd}}')" class="btn btn-default btn-xs mbs" data-target="#modal-tieuchuan" data-toggle="modal">
+                                                <i class="fa fa-list"></i></button>
+                                            <button title="Xóa" type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal">
+                                                <i class="fa fa-trash-o"></i></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -427,45 +450,6 @@
                         </div>
                     </div>
 
-                    <h4 class="form-section" style="color: #0000ff">Danh sách tiêu chuẩn giải thưởng</h4>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <button type="button" data-target="#modal-TieuChuan" data-toggle="modal" class="btn btn-success btn-xs" >
-                                    <i class="fa fa-plus"></i>&nbsp;Thêm</button>                                &nbsp;
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" id="dstieuchuan">
-                        <div class="col-md-12">
-                            <table id="sample_4" class="table table-striped table-bordered table-hover" >
-                                <thead>
-                                <tr>
-                                    <th style="text-align: center" width="5%">STT</th>
-                                    <th style="text-align: center">Tên danh hiệu</th>
-                                    <th style="text-align: center">Tên tiêu chuẩn</th>
-                                    <th style="text-align: center" width="8%">Bắt buộc</th>
-                                    <th style="text-align: center" width="10%">Thao tác</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php $i=1; ?>
-                                @foreach($model_tieuchuan as $key=>$tt)
-                                    <tr class="odd gradeX">
-                                        <td style="text-align: center">{{$i++}}</td>
-                                        <td>{{$tt->madanhhieutd}}</td>
-                                        <td >{{$tt->tentieuchuandhtd}}</td>
-                                        <td style="text-align: center">{{$tt->batbuoc}}</td>
-                                        <td>
-                                            <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
-                                                Xóa</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- END EXAMPLE TABLE PORTLET-->
@@ -565,6 +549,37 @@
         <!-- /.modal-dialog -->
     </div>
     {!! Form::close() !!}
+
+    {{--    Thông tin tiêu chuẩn--}}
+    <div class="modal fade bs-modal-lg" id="modal-tieuchuan" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Thông tin tiêu chuẩn của đối tượng</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="form-control-label">Danh hiệu đăng ký</label>
+                            {!!Form::select('madanhhieutd_tc', $a_danhhieu ,null, array('id' => 'madanhhieutd_tc','class' => 'form-control'))!!}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" id="dstieuchuan">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
 
     <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog ">

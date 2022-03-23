@@ -20,6 +20,7 @@ class CreateLaphosotdTieuchuanTable extends Migration
             $table->string('madanhhieutd')->nullable();
             $table->string('matieuchuandhtd')->nullable();
             $table->string('madt')->nullable();
+            $table->string('madonvi_kt')->nullable();
             $table->string('madonvi')->nullable();
             $table->boolean('dieukien')->default(0);
             $table->string('mota')->nullable();

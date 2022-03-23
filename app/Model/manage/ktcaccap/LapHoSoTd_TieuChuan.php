@@ -15,6 +15,7 @@ class LapHoSoTd_TieuChuan extends Model
         'matieuchuandhtd',
         'madt',
         'madonvi',
+        'madonvi_kt',
         'dieukien',
         'mota',
         'ghichu',

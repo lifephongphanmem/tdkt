@@ -14,6 +14,7 @@ class LapHoSoTd_KhenThuong extends Model
         'madonvi',
         'madanhhieutd',
         'phanloai',
+        'madonvi',
         //Thông tin cá nhân
         'madt',
         'maccvc',
@@ -23,8 +24,11 @@ class LapHoSoTd_KhenThuong extends Model
         'chucvu',
         'lanhdao',
         //Thông tin tập thể
-        'madonvi',
+        'madonvi_kt',
         'tendonvi',
         'ghichu',
+        //Kết quả đánh giá
+        'ketqua',
+        'lydo',
     ];
 }

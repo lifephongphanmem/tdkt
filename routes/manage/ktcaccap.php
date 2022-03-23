@@ -22,7 +22,22 @@ Route::group(['prefix'=>'HoSoThiDua'], function(){
     Route::post('Them','manage\ktcaccap\LapHoSoTdController@LuuHoSo');
 
     Route::get('ThemDoiTuong','manage\ktcaccap\LapHoSoTdController@ThemDoiTuong');
+    Route::get('ThemDoiTuongTapThe','manage\ktcaccap\LapHoSoTdController@ThemDoiTuongTapThe');
     Route::get('LayTieuChuan','manage\ktcaccap\LapHoSoTdController@LayTieuChuan');
+    Route::get('LuuTieuChuan','manage\ktcaccap\LapHoSoTdController@LuuTieuChuan');
+
+    Route::post('delete','manage\ktcaccap\LapHoSoTdController@delete');
+    Route::post('ChuyenHoSo','manage\ktcaccap\LapHoSoTdController@ChuyenHoSo');
+    Route::get('LayLyDo','manage\ktcaccap\LapHoSoTdController@LayLyDo');
+});
+
+Route::group(['prefix'=>'XetDuyetHoSoThiDua'], function(){
+    Route::get('ThongTin','manage\ktcaccap\DuyetHoSoCapDuoiController@ThongTin');
+    Route::get('DanhSach','manage\ktcaccap\DuyetHoSoCapDuoiController@DanhSach');
+    Route::post('TraLai','manage\ktcaccap\DuyetHoSoCapDuoiController@TraLai');
+    Route::get('KetQua','manage\ktcaccap\DuyetHoSoCapDuoiController@KetQua');
+    Route::post('KetQua','manage\ktcaccap\DuyetHoSoCapDuoiController@LuuKetQua');
+    Route::post('ChuyenDoiTuong','manage\ktcaccap\DuyetHoSoCapDuoiController@ChuyenDoiTuong');
 });
 
 //trinhhoso

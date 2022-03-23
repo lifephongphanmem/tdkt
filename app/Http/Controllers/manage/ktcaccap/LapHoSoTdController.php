@@ -33,20 +33,24 @@ class LapHoSoTdController extends Controller
             $m_diaban = DSDiaBan::all();
             $inputs['madonvi'] = $inputs['madonvi'] ?? $m_donvi->first()->madonvi;
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
-            $model = DangKyTd::whereYear('ngayky', $inputs['nam'])->where('madonvi', $inputs['madonvi'])->get();
+            $model = DangKyTd::all();
             $model_HoSo = LapHoSoTd::all();
             $ngayHienTai = date('Y-m-d');
-            foreach ($model as $DangKy){
-                $DangKy->tendonvi = $m_donvi->where('madonvi',$DangKy->madonvi)->first()->tendonvi ?? '';
-                $DangKy->nhanhoso = 'CHUABATDAU';
-                $DangKy->sohoso = $model_HoSo->where('kihieudhtd',$DangKy->kihieudhtd)->count();
-                $DangKy->hosodonvi = $model_HoSo->where('kihieudhtd',$DangKy->kihieudhtd)
-                    ->where('madonvi',$inputs['madonvi'])->count();
+            foreach ($model as $DangKy) {
+                $HoSo = $model_HoSo->where('kihieudhtd', $DangKy->kihieudhtd)
+                    ->where('madonvi', $inputs['madonvi']);
 
-                if($DangKy->tungay < $ngayHienTai && $DangKy->denngay > $ngayHienTai){
+                $DangKy->tendonvi = $m_donvi->where('madonvi', $DangKy->madonvi)->first()->tendonvi ?? '';
+                $DangKy->nhanhoso = 'CHUABATDAU';
+                $DangKy->sohoso = $model_HoSo->where('kihieudhtd', $DangKy->kihieudhtd)
+                    ->wherein('trangthai',['CD'])->count();
+                $DangKy->trangthai = $HoSo->first()->trangthai ?? 'CC';
+                $DangKy->ngaychuyen = $HoSo->first()->ngaychuyen ?? '';
+                $DangKy->hosodonvi = $HoSo->count();
+                if ($DangKy->tungay < $ngayHienTai && $DangKy->denngay > $ngayHienTai) {
                     $DangKy->nhanhoso = 'DANGNHAN';
                 }
-                if(strtotime($DangKy->denngay) < strtotime($ngayHienTai)){
+                if (strtotime($DangKy->denngay) < strtotime($ngayHienTai)) {
                     $DangKy->nhanhoso = 'KETTHUC';
                 }
             }
@@ -77,7 +81,7 @@ class LapHoSoTdController extends Controller
             $model_tieuchuan = LapHoSoTd_TieuChuan::where('madonvi',$inputs['madonvi'])
                 ->where('kihieudhtd',$inputs['kihieudhtd'])
                 ->get();
-            $m_donvi = DSDonVi::where('madonvi', $inputs['madonvi'])->first();
+            //$m_donvi = DSDonVi::where('madonvi', $inputs['madonvi'])->first();
             $m_doituong = qldoituong::where('madonvi', $inputs['madonvi'])->get();
             $m_danhhieu = DangKyTd_KhenThuong::where('kihieudhtd',$inputs['kihieudhtd'])->get();
             $m_tieuchuan = DangKyTd_TieuChuan::where('kihieudhtd',$inputs['kihieudhtd'])->get();
@@ -88,16 +92,22 @@ class LapHoSoTdController extends Controller
             }
             $model->noidungpt = DangKyTd::where('kihieudhtd',$inputs['kihieudhtd'])
                 ->first()->noidung;
+            $m_donvi = DSDonVi::all();
+            $m_diaban = DSDiaBan::all();
+            //dd($inputs);
             return view('manage.ktcaccap.laphosotd.Them')
                 ->with('inputs',$inputs)
                 ->with('model',$model)
-                ->with('model_khenthuong',$model_khenthuong)
+                ->with('model_khenthuong',$model_khenthuong->where('phanloai','CANHAN'))
+                ->with('model_tapthe',$model_khenthuong->where('phanloai','TAPTHE'))
                 ->with('model_tieuchuan',$model_tieuchuan)
                 ->with('m_doituong',$m_doituong)
                 ->with('m_danhhieu',$m_danhhieu)
                 ->with('m_tieuchuan',$m_tieuchuan)
                 ->with('a_danhhieu',array_column($m_danhhieu->toarray(),'tendanhhieutd','madanhhieutd'))
                 ->with('a_donvi',array_column($m_donvi->toarray(),'tendonvi','madonvi'))
+                ->with('m_donvi', $m_donvi)
+                ->with('m_diaban', $m_diaban)
                 ->with('pageTitle','Danh sách hồ sơ thi đua');
         }else
             return view('errors.notlogin');
@@ -130,7 +140,7 @@ class LapHoSoTdController extends Controller
                 $filedk->move(public_path() . '/data/tailieukhac/', $inputs['tailieukhac']);
             }
 
-            $model = LapHoSoTd::where('kihieudhtd',$inputs['kihieudhtd'])->first();
+            $model = LapHoSoTd::where('kihieudhtd',$inputs['kihieudhtd'])->where('madonvi',$inputs['kihieudhtd'])->first();
             if($model == null){
                 LapHoSoTd::create($inputs);
             }else{
@@ -167,6 +177,7 @@ class LapHoSoTdController extends Controller
             $model = new LapHoSoTd_KhenThuong();
             $model->madt = getdate()[0];
             $model->kihieudhtd = $inputs['kihieudhtd'];
+            $model->phanloai = 'CANHAN';
             $model->madonvi = $inputs['madonvi'];
             $model->madanhhieutd = $inputs['madanhhieutd'];
             $model->ngaysinh = $inputs['ngaysinh'];
@@ -187,6 +198,7 @@ class LapHoSoTdController extends Controller
         }
 
         $modelct = LapHoSoTd_KhenThuong::where('kihieudhtd', $inputs['kihieudhtd'])
+            ->where('phanloai', 'CANHAN')
             ->where('madonvi', $inputs['madonvi'])
             ->get();
         if (isset($modelct)) {
@@ -216,6 +228,86 @@ class LapHoSoTdController extends Controller
                 $result['message'] .= '<td>' . getDayVn($ct->ngaysinh) . '</td>';
                 $result['message'] .= '<td style="text-align: center">' . $ct->gioitinh . '</td>';
                 $result['message'] .= '<td style="text-align: center">' . $ct->chucvu . '</td>';
+                $result['message'] .= '<td style="text-align: center">' . $ct->madanhhieutd . '</td>';
+                $result['message'] .= '<td>' .
+                    '<button type="button" data-target="#modal-delete" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="getId(' . $ct->id . ')" ><i class="fa fa-trash-o"></i></button>' .
+                    '<button type="button" data-target="#modal-edit" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="editTtPh(' . $ct->id . ')"><i class="fa fa-edit"></i></button>'
+                    . '</td>';
+
+                $result['message'] .= '</tr>';
+            }
+            $result['message'] .= '</tbody>';
+            $result['message'] .= '</table>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['status'] = 'success';
+
+        }
+        die(json_encode($result));
+    }
+
+    public function ThemDoiTuongTapThe(Request $request)
+    {
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if (!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+        //dd($request);
+        $inputs = $request->all();
+        $m_donvi = DSDonVi::where('madonvi', $inputs['madonvi_kt'])->first();
+        //Chưa tối ưu và tìm kiếm trùng đối tượng
+        $model = LapHoSoTd_KhenThuong::where('madonvi_kt', $inputs['madonvi_kt'])
+            ->where('madanhhieutd', $inputs['madanhhieutd'])
+            ->where('madonvi', $inputs['madonvi'])
+            ->where('kihieudhtd', $inputs['kihieudhtd'])->first();
+        if ($model == null) {
+            $model = new LapHoSoTd_KhenThuong();
+            $model->madonvi_kt = $inputs['madonvi_kt'];
+            $model->tendonvi = $m_donvi->tendonvi ?? '';
+            $model->kihieudhtd = $inputs['kihieudhtd'];
+            $model->phanloai = 'TAPTHE';
+            $model->madonvi = $inputs['madonvi'];
+            $model->madanhhieutd = $inputs['madanhhieutd'];
+            $model->save();
+        } else {
+            $model->madanhhieutd = $inputs['madanhhieutd'];
+            $model->madonvi_kt = $inputs['madonvi_kt'];
+            $model->tendonvi = $m_donvi->tendonvi ?? '';
+            $model->save();
+        }
+
+        $modelct = LapHoSoTd_KhenThuong::where('kihieudhtd', $inputs['kihieudhtd'])
+            ->where('phanloai', 'TAPTHE')
+            ->where('madonvi', $inputs['madonvi'])
+            ->get();
+        if (isset($modelct)) {
+
+            $result['message'] = '<div class="row" id="dskhenthuongtapthe">';
+
+            $result['message'] .= '<div class="col-md-12">';
+            $result['message'] .= '<table id="sample_4" class="table table-striped table-bordered table-hover" >';
+            $result['message'] .= '<thead>';
+            $result['message'] .= '<tr>';
+            $result['message'] .= '<th width="5%" style="text-align: center">STT</th>';
+            $result['message'] .= '<th style="text-align: center">Tên đơn vi</th>';
+            $result['message'] .= '<th style="text-align: center" width="30%">Tên danh hiệu<br>đăng ký</th>';
+            $result['message'] .= '<th style="text-align: center" width="10%">Thao tác</th>';
+            $result['message'] .= '</tr>';
+            $result['message'] .= '</thead>';
+
+            $result['message'] .= '<tbody>';
+            $key = 1;
+            foreach ($modelct as $ct) {
+                $result['message'] .= '<tr>';
+                $result['message'] .= '<td style="text-align: center">' . $key++ . '</td>';
+                $result['message'] .= '<td>' . $ct->tendonvi . '</td>';
                 $result['message'] .= '<td style="text-align: center">' . $ct->madanhhieutd . '</td>';
                 $result['message'] .= '<td>' .
                     '<button type="button" data-target="#modal-delete" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="getId(' . $ct->id . ')" ><i class="fa fa-trash-o"></i></button>' .
@@ -284,7 +376,93 @@ class LapHoSoTdController extends Controller
                 $result['message'] .= '<td style="text-align: center">' . $ct->batbuoc . '</td>';
                 $result['message'] .= '<td style="text-align: center">' . $ct->dieukien . '</td>';
                 $result['message'] .= '<td>' .
-                    '<button type="button" data-target="#modal-edit" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="editTtPh(' . $ct->id . ')"><i class="fa fa-edit"></i></button>'
+                    '<button type="button" data-target="#modal-luutieuchuan" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="ThayDoiTieuChuan(' .chr(39). $ct->matieuchuandhtd . chr(39) .','. chr(39).$ct->tentieuchuandhtd.chr(39).')"><i class="fa fa-edit"></i></button>'
+                    . '</td>';
+
+                $result['message'] .= '</tr>';
+            }
+            $result['message'] .= '</tbody>';
+            $result['message'] .= '</table>';
+            $result['message'] .= '</div>';
+            $result['message'] .= '</div>';
+            $result['status'] = 'success';
+
+        }
+        die(json_encode($result));
+    }
+
+    public function LuuTieuChuan(Request $request)
+    {
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if (!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+        //dd($request);
+        $inputs = $request->all();
+        $m_danhhieu = dmdanhhieutd::where('madanhhieutd', $inputs['madanhhieutd'])->first();
+        //Chưa tối ưu và tìm kiếm trùng đối tượng
+        $model = LapHoSoTd_TieuChuan::where('madt', $inputs['madt'])
+            ->where('matieuchuandhtd', $inputs['matieuchuandhtd'])
+            ->where('madanhhieutd', $inputs['madanhhieutd'])
+            ->where('madonvi', $inputs['madonvi'])
+            ->where('kihieudhtd', $inputs['kihieudhtd'])->first();
+
+        //chưa lấy biến điều kiện đang dùng tạm để demo
+        if($model == null) {
+            $model = new LapHoSoTd_TieuChuan();
+            $model->madt = $inputs['madt'];
+            $model->matieuchuandhtd = $inputs['matieuchuandhtd'];
+            $model->madanhhieutd = $inputs['madanhhieutd'];
+            $model->madonvi = $inputs['madonvi'];
+            $model->kihieudhtd = $inputs['kihieudhtd'];
+            $model->dieukien = 1;
+            $model->save();
+        }else{
+            $model->dieukien = 1;
+            $model->save();
+        }
+        //
+        $model = LapHoSoTd_TieuChuan::where('madt', $inputs['madt'])
+            ->where('madanhhieutd', $inputs['madanhhieutd'])
+            ->where('madonvi', $inputs['madonvi'])
+            ->where('kihieudhtd', $inputs['kihieudhtd'])->get();
+        $model_tieuchuan = DangKyTd_TieuChuan::where('madanhhieutd', $inputs['madanhhieutd'])
+            ->where('kihieudhtd', $inputs['kihieudhtd'])->get();
+
+        if (isset($model_tieuchuan)) {
+
+            $result['message'] = '<div class="row" id="dstieuchuan">';
+
+            $result['message'] .= '<div class="col-md-12">';
+            $result['message'] .= '<table id="sample_4" class="table table-striped table-bordered table-hover" >';
+            $result['message'] .= '<thead>';
+            $result['message'] .= '<tr>';
+            $result['message'] .= '<th width="2%" style="text-align: center">STT</th>';
+            $result['message'] .= '<th style="text-align: center">Tên tiêu chuẩn</th>';
+            $result['message'] .= '<th style="text-align: center" width="15%">Bắt buộc</th>';
+            $result['message'] .= '<th style="text-align: center" width="15%">Đạt điều kiên</th>';
+            $result['message'] .= '<th style="text-align: center" width="10%">Thao tác</th>';
+            $result['message'] .= '</tr>';
+            $result['message'] .= '</thead>';
+
+            $result['message'] .= '<tbody>';
+            $key = 1;
+            foreach ($model_tieuchuan as $ct) {
+                $ct->dieukien = $model->where('matieuchuandhtd', $ct->matieuchuandhtd)->first()->dieukien ?? 0;
+                $result['message'] .= '<tr>';
+                $result['message'] .= '<td style="text-align: center">' . $key++ . '</td>';
+                $result['message'] .= '<td>' . $ct->tentieuchuandhtd . '</td>';
+                $result['message'] .= '<td style="text-align: center">' . $ct->batbuoc . '</td>';
+                $result['message'] .= '<td style="text-align: center">' . $ct->dieukien . '</td>';
+                $result['message'] .= '<td>' .
+                    '<button type="button" data-target="#modal-luutieuchuan" data-toggle="modal" class="btn btn-default btn-xs mbs" onclick="ThayDoiTieuChuan(' .chr(39). $ct->matieuchuandhtd . chr(39) .','. chr(39).$ct->tentieuchuandhtd.chr(39).')"><i class="fa fa-edit"></i></button>'
                     . '</td>';
 
                 $result['message'] .= '</tr>';
@@ -440,25 +618,27 @@ class LapHoSoTdController extends Controller
 
     public function delete(Request $request){
         if (Session::has('admin')) {
-            $id = $request->all()['iddelete'];
-            $model = LapHoSoTd::findorFail($id);
+            $inputs = $request->all();
+            $model = LapHoSoTd::where('kihieudhtd',$inputs['kihieudhtd'])->where('madonvi',$inputs['madonvi'])->first();
+            LapHoSoTd_TieuChuan::where('kihieudhtd',$model->kihieudhtd)->where('madonvi',$model->madonvi)->delete();
+            LapHoSoTd_KhenThuong::where('kihieudhtd',$model->kihieudhtd)->where('madonvi',$model->madonvi)->delete();
             $model->delete();
-            return redirect('laphosotd');
+            return redirect('HoSoThiDua/ThongTin?madonvi='.$model->madonvi);
         }else
             return view('errors.notlogin');
     }
 
-    public function trans(Request $request){
+    public function ChuyenHoSo(Request $request){
         if(Session::has('admin')) {
             $inputs = $request->all();
-            $id = $request->all()['idtrans'];
-            $model = LapHoSoTd::findorFail($id);
+            $model = LapHoSoTd::where('kihieudhtd',$inputs['kihieudhtd'])->where('madonvi',$inputs['madonvi'])->first();
+            //dd($model);
             $inputs['trangthai'] = 'CD';
-            $inputs['ttthaotac'] = session('admin')->username.'('.session('admin')->name.') chuyển hồ sơ ';
+            $inputs['ttthaotac'] = session('admin')->username.'('.session('admin')->tentaikhoan.') chuyển hồ sơ ';
             $inputs['ngaychuyen'] = date('Y-m-d H:i:s');
             $model->nguoichuyen = $inputs['nguoichuyen'];
             $model->update($inputs);
-            return redirect('laphosotd');
+            return redirect('HoSoThiDua/ThongTin?madonvi='.$model->madonvi);
         }else
             return view('errors.notlogin');
     }
@@ -477,6 +657,36 @@ class LapHoSoTdController extends Controller
                 $result['message'] = 'ok';
             }
         }
+        die(json_encode($result));
+    }
+
+    public function LayLyDo(Request $request)
+    {
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if (!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+
+        $inputs = $request->all();
+        //Chưa tối ưu và tìm kiếm trùng đối tượng
+        $model = LapHoSoTd::where('madonvi', $inputs['madonvi'])
+            ->where('kihieudhtd', $inputs['kihieudhtd'])->first();
+        //dd($inputs);
+
+        $result['message'] = '<div class="col-md-12" id="showlido">';
+        $result['message'] .= $model->lido;
+
+        $result['message'] .= '</div>';
+        $result['status'] = 'success';
+
+
         die(json_encode($result));
     }
 }
