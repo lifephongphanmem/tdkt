@@ -16,7 +16,6 @@ use App\Model\manage\ktcaccap\dangkytdct;
 use App\model\manage\ktcaccap\dangkytddf;
 use App\model\manage\qldoituong\dmphanloaict;
 use App\Model\manage\qldoituong\qldoituong;
-//use App\model\manage\qltailieu\qlphongtrao;
 use App\model\manage\qltailieu\qlphongtrao;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
