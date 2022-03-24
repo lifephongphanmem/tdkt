@@ -248,7 +248,7 @@ class UsersController extends Controller
     public function create()
     {
         if (Session::has('admin')) {
-            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+            if (session('admin')->level == 'SSA' || session('admin')->sadmin == 'sa') {
                 $modeldvql = dmdonvi::all();
                 return view('system.users.create')
                     ->with('modeldvql', $modeldvql)
@@ -266,7 +266,7 @@ class UsersController extends Controller
     {
         if (Session::has('admin')) {
             //quyền sa, ssa tạo tài khoản cấp tỉnh
-            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+            if (session('admin')->level == 'SSA' || session('admin')->sadmin == 'sa') {
                 $inputs = $request->all();
                 $model = new DSTaiKhoan();
                 $inputs['ttnguoitao'] = session('admin')->name.'('.session('admin')->username.')'. getDateTime(Carbon::now()->toDateTimeString());

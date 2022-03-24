@@ -75,7 +75,7 @@
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet box">
-{{--                @if(session('admin')->sadmin == 'ssa')--}}
+{{--                @if(session('admin')->level == 'SSA')--}}
                     <div class="portlet-title">
                         <div class="caption"></div>
                         <div class="actions">
@@ -108,7 +108,7 @@
                                 <button type="button" title="Chỉnh sửa" onclick="edit('{{$tt->madanhhieutd}}','{{$tt->tendanhhieutd}}','{{$tt->phanloai}}')" class="btn btn-default btn-xs mbs" data-target="#modify-modal" data-toggle="modal">
                                     <i class="fa fa-edit"></i></button>
 {{--                                @endif--}}
-{{--                                @if(session('admin')->sadmin == 'ssa')--}}
+{{--                                @if(session('admin')->level == 'SSA')--}}
                                 <button type="button" title="Xóa" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal">
                                     <i class="fa fa-trash-o"></i></button>
 

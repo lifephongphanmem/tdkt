@@ -775,7 +775,7 @@ function can($module = null, $action = null)
     $permission = json_decode($permission, true);
     //dd($permission);
     //check permission
-    if(isset($permission[$module][$action]) && $permission[$module][$action] == 1 || session('admin')->sadmin == 'ssa') {
+    if(isset($permission[$module][$action]) && $permission[$module][$action] == 1 || session('admin')->level == 'SSA') {
         return true;
     }else
         return false;
@@ -815,7 +815,7 @@ function canKkGiaGr($manganh){
 }
 
 function canKkGiaCt($manganh = null, $manghe = null){
-    if(session('admin')->level == 'T' || session('admin')->sadmin == 'ssa') {
+    if(session('admin')->level == 'T' || session('admin')->level == 'SSA') {
         $modelnghe = \App\Model\system\dmnganhnghekd\DmNgheKd::where('manganh',$manganh)
             ->where('manghe',$manghe)
             ->where('theodoi','TD');
@@ -880,7 +880,7 @@ function canCbKkGiaCt($manganh = null, $manghe = null){
 }
 
 function canEdit($trangthai){
-    if(session('admin')->sadmin == 'ssa')
+    if(session('admin')->level == 'SSA')
        return true;
     else{
         if ($trangthai == 'CC' || $trangthai == 'BTL') {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\manage\kttkkc\ktctubnd;
 
-use App\dmdanhhieutd;
+use App\DanhMuc\dmdanhhieutd;
 use App\dmdonvi;
 use App\dmhinhthuckt;
 use App\dmloaihinhkt;

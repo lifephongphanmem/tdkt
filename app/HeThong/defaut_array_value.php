@@ -7,7 +7,7 @@
  */
 function getdanhhieu()
 {
-    $danhhieu = \App\dmdanhhieutd::all();
+    $danhhieu = \App\DanhMuc\dmdanhhieutd::all();
     $options = array();
     $options[''] = '--Chọn danh hiệu thi đua--';
     foreach ($danhhieu as $danhhieu) {

@@ -38,6 +38,7 @@ Route::group(['prefix'=>'XetDuyetHoSoThiDua'], function(){
     Route::get('KetQua','manage\ktcaccap\DuyetHoSoCapDuoiController@KetQua');
     Route::post('KetQua','manage\ktcaccap\DuyetHoSoCapDuoiController@LuuKetQua');
     Route::post('ChuyenDoiTuong','manage\ktcaccap\DuyetHoSoCapDuoiController@ChuyenDoiTuong');
+    Route::get('InKetQua','manage\ktcaccap\DuyetHoSoCapDuoiController@InKetQua');
 });
 
 //trinhhoso

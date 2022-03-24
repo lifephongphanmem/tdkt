@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\manage\qldoituong;
 
+use App\DSDiaBan;
+use App\DSDonVi;
 use App\model\manage\qldoituong\dmphanloaict;
 use App\model\manage\qldoituong\dmphanloaidt;
 use App\Model\manage\qldoituong\qldoituong;
@@ -21,15 +23,20 @@ class QlDoiTuongCNController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
+            $m_donvi = DSDonVi::all();
+            $m_diaban = DSDiaBan::all();
+            $inputs['madonvi'] = $inputs['madonvi'] ?? $m_donvi->first()->madonvi;
             $inputs['phanloaict'] = isset($inputs['phanloaict']) ? $inputs['phanloaict'] : '';
             $m_pl = dmphanloaict::where('mapl','like','CN')->get();
-            $model = qldoituong::where('madonvi',session('admin')->madonvi)->where('phanloai','like','CN')->get();
+            $model = qldoituong::where('madonvi',$inputs['madonvi'])->where('phanloai','CANHAN')->get();
             if($inputs['phanloaict'] != '')
                 $model = $model->where('phanloaict',$inputs['phanloaict']);
             return view('manage.qldoituong.qldoituongcn.index')
                 ->with('model', $model)
                 ->with('m_pl', $m_pl)
                 ->with('inputs', $inputs)
+                ->with('m_donvi', $m_donvi)
+                ->with('m_diaban', $m_diaban)
                 ->with('pageTitle', 'Danh sách đối tượng quản lý cá nhân');
 
         } else

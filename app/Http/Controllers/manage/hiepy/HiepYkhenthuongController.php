@@ -44,10 +44,10 @@ class HiepYkhenthuongController extends Controller
     public function create()
     {
         if (Session::has('admin')) {
-            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+//            if (session('admin')->level == 'SSA' || session('admin')->sadmin == 'sa') {
                 return view('manage.hiepy.create')
                     ->with('pageTitle', 'Tạo mới thông tin hiệp y khen thưởng');
-            }
+//            }
         }
     }
 

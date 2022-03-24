@@ -26,7 +26,7 @@ class DmhinhthucktController extends Controller
                 $model=$model->where('mahinhthuckt',$inputs['mahinhthuckt']);
             if($inputs['phanloai'] != '')
                 $model = $model->where('phanloai',$inputs['phanloai']);
-            return view('system.dmhinhthuckt.index')
+            return view('system.dmhinhthuckt.ThongTin')
                 ->with('model', $model)
                 ->with('inputs', $inputs)
                 ->with('pageTitle', 'Danh sách danh mục hình thức khen thưởng');
@@ -43,7 +43,7 @@ class DmhinhthucktController extends Controller
     public function create()
     {
         if (Session::has('admin')) {
-            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+            if (session('admin')->level == 'SSA' || session('admin')->sadmin == 'sa') {
                 return view('system.dmhinhthuckt.create')
                     ->with('pageTitle', 'Tạo mới thông tin danh mục hình thức khen thưởng');
             }

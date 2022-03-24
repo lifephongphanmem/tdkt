@@ -96,7 +96,7 @@
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet box">
-                @if(session('admin')->sadmin == 'ssa')
+                @if(session('admin')->level == 'SSA')
                     <div class="portlet-title">
                         <div class="caption"></div>
                         <div class="actions">

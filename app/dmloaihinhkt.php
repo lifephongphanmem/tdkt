@@ -11,8 +11,6 @@ class dmloaihinhkt extends Model
         'maloaihinhkt',
         'tenloaihinhkt',
         'phanloai',
-        'maxa',
-        'mahuyen',
         'ghichu',
         'ttnguoitao',
     ];

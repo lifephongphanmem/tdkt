@@ -342,8 +342,29 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <li><a href="{{url('/DanhHieuThiDua/ThongTin')}}">Danh hiệu thi đua</a></li>
 {{--                                        <li><a href="{{url('dmtieuchuandhtd')}}">Quản lý tiêu chuẩn cho các danh hiệu TĐKT</a></li>--}}
 
-                                        <li><a href="{{url('dmhinhthuckt')}}">Quản lý hình thức TĐKT</a></li>
-                                        <li><a href="{{url('dmloaihinhkt')}}">Quản lý danh mục các loại hình TĐKT</a></li>
+                                        <li><a href="{{url('dmhinhthuckt')}}">Hình thức TĐKT</a></li>
+                                        <li><a href="{{url('dmloaihinhkt')}}">Loại hình TĐKT</a></li>
+
+                                        <li>
+                                            <a href="{{url('dmphanloaidt')}}">Phân loại đối tượng</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{url('dmphanloaict')}}">Phân loại đối tượng chi tiết</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <li class="tooltips" data-container="body" data-placement="right" data-html="true">
+                                    <a href="javascript:;">
+                                        <i class="icon-folder"></i>
+                                        <span class="title">Hệ thống API</span>
+                                        <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="{{url('/HeThongAPI/CaNhan')}}">Theo cá nhân</a></li>
+                                        <li><a href="{{url('/HeThongAPI/TapThe')}}">Theo tập thể</a></li>
+                                        <li><a href="{{url('/HeThongAPI/PhongTrao')}}">Theo phong trào</a></li>
                                     </ul>
                                 </li>
 
@@ -383,7 +404,7 @@ License: You must have a valid license purchased only from themeforest(the above
 {{--                                <span class="arrow "></span>--}}
 {{--                            </a>--}}
 {{--                            <ul class="sub-menu">--}}
-{{--                                @if(session('admin')->sadmin == 'SSA')--}}
+{{--                                @if(session('admin')->level == 'SSA')--}}
 {{--                                    <li><a href="{{url('general')}}">Cấu hình hệ thống</a></li>--}}
 {{--                                @endif--}}
 {{--                                @if(session('admin')->level == 'T' || session('admin')->level == 'H'|| session('admin')->level == 'SSA')--}}

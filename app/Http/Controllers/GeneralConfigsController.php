@@ -86,7 +86,7 @@ class GeneralConfigsController extends Controller
     public function setting()
     {
         if (Session::has('admin')) {
-            if(session('admin')->sadmin == 'ssa')
+            if(session('admin')->level == 'SSA')
             {
                 $model = HeThongChung::first();
                 $setting = isset($model->setting) ? $model->setting : '';
@@ -105,7 +105,7 @@ class GeneralConfigsController extends Controller
 
     public function updatesetting(Request $request){
         if (Session::has('admin')) {
-            if(session('admin')->sadmin == 'ssa'){
+            if(session('admin')->level == 'SSA'){
                 $update = $request->all();
                 $model = HeThongChung::first();
                 $update['roles'] = isset($update['roles']) ? $update['roles'] : null;

@@ -60,11 +60,8 @@
             document.getElementById("iddelete").value=id;
         }
         $(function(){
-            $('#phanloaict').change(function() {
-                var current_path_url = '/qldoituongcn?';
-                var phanloaict = 'phanloaict='+$('#phanloaict').val();
-                var url = current_path_url + phanloaict;
-                window.location.href = url;
+            $('#madonvi').change(function() {
+                window.location.href = '/qldoituongcn?madonvi=' + $('#madonvi').val();
             });
         })
         function ClickDelete(){
@@ -82,7 +79,7 @@
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet box">
-                @if(session('admin')->sadmin == 'ssa')
+
                     <div class="portlet-title">
                         <div class="caption"></div>
                         <div class="actions">
@@ -90,22 +87,40 @@
                             <i class="fa fa-plus"></i> Thêm mới</a>
                         </div>
                     </div>
-                @endif
+
                 <hr>
                 <div class="portlet-body">
+{{--                    <div class="row">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <div class="col-md-6">--}}
+{{--                                <label class="control-label">Phân loại đối tượng</label>--}}
+{{--                                <select class="form-control" name="phanloaict" id="phanloaict">--}}
+{{--                                    <option value="" >--Chọn phân loại đối tượng--</option>--}}
+{{--                                    @foreach($m_pl as $tt)--}}
+{{--                                        <option value="{{$tt->maplct}}" @if($inputs['phanloaict'] == $tt->maplct) selected @endif >{{$tt->tenplct}}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                     <div class="row">
-                        <div class="form-group">
-                            <div class="col-md-6">
-                                <label class="control-label">Phân loại đối tượng</label>
-                                <select class="form-control" name="phanloaict" id="phanloaict">
-                                    <option value="" >--Chọn phân loại đối tượng--</option>
-                                    @foreach($m_pl as $tt)
-                                        <option value="{{$tt->maplct}}" @if($inputs['phanloaict'] == $tt->maplct) selected @endif >{{$tt->tenplct}}</option>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label style="font-weight: bold">Đơn vị</label>
+                                <select class="form-control select2me" name="madonvi" id="madonvi">
+                                    @foreach($m_diaban as $diaban)
+                                        <optgroup label="{{$diaban->tendiaban}}">
+                                            <?php $donvi = $m_donvi->where('madiaban',$diaban->madiaban); ?>
+                                            @foreach($donvi as $ct)
+                                                <option {{$ct->madonvi == $inputs['madonvi'] ? "selected":""}} value="{{$ct->madonvi}}">{{$ct->tendonvi}}</option>
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
+
                 </div>
                     <div class="portlet-body">
                         <table class="table table-striped table-bordered table-hover" id="sample_3">
@@ -113,26 +128,29 @@
                         <tr>
                             <th style="text-align: center" width="2%">STT</th>
                             <th style="text-align: center">Tên đối tượng</th>
-                            <th style="text-align: center" width="40%">Phân loại</th>
-                            <th style="text-align: center" width="20%">Mã định danh</th>
-                            <th style="text-align: center" width="15%">Thao tác</th>
+                            <th style="text-align: center" width="15%">Ngày sinh</th>
+                            <th style="text-align: center" width="10%">Giới tính</th>
+                            <th style="text-align: center" width="20%">Chức vụ</th>
+                            <th style="text-align: center" width="10%">Mã công<br>chức, viên<br>chức</th>
+                            <th style="text-align: center" width="10%">Thao tác</th>
                         </tr>
                         </thead>
                         <tbody>
+                        <?php $i=1; ?>
                         @foreach($model as $key=>$tt)
                         <tr class="odd gradeX">
-                            <td style="text-align: center">{{$key + 1}}</td>
+                            <td style="text-align: center">{{$i++}}</td>
                             <td class="active">{{$tt->tendt}}</td>
-                            <td >{{$m_pl->where('maplct',$tt->phanloaict)->first()->tenplct}}</td>
-                            <td style="text-align: left">{{$tt->madinhdanh}}</td>
+                            <td>{{getDayVn($tt->ngaysinh)}}</td>
+                            <td>{{$tt->gioitinh}}</td>
+                            <td>{{$tt->chucvu}}</td>
+                            <td style="text-align: left">{{$tt->maccvc}}</td>
                             <td>
-                                @if(can('qldoituongcn','edit'))
-                                    <a href="{{url('qldoituongcn/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-edit"></i>&nbsp;Chỉnh sửa</a>
-                                @endif
-                                @if(can('qldoituongcn','delete'))
-                                    <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
-                                    Xóa</button>
-                                @endif
+                                <a title="Chỉnh sửa" href="{{url('qldoituongcn/'.$tt->id.'/edit')}}" class="btn btn-default btn-xs mbs">
+                                    <i class="fa fa-edit"></i></a>
+
+                                <button title="Xóa" type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal">
+                                    <i class="fa fa-trash-o"></i></button>
                             </td>
                         </tr>
                         @endforeach

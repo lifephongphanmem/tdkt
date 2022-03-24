@@ -356,7 +356,7 @@
                                     <tr class="odd gradeX">
                                         <td style="text-align: center">{{$key + 1}}</td>
                                         <td>{{$tt->tendt}}</td>
-                                        <td >{{$m_pl->where('maplct',$tt->phanloaict)->first()->tenplct}}</td>
+                                        <td >{{$m_pl->where('maplct',$tt->phanloaict)->first()->tenplct ?? '' ?? ''}}</td>
                                         <td style="text-align: center">{{$tt->diachi}}</td>
                                         <td style="text-align: center">{{$tt->madinhdanh}}</td>
                                         <td>
@@ -420,7 +420,7 @@
                                     </td>
                                     <td style="text-align: center">{{$key + 1}}</td>
                                     <td>{{$tt->tendt}}</td>
-                                    <td >{{$m_pl->where('maplct',$tt->phanloaict)->first()->tenplct}}</td>
+                                    <td >{{$m_pl->where('maplct',$tt->phanloaict)->first()->tenplct ?? '' ?? ''}}</td>
                                     <td style="text-align: center">{{$tt->diachi}}</td>
                                     <td style="text-align: center">{{$tt->madinhdanh}}</td>
                                 </tr>

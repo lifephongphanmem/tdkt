@@ -15,7 +15,7 @@ class DangKyTdXdController extends Controller
         if(Session::has('admin')){
             $inputs = $request->all();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
-            if(session('admin')->sadmin == 'ssa')
+            if(session('admin')->level == 'SSA')
                 $model = DangKyTd::whereYear('ngayky',$inputs['nam'])->where('trangthai','<>', 'CC')->get();
             else
                 $model = DangKyTd::whereYear('ngayky',$inputs['nam'])->where('madonvi',session('admin')->madonvi)

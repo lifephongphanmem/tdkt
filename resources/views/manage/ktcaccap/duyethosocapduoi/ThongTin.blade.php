@@ -175,13 +175,13 @@
                     {!! Form::open(['url'=>'/XetDuyetHoSoThiDua/ChuyenDoiTuong','method'=>'post' , 'files'=>true,'id' => 'frm_back','class'=>'form-horizontal','enctype'=>'multipart/form-data'])!!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h4 class="modal-title">Đồng ý chuyển đối tượng?</h4>
+                        <h4 class="modal-title">Đồng ý kết thúc phong trào và chuyển đối tượng?</h4>
                     </div>
                     <input type="hidden" name="kihieudhtd_chuyen" id="kihieudhtd_chuyen">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                Bạn đồng ý cập nhật các đối tượng đạt tiêu chuẩn khen thưởng trong phong trào thi đua sang danh sách đối tượng để quản lý.
+                                Bạn đồng ý kết thúc phong trào và cập nhật các đối tượng đạt tiêu chuẩn khen thưởng sang danh sách đối tượng để quản lý.
                             </div>
                         </div>
                     </div>

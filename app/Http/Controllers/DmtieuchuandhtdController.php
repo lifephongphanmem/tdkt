@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\dmdanhhieutd;
+use App\DanhMuc\dmdanhhieutd;
 use App\dmtieuchuandhtd;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -41,7 +41,7 @@ class DmtieuchuandhtdController extends Controller
     public function create()
     {
         if (Session::has('admin')) {
-            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+            if (session('admin')->level == 'SSA' || session('admin')->sadmin == 'sa') {
                 return view('system.dmtieuchuandhtd.create')
                     ->with('pageTitle', 'Tạo mới thông tin danh mục tiêu chuẩn danh hiệu thi đua');
             }

@@ -78,10 +78,10 @@
                                     <td style="text-align: center">
                                         <a title="Xem chi tiết" href="{{url('/HoSoThiDua/Them?kihieudhtd='.$tt->kihieudhtd.'&madonvi='.$tt->madonvi.'&trangthai=false')}}" class="btn btn-default btn-xs mbs" target="_blank">
                                             <i class="fa fa-eye"></i></a>
-
-                                        <button title="Trả lại hồ sơ" type="button" onclick="getIdBack('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#back-modal" data-toggle="modal">
-                                            <i class="fa fa-backward"></i></button>
-
+                                        @if($m_dangky->trangthai == 'CC')
+                                            <button title="Trả lại hồ sơ" type="button" onclick="getIdBack('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#back-modal" data-toggle="modal">
+                                                <i class="fa fa-backward"></i></button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

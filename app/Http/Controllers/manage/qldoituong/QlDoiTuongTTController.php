@@ -23,7 +23,7 @@ class QlDoiTuongTTController extends Controller
             $inputs = $request->all();
             $inputs['phanloaict'] = isset($inputs['phanloaict']) ? $inputs['phanloaict'] : '';
             $m_pl = dmphanloaict::where('mapl','not like','CN')->get();
-            $model = qldoituong::where('madonvi',session('admin')->madonvi)->where('phanloai','not like','CN')->get();
+            $model = qldoituong::where('phanloai','TAPTHE')->get();
             if($inputs['phanloaict'] != '')
                 $model = $model->where('phanloaict',$inputs['phanloaict']);
             return view('manage.qldoituong.qldoituongtt.index')

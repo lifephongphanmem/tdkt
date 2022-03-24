@@ -43,7 +43,7 @@ class DmloaihinhktController extends Controller
     public function create()
     {
         if (Session::has('admin')) {
-            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+            if (session('admin')->level == 'SSA' || session('admin')->sadmin == 'sa') {
                 return view('system.dmloaihinhkt.create')
                     ->with('pageTitle', 'Tạo mới thông tin danh mục loại hình khen thưởng');
             }

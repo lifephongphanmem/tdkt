@@ -34,6 +34,7 @@ class CreateLaphosotdKhenthuongTable extends Migration
             $table->string('ghichu')->nullable();//
             //Kết quả đánh giá
             $table->boolean('ketqua')->default(0);//
+            $table->string('maloaihinhkt')->nullable();
             $table->string('lydo')->nullable();
             $table->timestamps();
         });

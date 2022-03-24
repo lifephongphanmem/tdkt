@@ -29,6 +29,7 @@ class LapHoSoTd_KhenThuong extends Model
         'ghichu',
         //Kết quả đánh giá
         'ketqua',
+        'maloaihinhkt',
         'lydo',
     ];
 }

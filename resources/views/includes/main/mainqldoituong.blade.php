@@ -18,16 +18,7 @@
                         <a href="{{url('qldoituongtt')}}">Quản lý đối tượng tập thể</a>
                     </li>
                 @endif
-                    @if(can('dmphanloaidt','index'))
-                        <li>
-                            <a href="{{url('dmphanloaidt')}}">Quản lý danh mục phân loại đối tượng</a>
-                        </li>
-                    @endif
-                    @if(can('dmphanloaict','index'))
-                        <li>
-                            <a href="{{url('dmphanloaict')}}">Quản lý danh mục phân loại đối tượng chi tiết</a>
-                        </li>
-                    @endif
+
             </ul>
         </li>
     @endif

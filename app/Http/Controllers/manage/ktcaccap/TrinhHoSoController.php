@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\manage\ktcaccap;
 
-use App\dmdanhhieutd;
+use App\DanhMuc\dmdanhhieutd;
 use App\dmhinhthuckt;
 use App\dmloaihinhkt;
 use App\dmquoctich;
@@ -17,7 +17,7 @@ class TrinhHoSoController extends Controller
         if(Session::has('admin')){
             $inputs = $request->all();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
-            if(session('admin')->sadmin == 'ssa')
+            if(session('admin')->level == 'SSA')
                 $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->get();
             else
                 $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->where('madonvi',session('admin')->madonvi)

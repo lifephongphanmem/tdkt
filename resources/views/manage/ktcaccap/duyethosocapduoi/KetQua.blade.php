@@ -57,8 +57,9 @@
                                     <th>Tên đơn vị đăng ký</th>
                                     <th>Tên đối tượng</th>
                                     <th>Tên danh hiệu</th>
-                                    <th width="10%">Số chỉ<br>tiêu</th>
-                                    <th width="10%">Đạt tiêu<br>chuẩn</th>
+                                    <th width="5%">Số chỉ<br>tiêu</th>
+                                    <th width="5%">Đạt tiêu<br>chuẩn</th>
+                                    <th width="15%">Hình thức<br>khen thưởng</th>
                                     <th style="text-align: center" width="10%">Thao tác</th>
                                 </tr>
                             </thead>
@@ -70,11 +71,16 @@
                                     <td>{{$a_danhhieu[$tt->madanhhieutd] ?? ''}}</td>
                                     <td style="text-align: center">{{$tt->tongdieukien.'/'.$tt->tongtieuchuan}}</td>
                                     <td style="text-align: center">{{$tt->ketqua}}</td>
+                                    <td>{{$a_hinhthuckt[$tt->maloaihinhkt] ?? ''}}</td>
                                     <td style="text-align: center">
                                         <button title="Danh sách tiêu chuẩn" type="button" onclick="getIdBack('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#modal-tieuchuan" data-toggle="modal">
                                             <i class="fa fa-eye"></i></button>
-                                        <button title="Thay đổi" type="button" onclick="setKetQua('{{$tt->id}}','{{$tt->tendt}}')" class="btn btn-default btn-xs mbs" data-target="#modal-ketqua" data-toggle="modal">
-                                            <i class="fa fa-check"></i></button>
+                                        <a title="In kết quả" href="{{url('/XetDuyetHoSoThiDua/InKetQua?id='.$tt->id)}}" class="btn btn-default btn-xs mbs" target="_blank">
+                                            <i class="fa fa-print"></i></a>
+                                        @if($m_dangky->trangthai == 'CC')
+                                            <button title="Thay đổi" type="button" onclick="setKetQua('{{$tt->id}}','{{$tt->tendt}}')" class="btn btn-default btn-xs mbs" data-target="#modal-ketqua" data-toggle="modal">
+                                                <i class="fa fa-check"></i></button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -89,8 +95,9 @@
                                 <th width="5%">STT</th>
                                 <th>Tên đơn vị đăng ký</th>
                                 <th>Tên danh hiệu</th>
-                                <th width="10%">Số chỉ<br>tiêu</th>
-                                <th width="10%">Đạt tiêu<br>chuẩn</th>
+                                <th width="5%">Số chỉ<br>tiêu</th>
+                                <th width="5%">Đạt tiêu<br>chuẩn</th>
+                                <th width="15%">Hình thức<br>khen thưởng</th>
                                 <th style="text-align: center" width="10%">Thao tác</th>
                             </tr>
                             </thead>
@@ -101,11 +108,14 @@
                                     <td>{{$a_danhhieu[$tt->madanhhieutd] ?? ''}}</td>
                                     <td style="text-align: center">{{$tt->tongdieukien.'/'.$tt->tongtieuchuan}}</td>
                                     <td style="text-align: center">{{$tt->ketqua}}</td>
+                                    <td>{{$a_hinhthuckt[$tt->maloaihinhkt] ?? ''}}</td>
                                     <td style="text-align: center">
                                         <button title="Danh sách tiêu chuẩn" type="button" onclick="getIdBack('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#modal-tieuchuan" data-toggle="modal">
                                             <i class="fa fa-eye"></i></button>
-                                        <button title="Thay đổi" type="button" onclick="setKetQua('{{$tt->id}}','{{$a_donvi[$tt->madonvi_kt] ?? ''}}')" class="btn btn-default btn-xs mbs" data-target="#modal-ketqua" data-toggle="modal">
-                                            <i class="fa fa-check"></i></button>
+                                        @if($m_dangky->trangthai == 'CC')
+                                            <button title="Thay đổi" type="button" onclick="setKetQua('{{$tt->id}}','{{$a_donvi[$tt->madonvi_kt] ?? ''}}')" class="btn btn-default btn-xs mbs" data-target="#modal-ketqua" data-toggle="modal">
+                                                <i class="fa fa-check"></i></button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -175,7 +185,6 @@
         {{--    Thông tin tiêu chuẩn--}}
         <div class="modal fade bs-modal-lg" id="modal-tieuchuan" tabindex="-1" role="dialog" aria-hidden="true">
             <input type="hidden" id="madt_tc" name="madt_tc" />
-            <input type="hidden" id="madt_tc" name="madt_tc" />
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -236,6 +245,15 @@
                                         <label for="dieukien_ltc">
                                             <span></span><span class="check"></span><span class="box"></span>Đạt điều kiện khen thưởng</label>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label class="form-control-label">Hình thức khen thưởng</label>
+                                    {!!Form::select('maloaihinhkt_ltc', $a_hinhthuckt, null, array('id' => 'maloaihinhkt_ltc','class' => 'form-control'))!!}
                                 </div>
                             </div>
                         </div>

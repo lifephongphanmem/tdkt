@@ -369,7 +369,7 @@
                                     <tr class="odd gradeX">
                                         <td style="text-align: center">{{$key + 1}}</td>
                                         <td>{{$modeldt->where('madt',$tt->madt)->first()->tendt}}</td>
-                                        <td >{{$m_pl->where('maplct',$modeldt->where('madt',$tt->madt)->first()->phanloaict)->first()->tenplct}}</td>
+                                        <td >{{$m_pl->where('maplct',$modeldt->where('madt',$tt->madt)->first()->phanloaict)->first()->tenplct ?? ''}}</td>
                                         <td style="text-align: center">{{$modeldt->where('madt',$tt->madt)->first()->diachi}}</td>
                                         <td style="text-align: center">{{$tt->tendanhhieutd}}</td>
                                         <td>

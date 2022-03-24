@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\manage\ktcaccap;
 
-use App\dmdanhhieutd;
+use App\DanhMuc\dmdanhhieutd;
 use App\model\manage\ktcaccap\dangkytddf;
 use App\model\manage\qldoituong\dmphanloaict;
 use App\Model\manage\qldoituong\qldoituong;
@@ -66,7 +66,7 @@ class DangKyTddfController extends Controller
                     $result['message'] .= '<tr id="'.$ct->id.'">';
                     $result['message'] .= '<td style="text-align: center">'.$key.'</td>';
                     $result['message'] .= '<td class="success">'.$modeldt->where('madt',$ct->madt)->first()->tendt.'</td>';
-                    $result['message'] .= '<td class="active">'.$m_pl->where('maplct',$modeldt->where('madt',$ct->madt)->first()->phanloaict)->first()->tenplct.'</td>';
+                    $result['message'] .= '<td class="active">'.($m_pl->where('maplct',$modeldt->where('madt',$ct->madt)->first()->phanloaict)->first()->tenplct ?? '').'</td>';
                     $result['message'] .= '<td style="text-align: center">'.$modeldt->where('madt',$ct->madt)->first()->diachi.'</td>';
                     $result['message'] .= '<td style="text-align: center">'.$ct->tendanhhieutd.'</td>';
                     $result['message'] .= '<td>'.
@@ -280,7 +280,7 @@ class DangKyTddfController extends Controller
                     $result['message'] .= '<tr id="'.$ct->id.'">';
                     $result['message'] .= '<td style="text-align: center">'.$key.'</td>';
                     $result['message'] .= '<td class="success">'.$modeldt->where('madt',$ct->madt)->first()->tendt.'</td>';
-                    $result['message'] .= '<td class="active">'.$m_pl->where('maplct',$modeldt->where('madt',$ct->madt)->first()->phanloaict)->first()->tenplct.'</td>';
+                    $result['message'] .= '<td class="active">'.($m_pl->where('maplct',$modeldt->where('madt',$ct->madt)->first()->phanloaict)->first()->tenplct ?? '').'</td>';
                     $result['message'] .= '<td style="text-align: center">'.$modeldt->where('madt',$ct->madt)->first()->diachi.'</td>';
                     $result['message'] .= '<td style="text-align: center">'.$ct->tendanhhieutd.'</td>';
                     $result['message'] .= '<td>'.

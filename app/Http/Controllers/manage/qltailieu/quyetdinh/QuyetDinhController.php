@@ -21,10 +21,7 @@ class QuyetDinhController extends Controller
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
             $inputs['phanloai'] = isset($inputs['phanloai']) ? $inputs['phanloai'] :'XA';
             $hinhthuckt = dmhinhthuckt::all();
-            $model = qlquyetdinh::where('madonvi',session('admin')->madonvi)
-                ->where('phanloai',$inputs['phanloai'])
-                ->whereyear('ngaythang',$inputs['nam'])
-                ->get();
+            $model = qlquyetdinh::all();
             return view('manage.qltailieu.qlquyetdinh.index')
                 ->with('inputs',$inputs)
                 ->with('model',$model)

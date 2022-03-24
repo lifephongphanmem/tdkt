@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\manage\ktcaccap;
 
+use App\DanhMuc\dmdanhhieutd;
 use App\dmdonvi;
+use App\dmloaihinhkt;
 use App\DSDiaBan;
 use App\DSDonVi;
 use App\Model\manage\ktcaccap\DangKyTd;
@@ -32,17 +34,21 @@ class DuyetHoSoCapDuoiController extends Controller
             $model_HoSo = LapHoSoTd::all();
             $ngayHienTai = date('Y-m-d');
             foreach ($model as $DangKy) {
-                $DangKy->tendonvi = $m_donvi->where('madonvi', $inputs['madonvi'])->first()->tendonvi ?? '';
-                $DangKy->nhanhoso = 'CHUABATDAU';
-                $DangKy->sohoso = $model_HoSo->where('kihieudhtd', $DangKy->kihieudhtd)
-                    ->wherein('trangthai',['CD'])->count();
-
-                if ($DangKy->tungay < $ngayHienTai && $DangKy->denngay > $ngayHienTai) {
-                    $DangKy->nhanhoso = 'DANGNHAN';
-                }
-                if (strtotime($DangKy->denngay) < strtotime($ngayHienTai)) {
+                if($DangKy->trangthai == 'CC'){
+                    $DangKy->nhanhoso = 'CHUABATDAU';
+                    if ($DangKy->tungay < $ngayHienTai && $DangKy->denngay > $ngayHienTai) {
+                        $DangKy->nhanhoso = 'DANGNHAN';
+                    }
+                    if (strtotime($DangKy->denngay) < strtotime($ngayHienTai)) {
+                        $DangKy->nhanhoso = 'KETTHUC';
+                    }
+                }else{
                     $DangKy->nhanhoso = 'KETTHUC';
                 }
+
+                $DangKy->tendonvi = $m_donvi->where('madonvi', $inputs['madonvi'])->first()->tendonvi ?? '';
+                $DangKy->sohoso = $model_HoSo->where('kihieudhtd', $DangKy->kihieudhtd)
+                    ->wherein('trangthai',['CD'])->count();
             }
 
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
@@ -127,6 +133,7 @@ class DuyetHoSoCapDuoiController extends Controller
             }
             $m_donvi = DSDonVi::all();
             $m_danhhieu = DangKyTd_KhenThuong::where('kihieudhtd',$inputs['kihieudhtd'])->get();
+            //$a_hinhthuckt = array_column(dmloaihinhkt::all()->toArray(), 'tenloaihinhkt', 'maloaihinhkt');
             return view('manage.ktcaccap.duyethosocapduoi.KetQua')
                 ->with('inputs',$inputs)
                 ->with('model_canhan',$model_canhan->sortby('tongdieukien'))
@@ -134,6 +141,7 @@ class DuyetHoSoCapDuoiController extends Controller
                 ->with('m_dangky',$m_dangky)
                 ->with('a_donvi', array_column($m_donvi->toArray(),'tendonvi','madonvi'))
                 ->with('a_danhhieu', array_column($m_danhhieu->toArray(),'tendanhhieutd','madanhhieutd'))
+                ->with('a_hinhthuckt', array_column(dmloaihinhkt::all()->toArray(), 'tenloaihinhkt', 'maloaihinhkt'))
                 ->with('pageTitle','Kết quả phong trào thi đua');
 
         } else
@@ -146,6 +154,7 @@ class DuyetHoSoCapDuoiController extends Controller
             $inputs = $request->all();
             $model = LapHoSoTd_KhenThuong::findorFail($inputs['id_kq']);
             $model->ketqua = isset($inputs['dieukien_ltc']) ? 1 : 0;
+            $model->maloaihinhkt = $inputs['maloaihinhkt_ltc'];
             $model->save();
             return redirect('XetDuyetHoSoThiDua/KetQua?kihieudhtd=' . $model->kihieudhtd);
         } else
@@ -158,7 +167,9 @@ class DuyetHoSoCapDuoiController extends Controller
             $inputs = $request->all();
             $model = LapHoSoTd_KhenThuong::where('kihieudhtd',$inputs['kihieudhtd_chuyen'])
                 ->where('ketqua','1')->get();
-
+            $m_phongtrao = DangKyTd::where('kihieudhtd',$inputs['kihieudhtd_chuyen'])->first();
+            $m_phongtrao->trangthai = 'CD';
+            $m_phongtrao->save();
             foreach ($model as $chitiet) {
                 $doituong = new qldoituong;
                 $doituong->kihieudhtd = $chitiet->kihieudhtd;
@@ -171,12 +182,27 @@ class DuyetHoSoCapDuoiController extends Controller
                 $doituong->gioitinh = $chitiet->gioitinh;
                 $doituong->chucvu = $chitiet->chucvu;
                 $doituong->lanhdao = $chitiet->lanhdao;
-                $doituong->madonvi = $chitiet->madonvi_kt;
+                $doituong->madonvi = $chitiet->madonvi;
                 $doituong->tendonvi = $chitiet->tendonvi;
                 $doituong->save();
             }
             return redirect('XetDuyetHoSoThiDua/KetQua?kihieudhtd=' . $inputs['kihieudhtd_chuyen']);
         } else
+            return view('errors.notlogin');
+    }
+
+    public function InKetQua(Request $request){
+        if(Session::has('admin')) {
+            $inputs = $request->all();
+            $model = LapHoSoTd_KhenThuong::findorfail($inputs['id']);
+            $model->tendanhhieutd = dmdanhhieutd::where('madanhhieutd',$model->madanhhieutd)->first()->tendanhhieutd ?? '';
+            $model->noidung = DangKyTd::where('kihieudhtd',$model->kihieudhtd)->first()->noidung ?? '';
+
+            //dd($model);
+            return view('reports.DonVi.InBangKhen')
+                ->with('model', $model)
+                ->with('pageTitle', 'Danh sách hồ sơ thi đua');
+        }else
             return view('errors.notlogin');
     }
 

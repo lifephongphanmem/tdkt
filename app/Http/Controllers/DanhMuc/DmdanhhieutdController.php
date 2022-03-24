@@ -40,7 +40,7 @@ class DmdanhhieutdController extends Controller
     public function create()
     {
         if (Session::has('admin')) {
-            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+            if (session('admin')->level == 'SSA' || session('admin')->sadmin == 'sa') {
                 return view('system.dmdanhhieutd.create')
                     ->with('pageTitle', 'Tạo mới thông tin danh mục danh hiệu thi đua');
             }
@@ -76,7 +76,7 @@ class DmdanhhieutdController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-//            if (session('admin')->sadmin == 'ssa' || session('admin')->sadmin == 'sa') {
+//            if (session('admin')->level == 'SSA' || session('admin')->sadmin == 'sa') {
             $m_danhhieu = dmdanhhieutd::all();
             $inputs['tendanhhieutd'] = $m_danhhieu->where('madanhhieutd', $inputs['madanhhieutd'])->first()->tendanhhieutd ?? '';
             $model = dmtieuchuandhtd::where('madanhhieutd', $inputs['madanhhieutd'])->get();

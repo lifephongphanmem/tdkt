@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\manage\kttkkc\kyniemchuong;
 
-use App\dmdanhhieutd;
+use App\DanhMuc\dmdanhhieutd;
 use App\dmhinhthuckt;
 use App\dmloaihinhkt;
 use App\Http\Requests\manage\KyNiemChuongRequest;

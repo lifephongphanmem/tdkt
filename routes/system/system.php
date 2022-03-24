@@ -27,6 +27,11 @@ Route::group(['prefix'=>'TaiKhoan'], function(){
 
 });
 
+Route::group(['prefix'=>'HeThongAPI'], function(){
+    Route::get('CaNhan','system\HeThongAPIController@CaNhan');
+    Route::get('TapThe','system\HeThongAPIController@TapThe');
+    Route::get('PhongTrao','system\HeThongAPIController@PhongTrao');
+});
 
 Route::get('setting','GeneralConfigsController@setting');
 Route::post('setting','GeneralConfigsController@updatesetting');

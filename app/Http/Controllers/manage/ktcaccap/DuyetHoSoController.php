@@ -14,7 +14,7 @@ class DuyetHoSoController extends Controller
             $inputs = $request->all();
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
             $inputs['trangthai'] = isset($inputs['trangthai']) ? $inputs['trangthai'] : "";
-            if(session('admin')->sadmin == 'ssa')
+            if(session('admin')->level == 'SSA')
                 $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->where('trangthai','<>', 'CC')->get();
             else
                 $model = LapHoSoTd::whereYear('ngayky',$inputs['nam'])->where('trangthai','like',$inputs['trangthai'].'%')

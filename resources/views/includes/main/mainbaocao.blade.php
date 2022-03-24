@@ -22,13 +22,11 @@
                     <a href="{{url('')}}">Báo cáo tổng hợp</a>
                 </li-->
                 <li>
-                    <a href="{{url('01N-BNV-TĐKT')}}">Báo cáo theo mẫu 07.01N/BNV-TĐKT</a>
+                    <a href="{{url('/BaoCaoDonVi/ThongTin')}}">Báo cáo đơn vị</a>
                 </li>
                 <li>
-                    <a href="{{url('02N-BNV-TĐKT')}}">Báo cáo theo mẫu 07.02N/BNV-TĐKT</a>
+                    <a href="{{url('/BaoCaoTongHop/ThongTin')}}">Báo cáo tổng hợp</a>
                 </li>
-                <li>
-                    <a href="{{url('03N-BNV-TĐKT')}}">Báo cáo theo mẫu 07.03N/BNV-TĐKT</a>
-                </li>
+
             </ul>
         </li>

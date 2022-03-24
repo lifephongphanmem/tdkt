@@ -89,7 +89,7 @@
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet box">
-                @if(session('admin')->sadmin == 'ssa')
+                @if(session('admin')->level == 'SSA')
                     <div class="portlet-title">
                         <div class="caption"></div>
                         <div class="actions">
@@ -160,7 +160,7 @@
                                 @if(can('users','create'))
                                     <a href="{{url('users/'.$tt->id.'/copy')}}" class="btn btn-default btn-xs mbs"><i class="fa fa-copy"></i>&nbsp;Copy</a>
                                 @endif
-                                @if(session('admin')->sadmin == 'ssa')
+                                @if(session('admin')->level == 'SSA')
                                     <button type="button" onclick="getId('{{$tt->id}}')" class="btn btn-default btn-xs mbs" data-target="#delete-modal" data-toggle="modal"><i class="fa fa-trash-o"></i>&nbsp;
                                     Xóa</button>
                                 @endif

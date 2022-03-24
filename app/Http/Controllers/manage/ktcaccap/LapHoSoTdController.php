@@ -37,22 +37,31 @@ class LapHoSoTdController extends Controller
             $model_HoSo = LapHoSoTd::all();
             $ngayHienTai = date('Y-m-d');
             foreach ($model as $DangKy) {
+                if($DangKy->trangthai == 'CC'){
+                    $DangKy->nhanhoso = 'CHUABATDAU';
+                    if ($DangKy->tungay < $ngayHienTai && $DangKy->denngay > $ngayHienTai) {
+                        $DangKy->nhanhoso = 'DANGNHAN';
+                    }
+                    if (strtotime($DangKy->denngay) < strtotime($ngayHienTai)) {
+                        $DangKy->nhanhoso = 'KETTHUC';
+                    }
+                }else{
+                    $DangKy->nhanhoso = 'KETTHUC';
+                }
+
+                //
                 $HoSo = $model_HoSo->where('kihieudhtd', $DangKy->kihieudhtd)
                     ->where('madonvi', $inputs['madonvi']);
 
                 $DangKy->tendonvi = $m_donvi->where('madonvi', $DangKy->madonvi)->first()->tendonvi ?? '';
-                $DangKy->nhanhoso = 'CHUABATDAU';
+
                 $DangKy->sohoso = $model_HoSo->where('kihieudhtd', $DangKy->kihieudhtd)
                     ->wherein('trangthai',['CD'])->count();
                 $DangKy->trangthai = $HoSo->first()->trangthai ?? 'CC';
                 $DangKy->ngaychuyen = $HoSo->first()->ngaychuyen ?? '';
                 $DangKy->hosodonvi = $HoSo->count();
-                if ($DangKy->tungay < $ngayHienTai && $DangKy->denngay > $ngayHienTai) {
-                    $DangKy->nhanhoso = 'DANGNHAN';
-                }
-                if (strtotime($DangKy->denngay) < strtotime($ngayHienTai)) {
-                    $DangKy->nhanhoso = 'KETTHUC';
-                }
+
+
             }
 
             $inputs['nam'] = isset($inputs['nam']) ? $inputs['nam'] : date('Y');
