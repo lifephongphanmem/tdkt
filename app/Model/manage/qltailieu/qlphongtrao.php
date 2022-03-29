@@ -1,6 +1,6 @@
 <?php
 
-namespace App\model\manage\qltailieu;
+namespace App\Model\manage\qltailieu;
 
 use Illuminate\Database\Eloquent\Model;
 
