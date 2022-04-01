@@ -155,18 +155,11 @@ License: You must have a valid license purchased only from themeforest(the above
             <div class="page-logo">
                 <a href="{{url('')}}">
                     <img src="{{url('images/logolife.png')}}" alt="logo" class="logo-default">
-
                 </a>
-                <div class="menu-toggler sidebar-toggler hide">
-                    <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
-                </div>
-            </div>
-            <!--a href="{{url('')}}">{url('images/LIFESOFT.png')}}" width="100" alt
-                <img src="{="logo" class="logo-default"/>
-            </a-->
-            <div class="menu-toggler sidebar-toggler hide">
             </div>
         </div>
+
+
         <!-- END LOGO -->
         <!-- BEGIN RESPONSIVE MENU TOGGLER -->
         <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
@@ -264,20 +257,17 @@ License: You must have a valid license purchased only from themeforest(the above
                     <!-- END SIDEBAR TOGGLER BUTTON -->
                 </li>
                 <!--Manager-->
-                <li class="heading">
-                    <h3 class="uppercase">Quản lý phong trào thi đua khen thưởng</h3>
-                </li>
+{{--                <li class="heading">--}}
+{{--                    <h3 class="uppercase">Quản lý thi đua, khen thưởng các cấp</h3>--}}
+{{--                </li>--}}
                 @if(canGeneral('tdktcaccap','index'))
                     @if(can('tdktcaccap','index'))
                         @include('includes.main.maintdktcaccap')
                     @endif
                 @endif
+{{--                Quản lý cụm, khối thi đua--}}
+                @include('includes.main.CumKhoiThiDua')
 
-                @if(canGeneral('qldoituong','index'))
-                    @if(can('qldoituong','index'))
-                        @include('includes.main.mainqldoituong')
-                    @endif
-                @endif
 
                 @if(canGeneral('hiepykhenthuong','index'))
                     @if(can('hiepykhenthuong','index'))
@@ -288,6 +278,12 @@ License: You must have a valid license purchased only from themeforest(the above
                 @if(canGeneral('tdktkhangchien','index'))
                     @if(can('tdktkhangchien','index'))
                         @include('includes.main.maintdktkhangchien')
+                    @endif
+                @endif
+
+                @if(canGeneral('qldoituong','index'))
+                    @if(can('qldoituong','index'))
+                        @include('includes.main.mainqldoituong')
                     @endif
                 @endif
 
@@ -342,7 +338,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                         <li><a href="{{url('/DanhHieuThiDua/ThongTin')}}">Danh hiệu thi đua</a></li>
 {{--                                        <li><a href="{{url('dmtieuchuandhtd')}}">Quản lý tiêu chuẩn cho các danh hiệu TĐKT</a></li>--}}
 
-                                        <li><a href="{{url('dmhinhthuckt')}}">Hình thức TĐKT</a></li>
+                                        <li><a href="{{url('dmhinhthuckt')}}">Hình thức khen thưởng</a></li>
                                         <li><a href="{{url('dmloaihinhkt')}}">Loại hình TĐKT</a></li>
 
                                         <li>
