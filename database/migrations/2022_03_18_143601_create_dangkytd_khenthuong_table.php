@@ -16,7 +16,7 @@ class CreateDangkytdKhenthuongTable extends Migration
         Schema::create('dangkytd_khenthuong', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('stt')->default(1);
-            $table->string('kihieudhtd')->nullable();// ký hiệu
+            $table->string('madangkytd')->nullable();// ký hiệu
             $table->string('madanhhieutd')->nullable();
             $table->string('tendanhhieutd')->nullable();// tên danh hiệu thi đua
             $table->string('tenhinhthuckt')->nullable();// tên hình thức thi đua

@@ -9,7 +9,7 @@ class DangKyTd extends Model
     protected $table = 'dangkytd';
     protected $fillable = [
         'id',
-        'kihieudhtd',
+        'madangkytd',
         'tendanhhieutd',
         'tenhinhthuckt',
         'tendtkt',

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQlphongtraoTable extends Migration
+class CreateDmphongtraoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateQlphongtraoTable extends Migration
      */
     public function up()
     {
-        Schema::create('qlphongtrao', function (Blueprint $table) {
+        Schema::create('dmphongtrao', function (Blueprint $table) {
             $table->increments('id');
             $table->string('maphongtrao')->unique();
             $table->string('sophongtrao')->nullable();
@@ -41,6 +41,6 @@ class CreateQlphongtraoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('qlphongtrao');
+        Schema::dropIfExists('dmphongtrao');
     }
 }

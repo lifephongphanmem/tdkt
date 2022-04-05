@@ -10,7 +10,7 @@ class DangKyTd_TieuChuan extends Model
     protected $fillable = [
         'id',
         'stt',
-        'kihieudhtd',
+        'madangkytd',
         'madanhhieutd',
         'matieuchuandhtd',
         'tentieuchuandhtd',
